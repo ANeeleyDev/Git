@@ -167,16 +167,16 @@ VALUES	(0, 'Cincinnati', 34);
 INSERT INTO zips (zip_id, zipcode)
 VALUES	(0, 45249);
 
-INSERT INTO profiles (profile_id, first_name, last_name, email_address, phone_number, street_address, city, state, zip, user_id)
-VALUES	(0, 'Han', 'Solo', 'hsolo@gmail.com', '66s-tar-wars', '111 Smugglers Way', 0, 34, 0, 1);
+INSERT INTO profiles (first_name, last_name, email_address, phone_number, street_address, city, state, zip, user_id)
+VALUES	('Han', 'Solo', 'hsolo@gmail.com', '7684729290', '111 Smugglers Way', 0, 34, 0, 1);
 
-INSERT INTO pets (pet_id, user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
-VALUES (0, 0, 'Jabba', 13, 'mutt', 'dog', 0, 1, 0, 1, 1, 0, 'loves to eat');
+INSERT INTO pets (user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
+VALUES (0, 'Jabba', 13, 'mutt', 'dog', 0, 1, 0, 1, 1, 0, 'loves to eat');
 
-INSERT INTO posts (post_id, user_id, post_title, post_content)
-VALUES	(0, 0, 'Jabba needs a snack- I mean friend', 'Looking for a friend for my lovely little Jabba')
+INSERT INTO posts (user_id, post_title, post_content)
+VALUES	(0, 'Jabba needs a snack- I mean friend', 'Looking for a friend for my lovely little Jabba')
 
-INSERT INTO playdates (playdate_id, meetingTime, playdate_address, playdate_city, playdate_state, playdate_zip)
-VALUES (0, '2021-12-08 10:30:00', '888 Galaxy Drive', 0, 0, 0)
+INSERT INTO playdates (meetingTime, playdate_address, playdate_city, playdate_state, playdate_zip)
+VALUES ('2021-12-08 10:30:00', '888 Galaxy Drive', 0, 0, 0)
 
 GO
