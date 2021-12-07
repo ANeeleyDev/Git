@@ -58,9 +58,9 @@ CREATE TABLE profiles (
 	zip int NOT NULL,
 	user_id int NOT NULL
 	CONSTRAINT PK_profile PRIMARY KEY (profile_id)
-	CONSTRAINT FK_city FOREIGN KEY (city) REFERENCES cities (city_id),
-	CONSTRAINT FK_state FOREIGN KEY (state) REFERENCES states (state_id),
-	CONSTRAINT FK_zip FOREIGN KEY (zip) REFERENCES zips (zip_id),
+	CONSTRAINT FK_profile_city FOREIGN KEY (city) REFERENCES cities (city_id),
+	CONSTRAINT FK_profile_state FOREIGN KEY (state) REFERENCES states (state_id),
+	CONSTRAINT FK_profile_zip FOREIGN KEY (zip) REFERENCES zips (zip_id),
 	CONSTRAINT FK_profile_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
 )
 
