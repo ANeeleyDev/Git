@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Capstone.Controllers
 {
-    [Route("/pets")]
+    [Route("/pets/")]
     [ApiController]
     public class PetController : ControllerBase
     {
@@ -22,16 +22,30 @@ namespace Capstone.Controllers
             petDao = _petDao;
         }
 
-        [HttpPost("/register")]
+        [HttpPost("register")]
         public Pet RegisterPet(Pet petToSave)
         {
             return petDao.RegisterPet(petToSave);
         }
 
-        [HttpGet("/{petId}")]
+        [HttpGet("{petId}")]
         public Pet GetPetByPetId(int petId)
         {
             return petDao.GetPet(petId);
+        }
+
+        [HttpDelete("{petId}")]
+
+        public bool DeletePet(int petId)
+        {
+            return petDao.DeletePet(petId);
+        }
+
+        [HttpGet("user/{userId}")]
+
+        public List<Pet> GetPetByUserId(int userId)
+        {
+            return petDao.GetPetByUserId(userId);
         }
     }
 

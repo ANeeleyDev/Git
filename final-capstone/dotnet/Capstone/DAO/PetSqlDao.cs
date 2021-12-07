@@ -23,7 +23,8 @@ namespace Capstone.DAO
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = "SELECT * FROM pets WHERE pet_id = @pet_id;";
+                string sql = "SELECT pet_id, user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, " +
+                             "other_comments FROM pets WHERE pet_id = @pet_id;";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@pet_id", petId);
 
@@ -67,6 +68,61 @@ namespace Capstone.DAO
             }
 
             return GetPet(newPetId);
+        }
+
+        public bool DeletePet(int petId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("DELETE FROM pets WHERE pet_id = @pet_id", conn);
+                    cmd.Parameters.AddWithValue("@pet_id", petId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
+                
+                throw;
+            }
+        }
+
+        public List<Pet> GetPetByUserId(int userId)
+        {
+            List<Pet> allPetsByUserId = new List<Pet>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT pet_id, user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, " +
+                                                    "independent, other_comments FROM pets WHERE user_id = @user_id", conn);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Pet pet = CreatePetFromReader(reader);
+                        allPetsByUserId.Add(pet);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+                
+                throw;
+            }
+
+            return allPetsByUserId;
         }
 
         private Pet CreatePetFromReader(SqlDataReader reader)
