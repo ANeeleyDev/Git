@@ -1,20 +1,34 @@
 import axios from 'axios';
 
+
 export default {
 
-//return all pets for user
+    //return all pets for user
 
-petList(userId){
-    return axios.get('/pets/:userId')
+    
+    getPetList(userId) {
+        return axios.get(`/pets/user/${userId}`)
 
-}
+    },
 
-//return specific pet detail
+//return specific pet
+    getPet(petId){
+        return axios.get(`/pets/${petId}`)
+    },
 
 //register new pet
+    addPet(petToSave) {
+        return axios.post('/pets/register', petToSave)
+    },
 
-//edit pet detail
+    //edit pet detail
 
-//delete pet
+    // editPet(petToEdit){
+    //     return axios.put(``, petToEdit)
+    // }
 
+    //delete pet
+    deletePet(petId) {
+        return axios.delete(`/pets/${petId}`)
+    }
 }

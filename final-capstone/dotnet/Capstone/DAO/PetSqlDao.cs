@@ -51,7 +51,7 @@ namespace Capstone.DAO
                 "VALUES (@user_id, @pet_name, @breed, @species, @age, @other_comments, @playful, @nervous, @confident, @shy, @mischievous, @independent);" +
                 "", conn);
 
-                cmd.Parameters.AddWithValue("@user_id", newPet.petId);
+                cmd.Parameters.AddWithValue("@user_id", newPet.userId);
                 cmd.Parameters.AddWithValue("@pet_name", newPet.petName);
                 cmd.Parameters.AddWithValue("@breed", newPet.breed);
                 cmd.Parameters.AddWithValue("@species", newPet.species);
@@ -129,6 +129,7 @@ namespace Capstone.DAO
         {
             Pet pet = new Pet();
             pet.petId = Convert.ToInt32(reader["pet_id"]);
+            pet.userId = Convert.ToInt32(reader["user_id"]);
             pet.petName = Convert.ToString(reader["pet_name"]);
             pet.age = Convert.ToInt32(reader["age"]);
             pet.species = Convert.ToString(reader["species"]);
