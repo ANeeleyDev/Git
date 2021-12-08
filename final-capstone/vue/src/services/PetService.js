@@ -18,12 +18,14 @@ export default {
 
 //register new pet
     addPet(petToSave) {
-        return axios.post('/pets/register', petToSave)
+        console.log(petToSave);
+        return axios.post(`/pets/register`, petToSave)
+        
     },
 
     //edit pet detail
 
-    // editPet(petToEdit){
+    // updatePet(petToEdit){
     //     return axios.put(``, petToEdit)
     // }
 

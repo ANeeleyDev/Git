@@ -1,5 +1,6 @@
 <template>
   <div>
+      <router-link v-bind:to="{name:'add-pet'}">Add Pet</router-link>
       <div v-for="pet in pets" v-bind:key="pet.petId">
           <pet-detail v-bind:pet = "pet" />
       </div>
