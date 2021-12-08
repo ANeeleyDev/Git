@@ -93,7 +93,7 @@ namespace Capstone.DAO
             }
         }
 
-        public List<Pet> GetPetByUserId(int userId)
+        public List<Pet> GetPetsByUserId(int userId)
         {
             List<Pet> allPetsByUserId = new List<Pet>();
 
@@ -123,6 +123,72 @@ namespace Capstone.DAO
             }
 
             return allPetsByUserId;
+        }
+
+        public List<Pet> GetPetsByLoggedInUser(int userId)
+        {
+            List<Pet> allPetsByUserId = new List<Pet>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT pet_id, user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, " +
+                                                    "independent, other_comments FROM pets WHERE user_id = @user_id", conn);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Pet pet = CreatePetFromReader(reader);
+                        allPetsByUserId.Add(pet);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+
+            return allPetsByUserId;
+        }
+
+        public bool UpdatePet(Pet updatedPet)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("UPDATE pets SET pet_name = @pet_name, breed = @breed, species = @species, age = @age, other_comments = @other_comments, " +
+                        "playful = @playful, nervous = @nervous, confident = @confident, shy = @shy, mischievous = @mischievous, independent = @independent", conn);
+                    cmd.Parameters.AddWithValue("@pet_name", updatedPet.petName);
+                    cmd.Parameters.AddWithValue("@breed", updatedPet.breed);
+                    cmd.Parameters.AddWithValue("@species", updatedPet.species);
+                    cmd.Parameters.AddWithValue("@age", updatedPet.age);
+                    cmd.Parameters.AddWithValue("@other_comments", updatedPet.otherComments);
+                    cmd.Parameters.AddWithValue("@playful", updatedPet.playful);
+                    cmd.Parameters.AddWithValue("@nervous", updatedPet.nervous);
+                    cmd.Parameters.AddWithValue("@confident", updatedPet.confident);
+                    cmd.Parameters.AddWithValue("@shy", updatedPet.shy);
+                    cmd.Parameters.AddWithValue("@mischievous", updatedPet.mischievous);
+                    cmd.Parameters.AddWithValue("@independent", updatedPet.independent);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
         private Pet CreatePetFromReader(SqlDataReader reader)

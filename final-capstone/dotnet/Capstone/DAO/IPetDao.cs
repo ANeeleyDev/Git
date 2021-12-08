@@ -13,14 +13,11 @@ namespace Capstone.DAO
 
         public bool DeletePet(int petId);
 
-        public List<Pet> GetPetByUserId(int userId);
+        public List<Pet> GetPetsByUserId(int userId);
 
-        //TODO
-        //Make a "GetAllPetsBySpecies"
-        //Make top 5 most recent pets added (5 largest pet IDs)
-        //Make display pet methods based on drop down options
+        public List<Pet> GetPetsByLoggedInUser(int userId);
 
 
-
+        public bool UpdatePet(Pet updatedPet);
     }
 }

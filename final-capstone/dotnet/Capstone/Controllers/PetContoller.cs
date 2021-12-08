@@ -34,6 +34,7 @@ namespace Capstone.Controllers
             return petDao.GetPet(petId);
         }
 
+        
         [HttpDelete("{petId}")]
 
         public bool DeletePet(int petId)
@@ -41,11 +42,29 @@ namespace Capstone.Controllers
             return petDao.DeletePet(petId);
         }
 
+        //View any user's pets
+
         [HttpGet("user/{userId}")]
 
-        public List<Pet> GetPetByUserId(int userId)
+        public List<Pet> GetPetsByUserId(int userId)
         {
-            return petDao.GetPetByUserId(userId);
+            return petDao.GetPetsByUserId(userId);
+        }
+
+        //View MY pets (user id taken from token)
+        [HttpGet("mypets")]
+        public List<Pet> GetPetsByLoggedInUser(int userId)
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return petDao.GetPetsByLoggedInUser(userId);
+        }
+
+        [HttpPut("{petId}")]
+        public bool UpdatePet(Pet updatedPet)
+        {
+            return petDao.UpdatePet(updatedPet);
         }
     }
 
