@@ -43,11 +43,6 @@ CREATE TABLE users (
 	password_hash varchar(200) NOT NULL,
 	salt varchar(200) NOT NULL,
 	user_role varchar(50) NOT NULL,
-	CONSTRAINT PK_user PRIMARY KEY (user_id)
-)
-
-CREATE TABLE profiles (
-	profile_id int IDENTITY(0,1) NOT NULL,
 	first_name varchar(50) NOT NULL,
 	last_name varchar(50) NOT NULL,
 	email_address varchar(50) NOT NULL,
@@ -56,12 +51,24 @@ CREATE TABLE profiles (
 	city int NOT NULL,
 	state int NOT NULL,
 	zip int NOT NULL,
-	user_id int NOT NULL
-	CONSTRAINT PK_profile PRIMARY KEY (profile_id)
 	CONSTRAINT FK_profile_city FOREIGN KEY (city) REFERENCES cities (city_id),
 	CONSTRAINT FK_profile_state FOREIGN KEY (state) REFERENCES states (state_id),
 	CONSTRAINT FK_profile_zip FOREIGN KEY (zip) REFERENCES zips (zip_id),
-	CONSTRAINT FK_profile_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
+	CONSTRAINT PK_user PRIMARY KEY (user_id)
+)
+
+CREATE TABLE species (
+	species_id int IDENTITY(0,1) NOT NULL,
+	species varchar(50) NOT NULL
+	CONSTRAINT PK_species PRIMARY KEY (species_id)
+)
+
+CREATE TABLE breeds (
+	breed_id int IDENTITY(0,1) NOT NULL,
+	breed varchar(50) NOT NULL,
+	species int NOT NULL
+	CONSTRAINT PK_breed PRIMARY KEY (breed_id),
+	CONSTRAINT FK_species FOREIGN KEY (species) REFERENCES species (species_id)
 )
 
 CREATE TABLE pets (
@@ -69,8 +76,8 @@ CREATE TABLE pets (
 	user_id int NOT NULL,
 	pet_name varchar(50) NOT NULL,
 	age int NOT NULL,
-	breed varchar(50) NOT NULL,
-	species varchar(50) NOT NULL,
+	breed int NOT NULL,
+	species int NOT NULL,
 	playful BIT NOT NULL,
 	nervous BIT NOT NULL,
 	confident BIT NOT NULL,
@@ -79,7 +86,9 @@ CREATE TABLE pets (
 	independent BIT NOT NULL,
 	other_comments varchar(200) NOT NULL
 	CONSTRAINT PK_pet PRIMARY KEY (pet_id)
-	CONSTRAINT FK_user FOREIGN KEY (user_id) REFERENCES users (user_id)
+	CONSTRAINT FK_user FOREIGN KEY (user_id) REFERENCES users (user_id),
+	CONSTRAINT FK_pet_breed FOREIGN KEY (breed) REFERENCES breeds (breed_id),
+	CONSTRAINT FK_pet_species FOREIGN KEY (species) REFERENCES species (species_id)
 )
 
 CREATE TABLE posts (
@@ -91,23 +100,38 @@ CREATE TABLE posts (
 	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
 )
 
+CREATE TABLE playdate_statuses (
+	playdate_status_id int NOT NULL,
+	playdate_status varchar(50) NOT NULL
+	CONSTRAINT PK_playdate_status PRIMARY KEY (playdate_status_id)
+)
+
 CREATE TABLE playdates (
 	playdate_id int IDENTITY(0,1) NOT NULL,
 	meetingTime DATETIME NOT NULL,
 	playdate_address varchar(50) NOT NULL,
 	playdate_city int NOT NULL,
 	playdate_state int NOT NULL,
-	playdate_zip int NOT NULL
+	playdate_zip int NOT NULL,
+	playdate_status_id int NOT NULL
 	CONSTRAINT PK_playdate PRIMARY KEY (playdate_id)
 	CONSTRAINT FK_playdate_city FOREIGN KEY (playdate_city) REFERENCES cities (city_id),
 	CONSTRAINT FK_playdate_state FOREIGN KEY (playdate_state) REFERENCES states (state_id),
-	CONSTRAINT FK_playdate_zip FOREIGN KEY (playdate_zip) REFERENCES zips (zip_id)
+	CONSTRAINT FK_playdate_zip FOREIGN KEY (playdate_zip) REFERENCES zips (zip_id),
+	CONSTRAINT FK_playdate_status FOREIGN KEY (playdate_status_id) REFERENCES playdate_statuses (playdate_status_id)
 )
 
 
 --populate default data
-INSERT INTO users (username, password_hash, salt, user_role) VALUES ('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user');
-INSERT INTO users (username, password_hash, salt, user_role) VALUES ('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin');
+INSERT INTO users (username, password_hash, salt, user_role, first_name, last_name,	email_address, phone_number, street_address, city, state, zip)
+VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'Solo', 'hsolo@gmail.com', '7684729290', '111 Smugglers Way', 0, 34, 0, 1),
+		('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Tyson', 'Thorp', 'faketyson@gmail.com', '7684729291', '112 News Crew Drive', 0, 34, 0, 1),
+		('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Annie', 'Cochran', 'fakeannie@gmail.com', '7684729292', '777 Consultant Street', 0, 34, 0, 1),
+		('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Tiffany', 'McGillvary', 'faketiff@gmail.com', '7684729293', '8909 Stalk Market Road', 0, 34, 0, 1),
+		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Kevin', 'O''Leary', 'fakekevin@gmail.com', '7684729294', '9890 Columbus Way', 0, 34, 0, 1),
+		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Robert', 'Kaiser', 'fakerob@gmail.com', '7684729295', '7564 Oscar Wilde Boulevard', 0, 34, 0, 1),
+		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Amanda', 'Neeley', 'fakeamanda@gmail.com', '7684729296', '5555 Boss Lady Road', 0, 34, 0, 1),
+		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Ashley', 'Vorpe', 'fakeashley@gmail.com', '7684729297', '6754 Nerd Avenue', 0, 34, 0, 1);
 
 INSERT INTO states (state_id, state_name, state_abbreviation)
 VALUES	(0, 'Alabama', 'AL'),
@@ -162,21 +186,80 @@ VALUES	(0, 'Alabama', 'AL'),
 		(49, 'Wyoming', 'WY');
 
 INSERT INTO cities (city_id, city_name, state_id)
-VALUES	(0, 'Cincinnati', 34);
+VALUES	(0, 'Cincinnati', 34),
+		(1, 'Columbus', 34),
+		(2, 'Toledo', 34),
+		(3, 'Cleveland', 34),
+		(4, 'Dayton', 34);
 
 INSERT INTO zips (zip_id, zipcode)
-VALUES	(0, 45249);
+VALUES	(0, 45249),
+		(1, 41073),
+		(2, 45201),
+		(3, 45222),
+		(4, 45327);
 
-INSERT INTO profiles (first_name, last_name, email_address, phone_number, street_address, city, state, zip, user_id)
-VALUES	('Han', 'Solo', 'hsolo@gmail.com', '7684729290', '111 Smugglers Way', 0, 34, 0, 1);
+INSERT INTO breeds (breed, species)
+VALUES	('Affenpinscher', 0),
+		('Afghan Hound', 0),
+		('Airedale Terrier', 0),
+		('Akita', 0),
+		('Alaskan Klee Kai', 0),
+		('Alaskan Malamute', 0),
+		('American Bulldog', 0),
+		('American English Coonhound', 0),
+		('American Eskimo Dog', 0),
+		('American Foxhound', 0),
+		('American Hairless Terrier', 0),
+		('American Leopard Hound', 0),
+		('American Staffordshire Terrier', 0),
+		('American Water Spaniel', 0),
+		('Anatolian Shepherd Dog', 0),
+		('Appenzeller Sennenhund', 0),
+		('Australian Cattle Dog', 0),
+		('Australian Kelpie', 0),
+		('Australian Shepherd', 0),
+		('Australian Stumpy Tail Cattle Dog', 0),
+		('Australian Terrier', 0),
+		('Azawakh', 0),
+		('Barbado da Terceira', 0),
+		('Barbet', 0),
+		('Basenji', 0),
+		('Basset Fauve de Bretagne', 0),
+		('Basset Hound', 0),
+		('Bavarian Mountain Scent Hound', 0),
+		('Beagle', 0),
+		('Bearded Collie', 0),
+		('Beauceron', 0),
+		('Bedlington Terrier', 0),
+		('Belgian Laekenois', 0),
+		('Belgian Malinois', 0),
+		('Belgian Sheepdog', 0),
+		('Belgian Tervuren', 0),
+		('Bergamasco Sheepdog', 0),
+		('Berger Picard', 0),
+		('Bernese Mountain Dog', 0)
+
+INSERT INTO species (species)
+VALUES	('Dog'),
+		('Cat');
 
 INSERT INTO pets (user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
-VALUES (0, 'Jabba', 13, 'mutt', 'dog', 0, 1, 0, 1, 1, 0, 'loves to eat');
+VALUES	(0, 'Jabba', 13, 0, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
+		(1, 'Loose Seal AKA Bby Ppy Destructo', 3, 0, 0, 0, 0, 0, 0, 0, 0, 'destroys everything');
 
 INSERT INTO posts (user_id, post_title, post_content)
-VALUES	(0, 'Jabba needs a snack- I mean friend', 'Looking for a friend for my lovely little Jabba')
+VALUES	(0, 'Jabba needs a snack- I mean friend', 'Looking for a friend for my lovely little Jabba');
+
+INSERT INTO playdate_statuses (playdate_status_id, playdate_status)
+VALUES	(0, 'Pending'),
+		(1, 'Approved'),
+		(2, 'Denied'),
+		(3, 'Canceled'),
+		(4, 'Finished');
+
 
 INSERT INTO playdates (meetingTime, playdate_address, playdate_city, playdate_state, playdate_zip)
-VALUES ('2021-12-08 10:30:00', '888 Galaxy Drive', 0, 0, 0)
+VALUES ('2021-12-08 10:30:00', '888 Galaxy Drive', 0, 0, 0);
 
 GO
