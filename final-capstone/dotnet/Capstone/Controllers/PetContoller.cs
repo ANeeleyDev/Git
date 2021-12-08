@@ -11,22 +11,21 @@ namespace Capstone.Controllers
 {
     [Route("/pets/")]
     [ApiController]
+    [Authorize]
     public class PetController : ControllerBase
     {
-        //Properties
+        //Properties:
         private readonly IPetDao petDao;
 
-        //Constructor
+        //---------------------------------------------------------------------------------------------------
+        //Constructor:
         public PetController(IPetDao _petDao)
         {
             petDao = _petDao;
         }
 
-        [HttpPost("register")]
-        public Pet RegisterPet(Pet petToSave)
-        {
-            return petDao.RegisterPet(petToSave);
-        }
+        //---------------------------------------------------------------------------------------------------
+        //Methods:
 
         [HttpGet("{petId}")]
         public Pet GetPetByPetId(int petId)
@@ -51,21 +50,66 @@ namespace Capstone.Controllers
             return petDao.GetPetsByUserId(userId);
         }
 
-        //View MY pets (user id taken from token)
-        [HttpGet("mypets")]
-        public List<Pet> GetPetsByLoggedInUser(int userId)
-        {
-            string userIdString = User.FindFirst("sub")?.Value;
-            userId = Convert.ToInt32(userIdString);
-
-            return petDao.GetPetsByLoggedInUser(userId);
-        }
-
         [HttpPut("{petId}")]
         public bool UpdatePet(Pet updatedPet)
         {
             return petDao.UpdatePet(updatedPet);
         }
+
+        [HttpGet("recent")]
+        [AllowAnonymous]
+        public List<Pet> GetLast5Pets()
+        {
+            return petDao.GetLast5Pets();
+        }
+
+
+
+        //-----------------LOGGED IN USER METHODS BELOW----------------------
+
+        //Logged in users can register pets to DB
+        [HttpPost("register")]
+        [Authorize]
+        public Pet RegisterPet(Pet petToSave)
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            petToSave.userId = Convert.ToInt32(userIdString);
+
+            return petDao.RegisterPet(petToSave);
+        }
+
+        //Logged in user: View THEIR pets (user id taken from token)
+        [HttpGet("mypets")]
+        [Authorize]
+        public List<Pet> GetLoggedInUserPets(int userId)
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return petDao.GetLoggedInUserPets(userId);
+        }
+
+        //Logged in user: Delete one of their pets (user id taken from token)
+        [HttpDelete("mypets/{petId}")]
+        [Authorize]
+        public bool DeleteLoggedInUserPet(int petId, int userId)
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return petDao.DeleteLoggedInUserPet(petId, userId);
+        }
+
+        [HttpPut("mypets/{petId}")]
+        [Authorize]
+        public bool UpdateLoggedInUserPet(Pet updatedPet, int userId)
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return petDao.UpdateLoggedInUserPet(updatedPet, userId);
+        }
+
     }
 
 
