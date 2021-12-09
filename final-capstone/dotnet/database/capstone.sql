@@ -51,9 +51,9 @@ CREATE TABLE users (
 	city int NOT NULL,
 	state int NOT NULL,
 	zip int NOT NULL,
-	CONSTRAINT FK_profile_city FOREIGN KEY (city) REFERENCES cities (city_id),
-	CONSTRAINT FK_profile_state FOREIGN KEY (state) REFERENCES states (state_id),
-	CONSTRAINT FK_profile_zip FOREIGN KEY (zip) REFERENCES zips (zip_id),
+	CONSTRAINT FK_user_city FOREIGN KEY (city) REFERENCES cities (city_id),
+	CONSTRAINT FK_user_state FOREIGN KEY (state) REFERENCES states (state_id),
+	CONSTRAINT FK_user_zip FOREIGN KEY (zip) REFERENCES zips (zip_id),
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 )
 
@@ -123,17 +123,6 @@ CREATE TABLE playdates (
 
 
 --populate default data
-INSERT INTO users (username, password_hash, salt, user_role, first_name, last_name,	email_address, phone_number, street_address, city, state, zip)
-VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'Solo', 'hsolo@gmail.com', '7684729290', '111 Smugglers Way', 0, 34, 0, 1),
-		('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Tyson', 'Thorp', 'faketyson@gmail.com', '7684729291', '112 News Crew Drive', 0, 34, 0, 1),
-		('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Annie', 'Cochran', 'fakeannie@gmail.com', '7684729292', '777 Consultant Street', 0, 34, 0, 1),
-		('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Tiffany', 'McGillvary', 'faketiff@gmail.com', '7684729293', '8909 Stalk Market Road', 0, 34, 0, 1),
-		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Kevin', 'O''Leary', 'fakekevin@gmail.com', '7684729294', '9890 Columbus Way', 0, 34, 0, 1),
-		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Robert', 'Kaiser', 'fakerob@gmail.com', '7684729295', '7564 Oscar Wilde Boulevard', 0, 34, 0, 1),
-		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Amanda', 'Neeley', 'fakeamanda@gmail.com', '7684729296', '5555 Boss Lady Road', 0, 34, 0, 1),
-		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Ashley', 'Vorpe', 'fakeashley@gmail.com', '7684729297', '6754 Nerd Avenue', 0, 34, 0, 1),
-		('mod', '', '', '', '', '', '', '', '', 0, 34, 0, 1),
-		('mod', '', '', '', '', '', '', '', '', 0, 34, 0, 1);
 
 INSERT INTO states (state_id, state_name, state_abbreviation)
 VALUES	(0, 'Alabama', 'AL'),
@@ -201,6 +190,9 @@ VALUES	(0, 45249),
 		(3, 45222),
 		(4, 45327);
 
+INSERT INTO species (species)
+VALUES	('Dog');
+
 INSERT INTO breeds (breed, species)
 VALUES	('Affenpinscher', 0),
 		('Afghan Hound', 0),
@@ -244,8 +236,17 @@ VALUES	('Affenpinscher', 0),
 		('Bichon Frise', 0),
 		('Biewer Terrier', 0);
 
-INSERT INTO species (species)
-VALUES	('Dog');
+INSERT INTO users (username, password_hash, salt, user_role, first_name, last_name,	email_address, phone_number, street_address, city, state, zip)
+VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'Solo', 'hsolo@gmail.com', '7684729290', '111 Smugglers Way', 0, 34, 0),
+		('user1','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Tyson', 'Thorp', 'faketyson@gmail.com', '7684729291', '112 News Crew Drive', 0, 34, 0),
+		('user2','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Annie', 'Cochran', 'fakeannie@gmail.com', '7684729292', '777 Consultant Street', 0, 34, 0),
+		('user3','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Tiffany', 'McGillvary', 'faketiff@gmail.com', '7684729293', '8909 Stalk Market Road', 0, 34, 0),
+		('admin1','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Kevin', 'O''Leary', 'fakekevin@gmail.com', '7684729294', '9890 Columbus Way', 0, 34, 0),
+		('admin2','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Robert', 'Kaiser', 'fakerob@gmail.com', '7684729295', '7564 Oscar Wilde Boulevard', 0, 34, 0),
+		('admin3','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Amanda', 'Neeley', 'fakeamanda@gmail.com', '7684729296', '5555 Boss Lady Road', 0, 34, 0),
+		('admin4','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Ashley', 'Vorpe', 'fakeashley@gmail.com', '7684729297', '6754 Nerd Avenue', 0, 34, 0),
+		('mod1', 'YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=', 'mod', 'Joe', 'Riggs', 'fakejoe@gmail.com', '7684729298', '9483 Bobblehead Drive', 0, 34, 0),
+		('mod2', 'YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=', 'mod', 'Monika', 'Royal-Fischer', 'fakemonika@gmail.com', '7684729299', '7493 Leadership Court', 0, 34, 0);
 
 INSERT INTO pets (user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
 VALUES	(0, 'Jabba', 13, 0, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
