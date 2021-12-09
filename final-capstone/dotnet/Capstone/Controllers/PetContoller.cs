@@ -17,44 +17,17 @@ namespace Capstone.Controllers
         //Properties:
         private readonly IPetDao petDao;
 
-        //---------------------------------------------------------------------------------------------------
+
+
         //Constructor:
         public PetController(IPetDao _petDao)
         {
             petDao = _petDao;
         }
 
-        //---------------------------------------------------------------------------------------------------
-        //Methods:
 
-        [HttpGet("{petId}")]
-        public Pet GetPetByPetId(int petId)
-        {
-            return petDao.GetPet(petId);
-        }
 
-        
-        [HttpDelete("{petId}")]
-
-        public bool DeletePet(int petId)
-        {
-            return petDao.DeletePet(petId);
-        }
-
-        //View any user's pets
-
-        [HttpGet("user/{userId}")]
-
-        public List<Pet> GetPetsByUserId(int userId)
-        {
-            return petDao.GetPetsByUserId(userId);
-        }
-
-        [HttpPut("{petId}")]
-        public bool UpdatePet(Pet updatedPet)
-        {
-            return petDao.UpdatePet(updatedPet);
-        }
+        //Misc methods:
 
         [HttpGet("recent")]
         [AllowAnonymous]
@@ -64,13 +37,29 @@ namespace Capstone.Controllers
         }
 
 
+        //Anonymous user methods
 
-        //-----------------LOGGED IN USER METHODS BELOW----------------------
+        [HttpGet("{petId}")]
+        [AllowAnonymous]
+        public Pet GetPetByPetId(int petId) //View any pet
+        {
+            return petDao.GetPet(petId);
+        }
 
-        //Logged in users can register pets to DB
-        [HttpPost("register")]
+        [HttpGet("user/{userId}")]
+        [AllowAnonymous]
+        public List<Pet> GetPetsByUserId(int userId) //View any pet of a specified user
+        {
+            return petDao.GetPetsByUserId(userId);
+        }
+
+
+
+        //Registered user methods
+
+        [HttpPost("mypets/register")]
         [Authorize]
-        public Pet RegisterPet(Pet petToSave)
+        public Pet RegisterPet(Pet petToSave) //Register their pet in system
         {
             string userIdString = User.FindFirst("sub")?.Value;
             petToSave.userId = Convert.ToInt32(userIdString);
@@ -78,10 +67,9 @@ namespace Capstone.Controllers
             return petDao.RegisterPet(petToSave);
         }
 
-        //Logged in user: View THEIR pets (user id taken from token)
         [HttpGet("mypets")]
         [Authorize]
-        public List<Pet> GetLoggedInUserPets(int userId)
+        public List<Pet> GetLoggedInUserPets(int userId) //View their pets
         {
             string userIdString = User.FindFirst("sub")?.Value;
             userId = Convert.ToInt32(userIdString);
@@ -89,10 +77,9 @@ namespace Capstone.Controllers
             return petDao.GetLoggedInUserPets(userId);
         }
 
-        //Logged in user: Delete one of their pets (user id taken from token)
         [HttpDelete("mypets/{petId}")]
         [Authorize]
-        public bool DeleteLoggedInUserPet(int petId, int userId)
+        public bool DeleteLoggedInUserPet(int petId, int userId) //Delete their pet
         {
             string userIdString = User.FindFirst("sub")?.Value;
             userId = Convert.ToInt32(userIdString);
@@ -102,12 +89,29 @@ namespace Capstone.Controllers
 
         [HttpPut("mypets/{petId}")]
         [Authorize]
-        public bool UpdateLoggedInUserPet(Pet updatedPet, int userId, int petId)
+        public bool UpdateLoggedInUserPet(Pet updatedPet, int userId, int petId) //Update their pet
         {
             string userIdString = User.FindFirst("sub")?.Value;
             userId = Convert.ToInt32(userIdString);
 
             return petDao.UpdateLoggedInUserPet(updatedPet, userId, petId);
+        }
+
+
+        //Admin methods
+
+        [HttpDelete("admin/{petId}")]
+        [Authorize(Roles = "admin")]
+        public bool DeletePet(int petId) //Can delete any pet
+        {
+            return petDao.DeletePet(petId);
+        }
+
+        [HttpPut("admin/{petId}")]
+        [Authorize(Roles = "admin")] 
+        public bool UpdatePet(Pet updatedPet, int petId) //Can update any pet
+        {
+            return petDao.UpdatePet(updatedPet, petId);
         }
 
     }
