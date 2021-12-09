@@ -110,7 +110,7 @@ CREATE TABLE playdates (
 	playdate_id int IDENTITY(0,1) NOT NULL,
 	playdate_posted_user_id int NOT NULL,
 	playdate_requested_user_id int NULL,
-	meetingTime DATETIME NOT NULL,
+	meeting_time DATETIME NOT NULL,
 	playdate_address varchar(50) NOT NULL,
 	playdate_city int NOT NULL,
 	playdate_state int NOT NULL,
@@ -267,7 +267,7 @@ VALUES	(0, 'Pending'),
 		(4, 'Finished');
 
 
-INSERT INTO playdates (playdate_posted_user_id, playdate_requested_user_id, meetingTime, playdate_address, playdate_city, playdate_state, playdate_zip, playdate_status_id)
+INSERT INTO playdates (playdate_posted_user_id, playdate_requested_user_id, meeting_time, playdate_address, playdate_city, playdate_state, playdate_zip, playdate_status_id)
 VALUES (0, 1, '2021-12-08 10:30:00', '888 Galaxy Drive', 0, 0, 0, 4);
 
 GO
