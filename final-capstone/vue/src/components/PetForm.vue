@@ -99,10 +99,12 @@
 import petService from "@/services/PetService";
 export default {
   name: "pet-form",
+  props: ["petId"],
+  
   data() {
     return {
       pet: {        
-        
+        petId:"",
         petName: "",
         age: "",
         species: "",
@@ -115,7 +117,25 @@ export default {
         mischievous: false,
         independent: false,
       },
+      editPetId: this.$route.params.petId
     };
+  },
+  created() {
+    if (this.$route.params.petId != undefined) {
+      petService
+        .getPet(this.$route.params.petId)
+        .then(response => {
+          this.pet = response.data;
+        })
+        .catch(error => {
+          if (error.response && error.response.status === 404) {
+            alert(
+              "Card not available. This card may have been deleted or you have entered an invalid card ID."
+            );
+            this.$router.push("/");
+          }
+        });
+    }
   },
   methods: {
     submitForm() {
@@ -134,7 +154,7 @@ export default {
         independent: this.pet.independent,
       };
 
-    //   if (this.pet.petID === "") {
+      if (this.editPetId === undefined) {
         //add here
         petService
           .addPet(newPet)
@@ -146,20 +166,23 @@ export default {
           .catch((error) => {
             this.handleErrorResponse(error, "adding");
           });
-    //   } else {
-    //     // update else
+      } else {
+        // update else
 
-    //     petService
-    //       .updatePet(newPet)
-    //       .then((response) => {
-    //         if (response.status === 200) {
-    //           this.$router.push(`/petlist`);
-    //         }
-    //       })
-    //       .catch((error) => {
-    //         this.handleErrorResponse(error, "updating");
-    //       });
-    //   }
+        newPet.petId = this.editPetId;
+
+        petService
+
+          .updatePet(this.editPetId, newPet)
+          .then((response) => {
+            if (response.status === 200) {
+              this.$router.push(`/petlist`);
+            }
+          })
+          .catch((error) => {
+            this.handleErrorResponse(error, "updating");
+          });
+      }
     },
     cancelForm() {
       this.$router.push(`/petlist`);

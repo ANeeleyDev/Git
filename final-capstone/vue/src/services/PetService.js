@@ -6,8 +6,8 @@ export default {
     //return all pets for user
 
     
-    getPetList(userId) {
-        return axios.get(`/pets/user/${userId}`)
+    getPetList() {
+        return axios.get(`/pets/mypets`)
 
     },
 
@@ -25,12 +25,12 @@ export default {
 
     //edit pet detail
 
-    // updatePet(petToEdit){
-    //     return axios.put(``, petToEdit)
-    // }
+    updatePet(petId, petToEdit){
+        return axios.put(`/pets/mypets/${petId}`, petToEdit)
+    },
 
     //delete pet
     deletePet(petId) {
-        return axios.delete(`/pets/${petId}`)
+        return axios.delete(`/pets/mypets/${petId}`)
     }
 }

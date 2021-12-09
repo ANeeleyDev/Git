@@ -28,7 +28,7 @@ namespace Capstone.DAO
 
         public bool DeleteLoggedInUserPet(int petId, int userId);
 
-        public bool UpdateLoggedInUserPet(Pet updatedPet, int userId);
+        public bool UpdateLoggedInUserPet(Pet updatedPet, int userId, int petId);
 
 
     }
