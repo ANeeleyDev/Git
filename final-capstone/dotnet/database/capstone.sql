@@ -102,8 +102,10 @@ CREATE TABLE posts (
 
 CREATE TABLE playdate_statuses (
 	playdate_status_id int NOT NULL,
+	playdate_posted_user int NOT NULL,
 	playdate_status varchar(50) NOT NULL
-	CONSTRAINT PK_playdate_status PRIMARY KEY (playdate_status_id)
+	CONSTRAINT PK_playdate_status PRIMARY KEY (playdate_status_id),
+	CONSTRAINT FK_playdate_posted_user FOREIGN KEY (playdate_posted_user) REFERENCES users (user_id)
 )
 
 CREATE TABLE playdates (
