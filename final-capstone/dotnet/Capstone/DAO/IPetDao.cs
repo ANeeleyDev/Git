@@ -8,28 +8,31 @@ namespace Capstone.DAO
 {
     public interface IPetDao
     {
-        public Pet GetPet(int petId);
-
-        public bool DeletePet(int petId);
-
-        public List<Pet> GetPetsByUserId(int userId);
-
-        public bool UpdatePet(Pet updatedPet);
-
+        //Misc methods
         public List<Pet> GetLast5Pets();
 
 
 
+        //Anonymous user methods
+        public Pet GetPet(int petId); //Anonymous users can view any pet
+
+        public List<Pet> GetPetsByUserId(int userId); //Anonymous users can view any pet of a specified user
 
 
-        public Pet RegisterPet(Pet newPet);
 
-        public List<Pet> GetLoggedInUserPets(int userId);
+        //Registered user methods
+        public Pet RegisterPet(Pet newPet); //Registered users can register their pet in system
 
-        public bool DeleteLoggedInUserPet(int petId, int userId);
+        public List<Pet> GetLoggedInUserPets(int userId); //Registered users can view their pets
 
-        public bool UpdateLoggedInUserPet(Pet updatedPet, int userId, int petId);
+        public bool DeleteLoggedInUserPet(int petId, int userId); //Registered users can delete any of their pets
+
+        public bool UpdateLoggedInUserPet(Pet updatedPet, int userId, int petId); //Registered users can update any of their pets
 
 
+
+        //Admin methods
+        public bool DeletePet(int petId); //admins can delete any pet
+        public bool UpdatePet(Pet updatedPet, int petId); //admins can update any pet
     }
 }
