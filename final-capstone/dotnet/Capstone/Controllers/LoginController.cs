@@ -2,11 +2,13 @@
 using Capstone.DAO;
 using Capstone.Models;
 using Capstone.Security;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Capstone.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class LoginController : ControllerBase
     {
         private readonly ITokenGenerator tokenGenerator;
@@ -56,7 +58,7 @@ namespace Capstone.Controllers
                 return Conflict(new { message = "Username already taken. Please choose a different username." });
             }
 
-            User user = userDao.AddUser(userParam.Username, userParam.Password, userParam.Role);
+            User user = userDao.AddUser(userParam.Username, userParam.Password, userParam.Role, userParam.FirstName, userParam.LastName, userParam.EmailAddress, userParam.PhoneNumber, userParam.StreetAddress, userParam.City, userParam.State, userParam.Zip);
             if (user != null)
             {
                 result = Created(user.Username, null); //values aren't read on client
@@ -67,6 +69,13 @@ namespace Capstone.Controllers
             }
 
             return result;
+        }
+
+        [HttpPut("/admin/{userId}")]
+        [Authorize(Roles = "admin")]
+        public bool UpdateUserRoleUpdateUserRole(User updatedUser, int userId) //Can change user's role (user, mod, or admin)
+        {
+            return userDao.UpdateUserRole(updatedUser, userId);
         }
     }
 }

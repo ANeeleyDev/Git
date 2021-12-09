@@ -13,6 +13,7 @@ namespace Capstone.DAO
         public List<Playdate> GetPlaydatesByUserId(int userId); //Anonymous users can view any playdate of a specified user
 
 
+
         //Registered user methods
         public Playdate RegisterPlaydate(Playdate newPlaydate); //Registered users can register their playdate in system
         public List<Playdate> GetLoggedInUserPlaydates(int userId); //Registered users can view their playdates
