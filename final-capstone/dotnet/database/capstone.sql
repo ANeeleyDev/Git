@@ -45,7 +45,7 @@ CREATE TABLE users (
 	user_role varchar(50) NOT NULL,
 	first_name varchar(50) NOT NULL,
 	last_name varchar(50) NOT NULL,
-	email_address varchar(50) NOT NULL,
+	email_address varchar(50) NULL,
 	phone_number varchar(10) NOT NULL,
 	street_address varchar(50) NOT NULL,
 	city int NOT NULL,
