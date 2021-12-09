@@ -102,14 +102,14 @@ CREATE TABLE posts (
 
 CREATE TABLE playdate_statuses (
 	playdate_status_id int NOT NULL,
-	playdate_posted_user_id int NOT NULL,
 	playdate_status varchar(50) NOT NULL
-	CONSTRAINT PK_playdate_status PRIMARY KEY (playdate_status_id),
-	CONSTRAINT FK_playdate_posted_user_id FOREIGN KEY (playdate_posted_user_id) REFERENCES users (user_id)
+	CONSTRAINT PK_playdate_status PRIMARY KEY (playdate_status_id)
 )
 
 CREATE TABLE playdates (
 	playdate_id int IDENTITY(0,1) NOT NULL,
+	playdate_posted_user_id int NOT NULL,
+	playdate_requested_user_id int NULL,
 	meetingTime DATETIME NOT NULL,
 	playdate_address varchar(50) NOT NULL,
 	playdate_city int NOT NULL,
@@ -120,7 +120,9 @@ CREATE TABLE playdates (
 	CONSTRAINT FK_playdate_city FOREIGN KEY (playdate_city) REFERENCES cities (city_id),
 	CONSTRAINT FK_playdate_state FOREIGN KEY (playdate_state) REFERENCES states (state_id),
 	CONSTRAINT FK_playdate_zip FOREIGN KEY (playdate_zip) REFERENCES zips (zip_id),
-	CONSTRAINT FK_playdate_status FOREIGN KEY (playdate_status_id) REFERENCES playdate_statuses (playdate_status_id)
+	CONSTRAINT FK_playdate_status FOREIGN KEY (playdate_status_id) REFERENCES playdate_statuses (playdate_status_id),
+	CONSTRAINT FK_playdate_posted_user_id FOREIGN KEY (playdate_posted_user_id) REFERENCES users (user_id),
+	CONSTRAINT FK_playdate_requested_user_id FOREIGN KEY (playdate_requested_user_id) REFERENCES users (user_id)
 )
 
 
@@ -265,7 +267,7 @@ VALUES	(0, 'Pending'),
 		(4, 'Finished');
 
 
-INSERT INTO playdates (meetingTime, playdate_address, playdate_city, playdate_state, playdate_zip, playdate_status_id)
-VALUES ('2021-12-08 10:30:00', '888 Galaxy Drive', 0, 0, 0, 4);
+INSERT INTO playdates (playdate_posted_user_id, playdate_requested_user_id, meetingTime, playdate_address, playdate_city, playdate_state, playdate_zip, playdate_status_id)
+VALUES (0, 1, '2021-12-08 10:30:00', '888 Galaxy Drive', 0, 0, 0, 4);
 
 GO
