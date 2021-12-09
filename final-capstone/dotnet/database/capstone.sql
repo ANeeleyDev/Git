@@ -131,7 +131,9 @@ VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'So
 		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Kevin', 'O''Leary', 'fakekevin@gmail.com', '7684729294', '9890 Columbus Way', 0, 34, 0, 1),
 		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Robert', 'Kaiser', 'fakerob@gmail.com', '7684729295', '7564 Oscar Wilde Boulevard', 0, 34, 0, 1),
 		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Amanda', 'Neeley', 'fakeamanda@gmail.com', '7684729296', '5555 Boss Lady Road', 0, 34, 0, 1),
-		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Ashley', 'Vorpe', 'fakeashley@gmail.com', '7684729297', '6754 Nerd Avenue', 0, 34, 0, 1);
+		('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Ashley', 'Vorpe', 'fakeashley@gmail.com', '7684729297', '6754 Nerd Avenue', 0, 34, 0, 1),
+		('mod', '', '', '', '', '', '', '', '', 0, 34, 0, 1),
+		('mod', '', '', '', '', '', '', '', '', 0, 34, 0, 1);
 
 INSERT INTO states (state_id, state_name, state_abbreviation)
 VALUES	(0, 'Alabama', 'AL'),
@@ -238,11 +240,12 @@ VALUES	('Affenpinscher', 0),
 		('Belgian Tervuren', 0),
 		('Bergamasco Sheepdog', 0),
 		('Berger Picard', 0),
-		('Bernese Mountain Dog', 0)
+		('Bernese Mountain Dog', 0),
+		('Bichon Frise', 0),
+		('Biewer Terrier', 0);
 
 INSERT INTO species (species)
-VALUES	('Dog'),
-		('Cat');
+VALUES	('Dog');
 
 INSERT INTO pets (user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
 VALUES	(0, 'Jabba', 13, 0, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
@@ -259,7 +262,7 @@ VALUES	(0, 'Pending'),
 		(4, 'Finished');
 
 
-INSERT INTO playdates (meetingTime, playdate_address, playdate_city, playdate_state, playdate_zip)
-VALUES ('2021-12-08 10:30:00', '888 Galaxy Drive', 0, 0, 0);
+INSERT INTO playdates (meetingTime, playdate_address, playdate_city, playdate_state, playdate_zip, playdate_status_id)
+VALUES ('2021-12-08 10:30:00', '888 Galaxy Drive', 0, 0, 0, 4);
 
 GO
