@@ -102,12 +102,12 @@ namespace Capstone.Controllers
 
         [HttpPut("mypets/{petId}")]
         [Authorize]
-        public bool UpdateLoggedInUserPet(Pet updatedPet, int userId)
+        public bool UpdateLoggedInUserPet(Pet updatedPet, int userId, int petId)
         {
             string userIdString = User.FindFirst("sub")?.Value;
             userId = Convert.ToInt32(userIdString);
 
-            return petDao.UpdateLoggedInUserPet(updatedPet, userId);
+            return petDao.UpdateLoggedInUserPet(updatedPet, userId, petId);
         }
 
     }

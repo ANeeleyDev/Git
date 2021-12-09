@@ -16,7 +16,7 @@ namespace Capstone.DAO
             connectionString = dbConnectionString;
         }
 
-        public Pet GetPet(int petId) //returning a single pet based on the unique pet 
+        public Pet GetPet(int petId) //returning a single pet based on the unique petId
         {
             Pet pet = null;
 
@@ -245,7 +245,7 @@ namespace Capstone.DAO
             }
         }
 
-        public bool UpdateLoggedInUserPet(Pet updatedPet, int userId)
+        public bool UpdateLoggedInUserPet(Pet updatedPet, int userId, int petId)
         {
             try
             {
@@ -254,7 +254,7 @@ namespace Capstone.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand("UPDATE pets SET pet_name = @pet_name, breed = @breed, species = @species, age = @age, other_comments = @other_comments, " +
-                        "playful = @playful, nervous = @nervous, confident = @confident, shy = @shy, mischievous = @mischievous, independent = @independent WHERE user_id = @user_id", conn);
+                        "playful = @playful, nervous = @nervous, confident = @confident, shy = @shy, mischievous = @mischievous, independent = @independent WHERE user_id = @user_id AND pet_id = @pet_id", conn);
                     cmd.Parameters.AddWithValue("@pet_name", updatedPet.petName);
                     cmd.Parameters.AddWithValue("@breed", updatedPet.breed);
                     cmd.Parameters.AddWithValue("@species", updatedPet.species);
@@ -267,6 +267,7 @@ namespace Capstone.DAO
                     cmd.Parameters.AddWithValue("@mischievous", updatedPet.mischievous);
                     cmd.Parameters.AddWithValue("@independent", updatedPet.independent);
                     cmd.Parameters.AddWithValue("@user_id", updatedPet.userId);
+                    cmd.Parameters.AddWithValue("@pet_id", updatedPet.petId);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
 
