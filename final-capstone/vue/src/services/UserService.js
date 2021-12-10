@@ -5,7 +5,7 @@ export default {
 
     //return user profile info
 
-  userDetails(userId) {
+  displayUser(userId) {
     return axios.get(`/user/${userId}`)
   },
   // logged in user edit user profile
@@ -16,7 +16,7 @@ export default {
 
   // logged in user delete profile 
 
-  deleteUserProfile(userId){
+  deleteUser(userId){
     return axios.delete(`/user/delete/${userId}`)
   },
 
