@@ -2,6 +2,7 @@ import axios from 'axios';
 
 
 export default {
+    
 
     //return all pets for user
 
@@ -19,7 +20,7 @@ export default {
 //register new pet
     addPet(petToSave) {
         console.log(petToSave);
-        return axios.post(`/pets/register`, petToSave)
+        return axios.post(`/pets/mypets/register`, petToSave)
         
     },
 
@@ -32,5 +33,12 @@ export default {
     //delete pet
     deletePet(petId) {
         return axios.delete(`/pets/mypets/${petId}`)
-    }
+    },
+
+    //show five most recently added pets
+
+    getTopFivePets() {
+        return axios.get(`/pets/recent`)
+    },
+
 }

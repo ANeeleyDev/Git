@@ -23,6 +23,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Authenticate(LoginUser userParam)
         {
             // Default to bad username/password message
@@ -47,7 +48,9 @@ namespace Capstone.Controllers
             return result;
         }
 
+
         [HttpPost("/register")]
+        [AllowAnonymous]
         public IActionResult Register(RegisterUser userParam)
         {
             IActionResult result;

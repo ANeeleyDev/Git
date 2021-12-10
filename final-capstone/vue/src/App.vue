@@ -21,9 +21,13 @@
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''"><v-btn rounded color="primary" dark> logout </v-btn></router-link>
       
     </v-app-bar>
-
+   
     <v-main>
+      <v-row>
+        <v-col>
       <router-view />
+      </v-col>
+      </v-row>
     </v-main>
   </v-app>
 </template>

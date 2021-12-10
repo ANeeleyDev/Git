@@ -1,6 +1,46 @@
 <template>
   <div id="register" class="text-center">
-    <form class="form-register" @submit.prevent="register">
+    <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
+     <v-form v-model="valid">
+    <v-container>
+      <v-row>
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-text-field
+            v-model="user.username"            
+            :counter="10"
+            label="Username"
+            required
+          ></v-text-field>
+        </v-col>
+
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-text-field
+            v-model="user.password"           
+            label="Password"
+            required
+          ></v-text-field>
+        </v-col>
+
+        <v-col
+          cols="12"
+          md="4"
+        >
+          <v-text-field
+            v-model="user.confirmPassword"            
+            label="Confirm Password"
+            required
+          ></v-text-field>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-form>
+    <!-- <form class="form-register" @submit.prevent="register">
       <h1 class="h3 mb-3 font-weight-normal">Create Account</h1>
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -36,7 +76,7 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
-    </form>
+    </form> -->
   </div>
 </template>
 

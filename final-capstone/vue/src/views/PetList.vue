@@ -2,16 +2,16 @@
   <div>
       <router-link v-bind:to="{name:'add-pet'}">Add Pet</router-link>
       <div v-for="pet in pets" v-bind:key="pet.petId">
-          <pet-detail v-bind:pet = "pet" />
+          <pet-card v-bind:pet = "pet" />
       </div>
   </div>
 </template>
 
 <script>
 import petService from '@/services/PetService';
-import PetDetail from '../components/PetDetail.vue';
+import PetCard from '../components/PetCard.vue';
 export default {
-  components: { PetDetail },
+  components: { PetCard },
     name: 'petList',
    
     data(){
