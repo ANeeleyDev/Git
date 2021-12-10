@@ -278,10 +278,11 @@ VALUES	(1, 0, 'Absolutely not, this is a ploy to have Jabba eat our pets! Rude!'
 
 INSERT INTO playdate_statuses (playdate_status_id, playdate_status)
 VALUES	(0, 'Pending'),
-		(1, 'Approved'),
-		(2, 'Denied'),
-		(3, 'Canceled'),
-		(4, 'Finished');
+		(1, 'Requested'),
+		(2, 'Approved'),
+		(3, 'Denied'),
+		(4, 'Canceled'),
+		(5, 'Finished');
 
 
 INSERT INTO playdates (playdate_posted_user_id, playdate_requested_user_id, meeting_time, playdate_address, playdate_city, playdate_state, playdate_zip, playdate_status_id)
