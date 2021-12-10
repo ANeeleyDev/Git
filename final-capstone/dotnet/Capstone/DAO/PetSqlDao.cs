@@ -214,7 +214,8 @@ namespace Capstone.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand("SELECT pet_id, user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, " +
-                                                    "independent, other_comments FROM pets " +
+                                                    "independent, other_comments " +
+                                                    "FROM pets " +
                                                     "WHERE user_id = @user_id", conn);
                     cmd.Parameters.AddWithValue("@user_id", userId);
 

@@ -38,7 +38,7 @@ namespace Capstone.Controllers
 
         [HttpGet("user/{userId}")]
         [AllowAnonymous]
-        public List<Playdate> GetPlaydatesByUserId(int userId) //View any playdate of a specified user
+        public List<Playdate> GetPlaydatesByUserId(int userId) //View all playdates from a specified user
         {
             return playdateDao.GetPlaydatesByUserId(userId);
         }
@@ -78,7 +78,7 @@ namespace Capstone.Controllers
 
         [HttpPut("myplaydates/{playdateId}")] 
         [Authorize]
-        public bool UpdateLoggedInUserPet(Playdate updatedPlaydate, int userId, int playdateId) //Update their playdat
+        public bool UpdateLoggedInUserPlaydate(Playdate updatedPlaydate, int userId, int playdateId) //Update their playdat
         {
             string userIdString = User.FindFirst("sub")?.Value;
             userId = Convert.ToInt32(userIdString);

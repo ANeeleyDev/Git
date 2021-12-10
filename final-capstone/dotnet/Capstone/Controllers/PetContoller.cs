@@ -48,7 +48,7 @@ namespace Capstone.Controllers
 
         [HttpGet("user/{userId}")]
         [AllowAnonymous]
-        public List<Pet> GetPetsByUserId(int userId) //View any pet of a specified user
+        public List<Pet> GetPetsByUserId(int userId) //View all pets of a specified user
         {
             return petDao.GetPetsByUserId(userId);
         }
