@@ -18,16 +18,14 @@
       <router-link v-bind:to="{ name: 'home' }">
         <v-btn rounded color="primary" dark> Home </v-btn>
       </router-link>
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''"><v-btn rounded color="primary" dark> logout </v-btn></router-link>
-      
+      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''"><v-btn rounded color="primary" dark> Logout </v-btn></router-link>
+      <router-link v-bind:to="{ name: 'login' }" v-else><v-btn rounded color="primary" dark> Login </v-btn></router-link>
     </v-app-bar>
    
     <v-main>
-      <v-row>
-        <v-col>
+      
       <router-view />
-      </v-col>
-      </v-row>
+     
     </v-main>
   </v-app>
 </template>

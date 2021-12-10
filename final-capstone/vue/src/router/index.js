@@ -8,6 +8,7 @@ import PetList from '../views/PetList.vue'
 import store from '../store/index'
 import AddPet from '../views/AddPet.vue'
 import EditPet from '../views/EditPet.vue'
+import WelcomePage from '../views/WelcomePage.vue'
 
 Vue.use(Router)
 
@@ -30,6 +31,14 @@ const router = new Router({
       component: Home,
       meta: {
         requiresAuth: true
+      }
+    },
+    {
+      path: '/welcomePage',
+      name: 'welcomePage',
+      component: WelcomePage,
+      meta: {
+        requiresAuth: false
       }
     },
     {
@@ -90,7 +99,7 @@ router.beforeEach((to, from, next) => {
 
   // If it does and they are not logged in, send the user to "/login"
   if (requiresAuth && store.state.token === '') {
-    next("/login");
+    next("/welcomePage");
   } else {
     // Else let them go to their next destination
     next();

@@ -1,6 +1,43 @@
 <template>
   <div>
-    <form v-on:submit.prevent="submitForm">
+    <v-form v-on:submit.prevent="submitForm">
+      <v-text-field
+        value="petName"
+        label="Name"
+        v-model="pet.petName"
+      ></v-text-field>
+      <v-text-field
+        value="age"
+        label="Age"
+        type="number"
+        v-model="pet.age"
+      ></v-text-field>
+      <v-select
+        :items="species"
+        label="Species"
+        v-model="pet.species"
+      ></v-select>
+      <v-select :items="breed" label="Breed" v-model="pet.breed"></v-select>
+      <v-textarea
+        name="input-7-1"
+        label="Other Comments"
+        value="What else should we know?."
+        v-model="pet.otherComments"
+      ></v-textarea>
+
+      <v-checkbox
+        label="Playful"
+        value="Playful"
+        v-model="pet.playful"
+      ></v-checkbox>
+      <v-checkbox
+        v-model="pet.mischievous"
+        label="Mischievous"
+        value="Mischievous"
+      ></v-checkbox>
+      <v-checkbox v-model="pet.shy" label="Shy" value="Shy"></v-checkbox>
+    </v-form>
+    <!-- <form v-on:submit.prevent="submitForm">
       <div>
         <label for="petName">Name:</label>
         <input id="petName" type="text" class="" v-model="pet.petName" />
@@ -91,7 +128,7 @@
       <button class="" v-on:click.prevent="cancelForm" type="cancel">
         Cancel
       </button>
-    </form>
+    </form> -->
   </div>
 </template>
 
@@ -100,11 +137,27 @@ import petService from "@/services/PetService";
 export default {
   name: "pet-form",
   props: ["petId"],
-  
+
   data() {
     return {
-      pet: {        
-        petId:"",
+      species: [
+        {
+          text: "Dog",
+          value: 0,
+        },
+        {
+          text: "Cat",
+          value: 1,
+        },
+      ],
+      breed: [
+        {
+          text: "Holder",
+          value: 0,
+        },
+      ],
+      pet: {
+        petId: "",
         petName: "",
         age: "",
         species: "",
@@ -117,17 +170,17 @@ export default {
         mischievous: false,
         independent: false,
       },
-      editPetId: this.$route.params.petId
+      editPetId: this.$route.params.petId,
     };
   },
   created() {
     if (this.$route.params.petId != undefined) {
       petService
         .getPet(this.$route.params.petId)
-        .then(response => {
+        .then((response) => {
           this.pet = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response && error.response.status === 404) {
             alert(
               "Card not available. This card may have been deleted or you have entered an invalid card ID."
@@ -190,17 +243,17 @@ export default {
     handleErrorResponse(error, verb) {
       if (error.response) {
         this.errorMsg =
-          "Error " + verb + " pet. Response received was '" +
+          "Error " +
+          verb +
+          " pet. Response received was '" +
           error.response.statusText +
           "'.";
       } else if (error.request) {
-        this.errorMsg =
-          "Error " + verb + " pet. Server could not be reached.";
+        this.errorMsg = "Error " + verb + " pet. Server could not be reached.";
       } else {
-        this.errorMsg =
-          "Error " + verb + " pet. Request could not be created.";
-      }   
-    }
+        this.errorMsg = "Error " + verb + " pet. Request could not be created.";
+      }
+    },
   },
 };
 </script>

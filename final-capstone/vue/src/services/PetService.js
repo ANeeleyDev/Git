@@ -19,7 +19,7 @@ export default {
 
 //register new pet
     addPet(petToSave) {
-        console.log(petToSave);
+        
         return axios.post(`/pets/mypets/register`, petToSave)
         
     },

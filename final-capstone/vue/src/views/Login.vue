@@ -1,9 +1,32 @@
 <template>
+  <v-card class="mx-auto" max-width="500">
+    <h2>Login</h2>
+    
 
-  <v-card>
+    <v-form @submit.prevent="login">
+      <v-text-field
+        value="John Doe"
+        label="username"
+        outlined
+        v-model="user.username"
+        required
+        autofocus
+      ></v-text-field>
+      <v-text-field
+        value="John Doe"
+        label="password"
+        outlined
+        v-model="user.password"
+        required
+      ></v-text-field>
+      <v-btn type="submit"> submit </v-btn>
+    </v-form>
+    <router-link :to="{ name: 'register' }"
+      ><div><v-text>Need an account?</v-text></div></router-link
+    >
+  </v-card>
 
-  
-  <div id="login" class="text-center">
+  <!-- <div id="login" class="text-center">
     <form class="form-signin" @submit.prevent="login">
       <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
       <div
@@ -44,7 +67,7 @@
         submit
       </v-btn>
     </form>
-  </div> </v-card>
+  </div>  -->
 </template>
 
 <script>
@@ -57,30 +80,30 @@ export default {
     return {
       user: {
         username: "",
-        password: ""
+        password: "",
       },
-      invalidCredentials: false
+      invalidCredentials: false,
     };
   },
   methods: {
     login() {
       authService
         .login(this.user)
-        .then(response => {
+        .then((response) => {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
             this.$router.push("/");
           }
         })
-        .catch(error => {
+        .catch((error) => {
           const response = error.response;
 
           if (response.status === 401) {
             this.invalidCredentials = true;
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
