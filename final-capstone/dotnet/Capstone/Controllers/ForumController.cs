@@ -112,5 +112,77 @@ namespace Capstone.Controllers
 
             return forumDao.GetLoggedInUserComments(userId);
         }
+
+        [HttpDelete("myposts/{postId}")]
+        [Authorize]
+        public bool DeleteLoggedInUserPost(int postId, int userId) //Delete their post
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return forumDao.DeleteLoggedInUserPost(postId, userId);
+        }
+
+        [HttpDelete("mycomments/{commentId}")]
+        [Authorize]
+        public bool DeleteLoggedInUserComment(int commentId, int userId) //Delete their comment
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return forumDao.DeleteLoggedInUserComment(commentId, userId);
+        }
+
+        [HttpPut("myposts/{postId}")]
+        [Authorize]
+        public bool UpdateLoggedInUserPost(Post updatedPost, int userId, int postId) //Update their post
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return forumDao.UpdateLoggedInUserPost(updatedPost, userId, postId);
+        }
+
+        [HttpPut("mycomments/{commentId}")]
+        [Authorize]
+        public bool UpdateLoggedInUserComment(Comment updatedComment, int userId, int commentId) //Update their comment
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return forumDao.UpdateLoggedInUserComment(updatedComment, userId, commentId);
+        }
+
+
+
+        //Admin & Mod methods
+
+        [HttpDelete("admin/posts/{postid}")]
+        [Authorize(Roles = "admin, mod")]
+        public bool DeletePost(int postId) //Can delete any post
+        {
+            return forumDao.DeletePost(postId);
+        }
+
+        [HttpDelete("admin/comments/{commentId}")]
+        [Authorize(Roles = "admin, mod")]
+        public bool DeleteComment(int commentId) //Can delete any comment
+        {
+            return forumDao.DeleteComment(commentId);
+        }
+
+        [HttpPut("admin/posts/{postId}")]
+        [Authorize(Roles = "admin, mod")]
+        public bool UpdatePost(Post updatedPost, int postId) //Can update any post
+        {
+            return forumDao.UpdatePost(updatedPost, postId);
+        }
+
+        [HttpPut("admin/comments/{commentId}")]
+        [Authorize(Roles = "admin, mod")]
+        public bool UpdateComment(Comment updatedComment, int commentId) //Can update any post
+        {
+            return forumDao.UpdateComment(updatedComment, commentId);
+        }
     }
 }

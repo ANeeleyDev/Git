@@ -32,7 +32,7 @@ namespace Capstone.DAO
 
 
         //Admin methods
-        public bool DeletePet(int petId); //admins can delete any pet
-        public bool UpdatePet(Pet updatedPet, int petId); //admins can update any pet
+        public bool DeletePet(int petId); //Admins can delete any pet
+        public bool UpdatePet(Pet updatedPet, int petId); //Admins can update any pet
     }
 }

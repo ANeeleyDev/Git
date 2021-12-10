@@ -26,5 +26,16 @@ namespace Capstone.DAO
         public Comment AddComment(Comment newComment); //Registered users can add a comment on a post on forum
         public List<Post> GetLoggedInUserPosts(int userId); //Registered users can view all their posts
         public List<Comment> GetLoggedInUserComments(int userId); //Registered users can view all their posts
+        public bool DeleteLoggedInUserPost(int postId, int userId); //Registered users can delete any of their posts
+        public bool DeleteLoggedInUserComment(int commentId, int userId); //Registered users can delete any of their comments
+        public bool UpdateLoggedInUserPost(Post updatedPost, int userId, int postId); //Registered users can update any of their posts
+        public bool UpdateLoggedInUserComment(Comment updatedComment, int userId, int commentId); //Registered users can update any of their comments
+
+
+        //Admin & Mod methods
+        public bool DeletePost(int postId); //Admins & Mods can delete any post
+        public bool DeleteComment(int commentId); //Admins & Mods can delete any comment
+        public bool UpdatePost(Post updatedpost, int postId); //Admins & Mods can update any post
+        public bool UpdateComment(Comment updatedComment, int commentId); //Admins & Mods can update any comment
     }
 }
