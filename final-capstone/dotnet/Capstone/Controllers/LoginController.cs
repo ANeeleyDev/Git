@@ -3,6 +3,7 @@ using Capstone.DAO;
 using Capstone.Models;
 using Capstone.Security;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace Capstone.Controllers
 {
@@ -74,9 +75,71 @@ namespace Capstone.Controllers
             return result;
         }
 
+
+        //Misc methods
+
+        [HttpGet("/user/{userId}")]
+        [AllowAnonymous]
+        public User DisplayUser(int userId) //Display user details
+        {
+            return userDao.DisplayUser(userId);
+        }
+
+
+
+        //Registered user methods
+
+        [HttpGet("/myprofile")]
+        [Authorize]
+        public User DisplayLoggedInUser(int userId) //View their profile
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return userDao.DisplayUser(userId);
+        }
+
+        [HttpDelete("/myprofile")]
+        [Authorize]
+        public bool DeleteLoggedInUser(int userId) //Delete their profile
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return userDao.DeleteUser(userId);
+        }
+
+        [HttpPut("/myprofile")]
+        [Authorize]
+        public bool UpdateLoggedInUser(User updatedUser, int userId) //Update their profile
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return userDao.UpdateUser(updatedUser, userId);
+        }
+
+
+
+        //Admin methods
+
+        [HttpDelete("/admin/{userId}")]
+        [Authorize(Roles = "admin")]
+        public bool DeleteUser(int userId) //Delete any profile
+        {
+            return userDao.DeleteUser(userId);
+        }
+
         [HttpPut("/admin/{userId}")]
         [Authorize(Roles = "admin")]
-        public bool UpdateUserRole(User updatedUser, int userId) //Can change user's role (user, mod, or admin)
+        public bool UpdateUser(User updatedUser, int userId) //Can change any user's profile
+        {
+            return userDao.UpdateUser(updatedUser, userId);
+        }
+
+        [HttpPut("/admin/{userId}/updaterole")]
+        [Authorize(Roles = "admin")]
+        public bool UpdateUserRole(User updatedUser, int userId) //Can change user's role to user, mod, or admin
         {
             return userDao.UpdateUserRole(updatedUser, userId);
         }
