@@ -270,10 +270,213 @@ namespace Capstone.DAO
             return allCommentsByUserId;
         }
 
+        public bool DeleteLoggedInUserPost(int postId, int userId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
 
+                    SqlCommand cmd = new SqlCommand("DELETE FROM posts " +
+                        "WHERE post_id = @post_id " +
+                        "AND user_id = @user_id", conn);
+                    cmd.Parameters.AddWithValue("@post_id", postId);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
 
+                    int rowsAffected = cmd.ExecuteNonQuery();
 
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
 
+                throw;
+            }
+        }
+
+        public bool DeleteLoggedInUserComment(int commentId, int userId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("DELETE FROM comments " +
+                        "WHERE comment_id = @comment_id " +
+                        "AND comment_user_id = @comment_user_id", conn);
+                    cmd.Parameters.AddWithValue("@comment_id", commentId);
+                    cmd.Parameters.AddWithValue("@comment_user_id", userId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+        }
+
+        public bool UpdateLoggedInUserPost(Post updatedPost, int userId, int postId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("UPDATE posts " +
+                        "SET post_title = @post_title, post_content = @post_content " +
+                        "WHERE user_id = @user_id AND post_id = @post_id", conn);
+                    cmd.Parameters.AddWithValue("@post_title", updatedPost.postTitle);
+                    cmd.Parameters.AddWithValue("@post_content", updatedPost.postContent);
+                    cmd.Parameters.AddWithValue("@user_id", updatedPost.userId);
+                    cmd.Parameters.AddWithValue("@post_id", updatedPost.postId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+        }
+
+        public bool UpdateLoggedInUserComment(Comment updatedComment, int userId, int commentId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("UPDATE comments " +
+                        "SET comment_content = @comment_content " +
+                        "WHERE comment_user_id = @comment_user_id AND comment_id = @comment_id", conn);
+                    cmd.Parameters.AddWithValue("@comment_content", updatedComment.commentContent);
+                    cmd.Parameters.AddWithValue("@comment_user_id", updatedComment.commentUserId);
+                    cmd.Parameters.AddWithValue("@comment_id", updatedComment.commentId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+        }
+
+        public bool DeletePost(int postId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("DELETE FROM posts " +
+                        "WHERE post_id = @post_id", conn);
+                    cmd.Parameters.AddWithValue("@post_id", postId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+        }
+
+        public bool DeleteComment(int commentId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("DELETE FROM comments " +
+                        "WHERE comment_id = @comment_id", conn);
+                    cmd.Parameters.AddWithValue("@comment_id", commentId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+        }
+
+        public bool UpdatePost(Post updatedPost, int postId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("UPDATE posts " +
+                        "SET post_title = @post_title, post_content = @post_content " +
+                        "WHERE post_id = @post_id", conn);
+                    cmd.Parameters.AddWithValue("@post_title", updatedPost.postTitle);
+                    cmd.Parameters.AddWithValue("@post_content", updatedPost.postContent);
+                    cmd.Parameters.AddWithValue("@post_id", updatedPost.postId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+        }
+
+        public bool UpdateComment(Comment updatedComment, int commentId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("UPDATE comments " +
+                        "SET comment_content = @comment_content " +
+                        "WHERE comment_id = @comment_id", conn);
+                    cmd.Parameters.AddWithValue("@comment_content", updatedComment.commentContent);
+                    cmd.Parameters.AddWithValue("@comment_id", updatedComment.commentId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+        }
 
         private Post CreatePostFromReader(SqlDataReader reader)
         {

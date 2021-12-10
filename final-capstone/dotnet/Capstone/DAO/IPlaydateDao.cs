@@ -23,7 +23,7 @@ namespace Capstone.DAO
 
 
         //Admin user methods
-        public bool DeletePlaydate(int playdateId); //admins can delete any playdate
-        public bool UpdatePlaydate(Playdate updatedPlaydate, int playdateId); //admins can update any playdate
+        public bool DeletePlaydate(int playdateId); //Admins can delete any playdate
+        public bool UpdatePlaydate(Playdate updatedPlaydate, int playdateId); //Admins can update any playdate
     }
 }

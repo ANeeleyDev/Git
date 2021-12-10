@@ -76,7 +76,7 @@ namespace Capstone.Controllers
 
         [HttpPut("/admin/{userId}")]
         [Authorize(Roles = "admin")]
-        public bool UpdateUserRoleUpdateUserRole(User updatedUser, int userId) //Can change user's role (user, mod, or admin)
+        public bool UpdateUserRole(User updatedUser, int userId) //Can change user's role (user, mod, or admin)
         {
             return userDao.UpdateUserRole(updatedUser, userId);
         }
