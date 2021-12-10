@@ -23,7 +23,7 @@ namespace Capstone.DAO
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = "SELECT pet_id, user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, " +
+                string sql = "SELECT pet_id, user_id, pet_image, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, " +
                              "other_comments " +
                              "FROM pets " +
                              "WHERE pet_id = @pet_id;";
@@ -75,7 +75,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT pet_id, user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, " +
+                    SqlCommand cmd = new SqlCommand("SELECT pet_id, user_id, pet_name, pet_image, age, breed, species, playful, nervous, confident, shy, mischievous, " +
                                                     "independent, other_comments " +
                                                     "FROM pets " +
                                                     "WHERE user_id = @user_id", conn);
@@ -108,9 +108,10 @@ namespace Capstone.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand("UPDATE pets " +
-                        "SET pet_name = @pet_name, breed = @breed, species = @species, age = @age, other_comments = @other_comments, " +
+                        "SET pet_image = @pet_image, pet_name = @pet_name, breed = @breed, species = @species, age = @age, other_comments = @other_comments, " +
                         "playful = @playful, nervous = @nervous, confident = @confident, shy = @shy, mischievous = @mischievous, independent = @independent " +
                         "WHERE pet_id = @pet_id", conn);
+                    cmd.Parameters.AddWithValue("@pet_image", updatedPet.petImage);
                     cmd.Parameters.AddWithValue("@pet_name", updatedPet.petName);
                     cmd.Parameters.AddWithValue("@breed", updatedPet.breed);
                     cmd.Parameters.AddWithValue("@species", updatedPet.species);
@@ -178,13 +179,14 @@ namespace Capstone.DAO
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO pets (user_id, pet_name, breed, species, age, other_comments, playful, nervous, confident, shy, " +
+                SqlCommand cmd = new SqlCommand("INSERT INTO pets (user_id, pet_image, pet_name, breed, species, age, other_comments, playful, nervous, confident, shy, " +
                     "mischievous, independent) " +
                 "OUTPUT INSERTED.pet_id " +
-                "VALUES (@user_id, @pet_name, @breed, @species, @age, @other_comments, @playful, @nervous, @confident, @shy, @mischievous, @independent)" +
+                "VALUES (@user_id, @pet_image, @pet_name, @breed, @species, @age, @other_comments, @playful, @nervous, @confident, @shy, @mischievous, @independent)" +
                 "", conn);
 
                 cmd.Parameters.AddWithValue("@user_id", newPet.userId);
+                cmd.Parameters.AddWithValue("@pet_image", newPet.petImage);
                 cmd.Parameters.AddWithValue("@pet_name", newPet.petName);
                 cmd.Parameters.AddWithValue("@breed", newPet.breed);
                 cmd.Parameters.AddWithValue("@species", newPet.species);
@@ -213,7 +215,7 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT pet_id, user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, " +
+                    SqlCommand cmd = new SqlCommand("SELECT pet_image, pet_id, user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, " +
                                                     "independent, other_comments " +
                                                     "FROM pets " +
                                                     "WHERE user_id = @user_id", conn);
@@ -272,9 +274,10 @@ namespace Capstone.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand("UPDATE pets " +
-                        "SET pet_name = @pet_name, breed = @breed, species = @species, age = @age, other_comments = @other_comments, " +
+                        "SET pet_image = @pet_image, pet_name = @pet_name, breed = @breed, species = @species, age = @age, other_comments = @other_comments, " +
                         "playful = @playful, nervous = @nervous, confident = @confident, shy = @shy, mischievous = @mischievous, independent = @independent " +
                         "WHERE user_id = @user_id AND pet_id = @pet_id", conn);
+                    cmd.Parameters.AddWithValue("pet_image", updatedPet.petImage);
                     cmd.Parameters.AddWithValue("@pet_name", updatedPet.petName);
                     cmd.Parameters.AddWithValue("@breed", updatedPet.breed);
                     cmd.Parameters.AddWithValue("@species", updatedPet.species);
@@ -307,6 +310,7 @@ namespace Capstone.DAO
             Pet pet = new Pet();
             pet.petId = Convert.ToInt32(reader["pet_id"]);
             pet.userId = Convert.ToInt32(reader["user_id"]);
+            pet.petImage = Convert.ToString(reader["pet_image"]);
             pet.petName = Convert.ToString(reader["pet_name"]);
             pet.age = Convert.ToInt32(reader["age"]);
             pet.species = Convert.ToString(reader["species"]);

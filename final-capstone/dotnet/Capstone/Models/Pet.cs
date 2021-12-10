@@ -9,6 +9,7 @@ namespace Capstone.Models
     {
         public int petId { get; set; }
         public int userId { get; set; }
+        public string petImage { get; set; }
         public string petName { get; set; }
         public int age { get; set; }
         public string species { get; set; }
