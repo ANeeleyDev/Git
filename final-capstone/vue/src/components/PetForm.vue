@@ -6,11 +6,15 @@
         label="Name"
         v-model="pet.petName"
       ></v-text-field>
+       <v-text-field
+        value="petImage"
+        label="Pet Image URL"        
+        v-model.number="pet.petImage"
+      ></v-text-field>
       <v-text-field
         value="age"
-        label="Age"
-        type="number"
-        v-model="pet.age"
+        label="Age"        
+        v-model.number="pet.age"
       ></v-text-field>
       <v-select
         :items="species"
@@ -26,17 +30,24 @@
       ></v-textarea>
 
       <v-checkbox
-        label="Playful"
-        value="Playful"
+        label="Playful"        
         v-model="pet.playful"
       ></v-checkbox>
       <v-checkbox
         v-model="pet.mischievous"
         label="Mischievous"
-        value="Mischievous"
+        
       ></v-checkbox>
-      <v-checkbox v-model="pet.shy" label="Shy" value="Shy"></v-checkbox>
-    </v-form>
+      <v-checkbox v-model="pet.shy" label="Shy"></v-checkbox>
+      <v-checkbox v-model="pet.nervous" label="Nervous"></v-checkbox>
+      <v-checkbox v-model="pet.confident" label="Confident"></v-checkbox>
+      <v-checkbox v-model="pet.independent" label="Independent"></v-checkbox>
+
+      <v-btn type="submit"> Submit </v-btn>
+      <v-btn class="" v-on:click.prevent="cancelForm" type="cancel">
+        Cancel
+      </v-btn>
+    </v-form>    
     <!-- <form v-on:submit.prevent="submitForm">
       <div>
         <label for="petName">Name:</label>
@@ -143,22 +154,23 @@ export default {
       species: [
         {
           text: "Dog",
-          value: 0,
+          value: "0",
         },
         {
           text: "Cat",
-          value: 1,
+          value: "1",
         },
       ],
       breed: [
         {
           text: "Holder",
-          value: 0,
+          value: "0",
         },
       ],
       pet: {
         petId: "",
         petName: "",
+        petImage: "",
         age: "",
         species: "",
         breed: "",
@@ -183,7 +195,7 @@ export default {
         .catch((error) => {
           if (error.response && error.response.status === 404) {
             alert(
-              "Card not available. This card may have been deleted or you have entered an invalid card ID."
+              "Pet not available. This pet may have been deleted or you have entered an invalid pet ID."
             );
             this.$router.push("/");
           }
@@ -193,9 +205,10 @@ export default {
   methods: {
     submitForm() {
       const newPet = {
-        userId: Number(this.$store.state.user.userId),
+        //userId: Number(this.$store.state.user.userId),
         petName: this.pet.petName,
-        age: parseInt(this.pet.age),
+        petImage: this.pet.petImage,
+        age: this.pet.age,
         species: this.pet.species,
         breed: this.pet.breed,
         otherComments: this.pet.otherComments,
