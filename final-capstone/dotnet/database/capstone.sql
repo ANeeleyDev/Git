@@ -74,6 +74,7 @@ CREATE TABLE breeds (
 CREATE TABLE pets (
 	pet_id int IDENTITY(0,1) NOT NULL,
 	user_id int NOT NULL,
+	pet_image varchar(250) NOT NULL,
 	pet_name varchar(50) NOT NULL,
 	age int NOT NULL,
 	breed int NOT NULL,
@@ -262,9 +263,9 @@ VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'So
 		('mod1', 'YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=', 'mod', 'Joe', 'Riggs', 'fakejoe@gmail.com', '7684729298', '9483 Bobblehead Drive', 0, 34, 0),
 		('mod2', 'YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=', 'mod', 'Monika', 'Royal-Fischer', 'fakemonika@gmail.com', '7684729299', '7493 Leadership Court', 0, 34, 0);
 
-INSERT INTO pets (user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
-VALUES	(0, 'Jabba', 13, 0, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
-		(1, 'Loose Seal AKA Bby Ppy Destructo', 3, 0, 0, 0, 0, 0, 0, 0, 0, 'destroys everything');
+INSERT INTO pets (user_id, pet_image, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
+VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large/james-parce-jabba-the-pug.jpg?1604239107', 'Jabba', 13, 0, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
+		(1, 'https://static.wikia.nocookie.net/arresteddevelopment/images/7/71/3x13_Development_Arrested_%2892%29.png/revision/latest/scale-to-width-down/1000?cb=20130323224933', 'Loose Seal AKA Bby Ppy Destructo', 3, 0, 0, 0, 0, 0, 0, 0, 0, 'destroys everything');
 
 INSERT INTO posts (user_id, post_title, post_content)
 VALUES	(0, 'Jabba needs a snack- I mean friend', 'Looking for a friend for my lovely little Jabba');
