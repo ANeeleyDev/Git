@@ -100,6 +100,16 @@ CREATE TABLE posts (
 	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users (user_id)
 )
 
+CREATE TABLE comments (
+	comment_id int IDENTITY(0,1) NOT NULL,
+	comment_user_id int NOT NULL,
+	comment_post_id int NOT NULL,
+	comment_content varchar(200) NOT NULL
+	CONSTRAINT PK_comment PRIMARY KEY (comment_id)
+	CONSTRAINT FK_comment_user_id FOREIGN KEY (comment_user_id) REFERENCES users (user_id),
+	CONSTRAINT FK_comment_post_id FOREIGN KEY (comment_post_id) REFERENCES posts (post_id)
+)
+
 CREATE TABLE playdate_statuses (
 	playdate_status_id int NOT NULL,
 	playdate_status varchar(50) NOT NULL
@@ -258,6 +268,9 @@ VALUES	(0, 'Jabba', 13, 0, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
 
 INSERT INTO posts (user_id, post_title, post_content)
 VALUES	(0, 'Jabba needs a snack- I mean friend', 'Looking for a friend for my lovely little Jabba');
+
+INSERT INTO comments (comment_user_id, comment_post_id, comment_content)
+VALUES	(1, 0, 'Absolutely not, this is a ploy to have Jabba eat our pets! Rude!');
 
 INSERT INTO playdate_statuses (playdate_status_id, playdate_status)
 VALUES	(0, 'Pending'),
