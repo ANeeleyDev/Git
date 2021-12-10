@@ -6,7 +6,7 @@
     <v-img
       class="white--text align-end"
       height="200px"
-      src="http://cdn.akc.org/content/article-body-image/lab_puppy_dog_pictures.jpg"
+      :src="pet.petImage"
     >
       <v-card-title>{{pet.petName}}</v-card-title>
     </v-img>
@@ -24,8 +24,9 @@
       <v-btn
         color="orange"
         text
+        @click="deletePet"
       >
-        Share
+        Delete
       </v-btn>
 
       <v-btn
@@ -43,16 +44,38 @@ import petService from "@/services/PetService";
 export default {
   name: "pet-detail",
   props: ["pet"],
-  calculated: {
-      getRandomPic(){
-          
-          petService.getRandomPic().then((response) => {
+  methods: {
+    deletePet() {
+      if (
+        confirm(
+          "Are you sure you want to delete this pet? This action cannot be undone."
+        )
+      ) {
+        petService
+          .deletePet(this.pet.petId)
+          .then((response) => {
             if (response.status === 200) {
-              return response.data.message
+              alert("Pet successfully deleted");
+              this.$router.push(`/`);
             }
           })
+          .catch((error) => {
+            if (error.response) {
+              this.errorMsg =
+                "Error deleting pet. Response received was '" +
+                error.response.statusText +
+                "'.";
+            } else if (error.request) {
+              this.errorMsg =
+                "Error deleting pet. Server could not be reached.";
+            } else {
+              this.errorMsg =
+                "Error deleting pet. Request could not be created.";
+            }
+          });
       }
-  }
+    },    
+  },
 };
 </script>
 
