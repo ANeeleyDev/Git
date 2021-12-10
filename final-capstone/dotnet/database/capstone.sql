@@ -270,7 +270,10 @@ INSERT INTO posts (user_id, post_title, post_content)
 VALUES	(0, 'Jabba needs a snack- I mean friend', 'Looking for a friend for my lovely little Jabba');
 
 INSERT INTO comments (comment_user_id, comment_post_id, comment_content)
-VALUES	(1, 0, 'Absolutely not, this is a ploy to have Jabba eat our pets! Rude!');
+VALUES	(1, 0, 'Absolutely not, this is a ploy to have Jabba eat our pets! Rude!'),
+		(0, 0, 'You''re just jealous Jabba is prettier than Loose Seal!'),
+		(2, 0, 'Why can''t you both just get along? If you''re worried about your pet getting eaten, just maintain social distancing! You''ll be fine!'),
+		(1, 0, 'Only if he says Star Trek is better.');
 
 INSERT INTO playdate_statuses (playdate_status_id, playdate_status)
 VALUES	(0, 'Pending'),
