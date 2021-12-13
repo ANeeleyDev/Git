@@ -125,6 +125,7 @@ CREATE TABLE playdates (
 	playdate_posted_pet_id int NOT NULL,
 	playdate_requested_user_id int NULL,
 	playdate_requested_pet_id int NULL,
+	playdate_cancelled_user_id int NULL,
 	meeting_time DATETIME NOT NULL,
 	playdate_address varchar(50) NOT NULL,
 	playdate_city int NOT NULL,
