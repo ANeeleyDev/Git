@@ -25,7 +25,7 @@ namespace Capstone.DAO
         public bool RejectPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can reject a playdate after a request
         public bool CancelPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can cancel a playdate after accepted (requested & posted user)
 
-        //public bool FinishPlaydate(Playdate updatedPlaydate, int playdateId); //Registered users can make a playdate as finished
+        public bool FinishPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can mark a playdate as finished (requested & posted user)
 
 
 

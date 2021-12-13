@@ -330,6 +330,34 @@ namespace Capstone.DAO
             }
         }
 
+        public bool FinishPlaydate(Playdate updatedPlaydate, int userId, int playdateId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("UPDATE playdates " +
+                        "SET playdate_status_id = 5 " +
+                        "WHERE playdate_id = @playdate_id AND (playdate_posted_user_id = @playdate_posted_user_id OR playdate_requested_user_id = @playdate_requested_user_id) AND playdate_status_id = 2;", conn);
+                    cmd.Parameters.AddWithValue("@playdate_posted_user_id", userId);
+                    cmd.Parameters.AddWithValue("@playdate_requested_user_id", userId);
+                    cmd.Parameters.AddWithValue("@playdate_status_id", updatedPlaydate.playdateStatusId);
+                    cmd.Parameters.AddWithValue("@playdate_id", playdateId);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    return (rowsAffected > 0);
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+        }
+
         public bool UpdatePlaydate(Playdate updatedPlaydate, int playdateId)
         {
             try
