@@ -20,8 +20,8 @@ export default {
 
   // logged in user delete profile 
 
-  deleteUser(userId){
-    return axios.delete(`/user/delete/${userId}`)
+  deleteLoggedInUser(){
+    return axios.delete(`/user/myprofile/`)
   },
 
   // ADMIN FUNCTION
@@ -29,7 +29,16 @@ export default {
   // update user role
 
   updateUserRole(updatedUser, userId){
-    return axios.put(`/admin/${userId}`, updatedUser)
+    return axios.put(`/admin/${userId}/updaterole`, updatedUser)
+  },
+
+  deleteUser(userId){
+
+    return axios.delete(`/admin/${userId}`)
+  },
+
+  updateUser(userId){
+    return axios.put(`/admin/${userId}`)
   },
 
 }
