@@ -8,10 +8,14 @@ export default {
   displayUser(userId) {
     return axios.get(`/user/${userId}`)
   },
+
+  displayUserProfile(){
+    return axios.get('/myprofile')
+  },
   // logged in user edit user profile
 
-  editUser(userId){
-    return axios.put(`/user/edit/${userId}`)
+  editUser(userToUpdate){
+    return axios.put(`/myprofile`, userToUpdate)
   },
 
   // logged in user delete profile 

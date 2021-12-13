@@ -80,7 +80,7 @@ namespace Capstone.Controllers
 
         [HttpGet("/user/{userId}")]
         [AllowAnonymous]
-        public User DisplayUser(int userId) //Display user details
+        public DisplayUser DisplayUser(int userId) //Display user details
         {
             return userDao.DisplayUser(userId);
         }
@@ -91,7 +91,7 @@ namespace Capstone.Controllers
 
         [HttpGet("/myprofile")]
         [Authorize]
-        public User DisplayLoggedInUser(int userId) //View their profile
+        public DisplayUser DisplayLoggedInUser(int userId) //View their profile
         {
             string userIdString = User.FindFirst("sub")?.Value;
             userId = Convert.ToInt32(userIdString);

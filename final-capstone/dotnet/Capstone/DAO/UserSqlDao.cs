@@ -83,17 +83,14 @@ namespace Capstone.DAO
             return GetUser(username);
         }
 
-        public User DisplayUser(int userId) //display user info
+        public DisplayUser DisplayUser(int userId) //display user info
         {
-            User user = null;
+            DisplayUser user = null;
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = "SELECT user_id, username, password_hash, salt, user_role, first_name, last_name, email_address, " +
-                    "phone_number, street_address, city, state, zip " +
-                             "FROM users " +
-                             "WHERE user_id = @user_id;";
+                string sql = "SELECT u.user_id, u.username, u.password_hash, u.salt, u.user_role, u.first_name, u.last_name, u.email_address, u.phone_number, u.street_address, c.city_name, s.state_name, z.zipcode FROM users u JOIN states s ON s.state_id = u.state JOIN cities c ON c.city_id = u.city JOIN zips z ON z.zip_id = u.zip WHERE u.user_id = @user_id;";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@user_id", userId);
 
@@ -101,7 +98,7 @@ namespace Capstone.DAO
 
                 if (reader.Read())
                 {
-                    user = CreateUserFromReader(reader);
+                    user = CreateUserFromReaderForDisplay(reader);
                 }
 
                 return user;
@@ -212,6 +209,29 @@ namespace Capstone.DAO
             };
 
             return u;
+        }
+
+        //added for user display to not break things immediately; refactor later
+        private DisplayUser CreateUserFromReaderForDisplay(SqlDataReader reader)
+        {
+            DisplayUser du = new DisplayUser()
+            {
+                UserId = Convert.ToInt32(reader["user_id"]),
+                Username = Convert.ToString(reader["username"]),
+                PasswordHash = Convert.ToString(reader["password_hash"]),
+                Salt = Convert.ToString(reader["salt"]),
+                Role = Convert.ToString(reader["user_role"]),
+                FirstName = Convert.ToString(reader["first_name"]),
+                LastName = Convert.ToString(reader["last_name"]),
+                EmailAddress = Convert.ToString(reader["email_address"]),
+                PhoneNumber = Convert.ToString(reader["phone_number"]),
+                StreetAddress = Convert.ToString(reader["street_address"]),
+                City = Convert.ToString(reader["city_name"]),
+                State = Convert.ToString(reader["state_name"]),
+                Zip = Convert.ToInt32(reader["zipcode"]),
+            };
+
+            return du;
         }
     }
 }

@@ -5,7 +5,7 @@
 
     <v-form @submit.prevent="login">
       <v-text-field
-        value="John Doe"
+        value="username"
         label="username"
         outlined
         v-model="user.username"
@@ -13,16 +13,17 @@
         autofocus
       ></v-text-field>
       <v-text-field
-        value="John Doe"
+        value="password"
         label="password"
+        type="password"
         outlined
         v-model="user.password"
         required
       ></v-text-field>
       <v-btn type="submit"> submit </v-btn>
     </v-form>
-    <router-link :to="{ name: 'register' }"
-      ><div><v-text>Need an account?</v-text></div></router-link
+    <router-link :to="{ name: 'register-user' }"
+      ><div>Need an account?</div></router-link
     >
   </v-card>
 
@@ -82,6 +83,7 @@ export default {
         username: "",
         password: "",
       },
+      currentUser: {},
       invalidCredentials: false,
     };
   },

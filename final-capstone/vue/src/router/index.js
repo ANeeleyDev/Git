@@ -3,12 +3,13 @@ import Router from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
-import Register from '../views/Register.vue'
+import RegisterUser from '../views/RegisterUser.vue'
 import PetList from '../views/PetList.vue'
 import store from '../store/index'
 import AddPet from '../views/AddPet.vue'
 import EditPet from '../views/EditPet.vue'
 import WelcomePage from '../views/WelcomePage.vue'
+import ProfileDetails from '../views/ProfileDetails.vue'
 
 Vue.use(Router)
 
@@ -58,9 +59,9 @@ const router = new Router({
       }
     },
     {
-      path: "/register",
-      name: "register",
-      component: Register,
+      path: "/registerUser",
+      name: "register-user",
+      component: RegisterUser,
       meta: {
         requiresAuth: false
       }
@@ -88,6 +89,14 @@ const router = new Router({
       component: EditPet,
       meta: {
         requiresAuth: false
+      }
+    },
+    {
+      path: "/profileDetails",
+      name: "profile-details",
+      component: ProfileDetails,
+      meta: {
+        requiresAuth: true
       }
     },
   ]
