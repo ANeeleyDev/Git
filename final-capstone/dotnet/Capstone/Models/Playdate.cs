@@ -9,7 +9,9 @@ namespace Capstone.Models
     {
         public int playdateId { get; set; }
         public int playdatePostedUserId { get; set; }
+        public int playdatePostedPetId { get; set; }
         public int playdateRequestedUserId { get; set; }
+        public int playdateRequestedPetId { get; set; }
         public DateTime meetingTime { get; set; }
         public string playdateAddress { get; set; }
         public string playdateCity { get; set; }

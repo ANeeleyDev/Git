@@ -76,9 +76,9 @@ namespace Capstone.Controllers
             return playdateDao.DeleteLoggedInUserPlaydate(playdateId, userId);
         }
 
-        [HttpPut("myplaydates/{playdateId}")] 
+        [HttpPut("myplaydates/{playdateId}")]
         [Authorize]
-        public bool UpdateLoggedInUserPlaydate(Playdate updatedPlaydate, int userId, int playdateId) //Update their playdat
+        public bool UpdateLoggedInUserPlaydate(Playdate updatedPlaydate, int userId, int playdateId) //Update their playdate
         {
             string userIdString = User.FindFirst("sub")?.Value;
             userId = Convert.ToInt32(userIdString);
@@ -86,6 +86,55 @@ namespace Capstone.Controllers
             return playdateDao.UpdateLoggedInUserPlaydate(updatedPlaydate, userId, playdateId);
         }
 
+        [HttpPut("{playdateId}/request")]
+        [Authorize]
+        public bool RequestPlaydate(Playdate updatedPlaydate, int userId, int playdateId) //Request a playdate
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return playdateDao.RequestPlaydate(updatedPlaydate, userId, playdateId);
+        }
+
+        [HttpPut("{playdateId}/accept")]
+        [Authorize]
+        public bool AcceptPlaydate(Playdate updatedPlaydate, int userId, int playdateId) //Accept a playdate
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return playdateDao.AcceptPlaydate(updatedPlaydate, userId, playdateId);
+        }
+
+        [HttpPut("{playdateId}/reject")]
+        [Authorize]
+        public bool RejectPlaydate(Playdate updatedPlaydate, int userId, int playdateId) //Reject a playdate
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return playdateDao.RejectPlaydate(updatedPlaydate, userId, playdateId);
+        }
+
+        [HttpPut("{playdateId}/cancel")]
+        [Authorize]
+        public bool CancelPlaydate(Playdate updatedPlaydate, int userId, int playdateId) //Cancel a playdate (posted or requested user can do this)
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return playdateDao.CancelPlaydate(updatedPlaydate, userId, playdateId);
+        }
+
+        [HttpPut("{playdateId}/finish")]
+        [Authorize]
+        public bool FinishPlaydate(Playdate updatedPlaydate, int userId, int playdateId) //Cancel a playdate (posted or requested user can do this)
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return playdateDao.FinishPlaydate(updatedPlaydate, userId, playdateId);
+        }
 
 
         //Admin methods

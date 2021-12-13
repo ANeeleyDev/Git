@@ -19,6 +19,14 @@ namespace Capstone.DAO
         public List<Playdate> GetLoggedInUserPlaydates(int userId); //Registered users can view their playdates
         public bool DeleteLoggedInUserPlaydate(int playdateId, int userId); //Registered users can delete any of their playdates
         public bool UpdateLoggedInUserPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can update any of their playdates
+        public bool RequestPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can request to meet a pet
+
+        public bool AcceptPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can accept a playdate after a request
+        public bool RejectPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can reject a playdate after a request
+        public bool CancelPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can cancel a playdate after accepted (requested & posted user)
+
+        //public bool FinishPlaydate(Playdate updatedPlaydate, int playdateId); //Registered users can make a playdate as finished
+
 
 
 
