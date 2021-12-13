@@ -1,9 +1,11 @@
 <template>
   <div>
-      <router-link v-bind:to="{name:'add-pet'}">Add Pet</router-link>
-      <div v-for="pet in pets" v-bind:key="pet.petId">
+      
+    <v-row>
+      <v-col v-for="pet in pets" v-bind:key="pet.petId">
           <pet-card v-bind:pet = "pet" />
-      </div>
+      </v-col>
+      </v-row>
   </div>
 </template>
 

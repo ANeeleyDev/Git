@@ -16,9 +16,11 @@
 
         <p>Is Spike lonely? He doesn't have to be...</p>
       </v-col>
-
-      
+    <v-container>  <router-link v-bind:to="{ name: 'home' }"><v-btn>See the meetups near you</v-btn></router-link></v-container>
+  
+      <v-container>Meet our newest additions:</v-container>
     </v-row>
+    
   <v-carousel hide-delimiters>
     <v-carousel-item
       v-for="pet in this.pets"

@@ -3,8 +3,11 @@
     class="mx-auto"
     max-width="800"
     >
-
-    <v-img class="pd-pet-pic" height="200px"
+    <vtitle>{{playdate.meetingTime}}</vtitle>
+    <v-card-text class="pd-comments">
+        <div>{{playdate.playdateAddress}} {{playdate.playdateCity}}, {{playdate.playdateState}} {{playdate.playdateZip}}</div>
+    </v-card-text>
+    <!-- <v-img class="pd-pet-pic" height="200px"
         src={{pet.petImage}} >
 
     <v-card-title>
@@ -40,7 +43,7 @@
         >
         Save 
         </v-btn>
-    </v-card-actions>
+    </v-card-actions> -->
  </v-card>
 
 
@@ -50,7 +53,7 @@
 
 export default {
     name:"playdate-card",
-    props: ["pet"],
+    props: ["playdate", "petId"],
     
 }
 </script>

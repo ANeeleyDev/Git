@@ -1,18 +1,19 @@
 <template>
   <div class="home">
-    <p>{{ this.$store.state.userProfile.firstName }}</p>
     <nav-bar />
-    <pet-list />
+    <playdate-view/>
+   
   </div>
 </template>
 
 <script>
-import PetList from "./PetList.vue";
+
+import PlaydateView from './PlaydateView.vue';
 import userService from "@/services/UserService";
 import NavBar from "./NavBar.vue";
 export default {
   components: {
-    PetList,
+    PlaydateView,
     NavBar,
   },
   name: "home",

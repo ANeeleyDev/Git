@@ -258,7 +258,7 @@ export default {
           .editUser(updateUser)
           .then((response) => {
             if (response.status === 200) {
-              this.$router.push(`/profile-details`);
+              this.$router.push(`/`);
             }
           })
           .catch((error) => {

@@ -10,6 +10,7 @@ import AddPet from '../views/AddPet.vue'
 import EditPet from '../views/EditPet.vue'
 import WelcomePage from '../views/WelcomePage.vue'
 import ProfileDetails from '../views/ProfileDetails.vue'
+import PetView from '../views/PetView.vue'
 
 Vue.use(Router)
 
@@ -31,7 +32,7 @@ const router = new Router({
       name: 'home',
       component: Home,
       meta: {
-        requiresAuth: true
+        requiresAuth: false
       }
     },
     {
@@ -99,6 +100,15 @@ const router = new Router({
         requiresAuth: true
       }
     },
+    {
+      path: "/petView",
+      name: "pet-view",
+      component: PetView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+
   ]
 })
 

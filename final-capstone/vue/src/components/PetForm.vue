@@ -151,7 +151,7 @@ export default {
           .updatePet(this.editPetId, newPet)
           .then((response) => {
             if (response.status === 200) {
-              this.$router.push(`/petlist`);
+              this.$router.push(`/petView`);
             }
           })
           .catch((error) => {
