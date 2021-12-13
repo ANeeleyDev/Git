@@ -50,6 +50,13 @@ namespace Capstone.Controllers
             return playdateDao.GetPlaydatesByUserId(userId);
         }
 
+        [HttpGet("display")]
+        [AllowAnonymous]
+        public List<Playdate> GetAllPlaydatesForDisplay(int userId) //View all playdates, will return city, state and zip not as IDs
+        {
+            return playdateDao.GetAllPlaydatesForDisplay();
+        }
+
 
         //Registered user methods
 

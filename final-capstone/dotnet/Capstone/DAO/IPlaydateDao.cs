@@ -11,6 +11,7 @@ namespace Capstone.DAO
         //Anonymous user methods
         public Playdate GetPlaydate(int playdateId); //Anonymous users can view any playdate
         public Playdate GetPlaydateForDisplay(int playdateId); //Will display city, state and zip (not IDs)
+        public List<Playdate> GetAllPlaydatesForDisplay(); //Will display all playdates regardless of userID)
         public List<Playdate> GetPlaydatesByUserId(int userId); //Anonymous users can view any playdate of a specified user
 
 

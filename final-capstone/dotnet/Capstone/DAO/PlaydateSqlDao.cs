@@ -103,7 +103,8 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT playdate_id, playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, meeting_time, playdate_address, " +
+                    SqlCommand cmd = new SqlCommand("SELECT playdate_id, playdate_posted_user_id, playdate_posted_pet_id, " +
+                        "playdate_requested_user_id, playdate_requested_pet_id, meeting_time, playdate_address, " +
                         "playdate_city, playdate_state, playdate_zip, playdate_status_id " +
                         "FROM playdates " +
                         "WHERE playdate_posted_user_id = @playdate_posted_user_id", conn);
@@ -125,6 +126,42 @@ namespace Capstone.DAO
             }
 
             return allPlaydatesByUserId;
+        }
+
+        public List<Playdate> GetAllPlaydatesForDisplay()
+        {
+            List<Playdate> allPlaydates = new List<Playdate>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT playdate_id, playdate_posted_user_id, playdate_posted_pet_id, " +
+                        "playdate_requested_user_id, playdate_requested_pet_id, meeting_time, playdate_address, cities.city_name, " +
+                        "states.state_abbreviation, zips.zipcode, playdate_status_id " +
+                        "FROM playdates " +
+                        "JOIN cities ON playdates.playdate_city = city_id " +
+                        "JOIN states ON playdates.playdate_state = states.state_id " +
+                        "JOIN zips ON playdates.playdate_zip = zip_id;", conn);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Playdate playdate = CreatePlaydateFromReaderForDisplay(reader);
+                        allPlaydates.Add(playdate);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+
+            return allPlaydates;
         }
 
         //-----------------LOGGED IN USER METHODS BELOW----------------------
