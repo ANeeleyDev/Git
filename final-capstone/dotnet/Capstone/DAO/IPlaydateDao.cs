@@ -10,6 +10,7 @@ namespace Capstone.DAO
     {
         //Anonymous user methods
         public Playdate GetPlaydate(int playdateId); //Anonymous users can view any playdate
+        public Playdate GetPlaydateForDisplay(int playdateId); //Will display city, state and zip (not IDs)
         public List<Playdate> GetPlaydatesByUserId(int userId); //Anonymous users can view any playdate of a specified user
 
 
@@ -17,6 +18,7 @@ namespace Capstone.DAO
         //Registered user methods
         public Playdate RegisterPlaydate(Playdate newPlaydate); //Registered users can register their playdate in system
         public List<Playdate> GetLoggedInUserPlaydates(int userId); //Registered users can view their playdates
+        public List<Playdate> GetLoggedInUserPlaydatesForDisplay(int userId); //Will show city, state and zip not as IDs
         public bool DeleteLoggedInUserPlaydate(int playdateId, int userId); //Registered users can delete any of their playdates
         public bool UpdateLoggedInUserPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can update any of their playdates
         public bool RequestPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can request to meet a pet

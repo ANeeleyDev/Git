@@ -46,6 +46,13 @@ namespace Capstone.Controllers
             return petDao.GetPet(petId);
         }
 
+        [HttpGet("{petId}/display")]
+        [AllowAnonymous]
+        public Pet GetPetForDisplay(int petId) //View any pet that displays species and breed
+        {
+            return petDao.GetPetForDisplay(petId);
+        }
+
         [HttpGet("user/{userId}")]
         [AllowAnonymous]
         public List<Pet> GetPetsByUserId(int userId) //View all pets of a specified user
@@ -75,6 +82,16 @@ namespace Capstone.Controllers
             userId = Convert.ToInt32(userIdString);
 
             return petDao.GetLoggedInUserPets(userId);
+        }
+
+        [HttpGet("mypets/display")]
+        [Authorize]
+        public List<Pet> GetLoggedInUserPetsForDisplay(int userId) //View their pets but with species and breed not as IDs
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return petDao.GetLoggedInUserPetsForDisplay(userId);
         }
 
         [HttpDelete("mypets/{petId}")]

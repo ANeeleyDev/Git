@@ -41,6 +41,33 @@ namespace Capstone.DAO
             }
         }
 
+        public Pet GetPetForDisplay(int petId) //Will display species and breeds as not id
+        {
+            Pet pet = null;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string sql = "SELECT pet_id, user_id, pet_image, pet_name, age, breeds.breed, species.species, playful, nervous, confident, shy, mischievous, independent, " +
+                             "other_comments " +
+                             "FROM pets " +
+                             "JOIN breeds on pets.breed = breed_id " +
+                             "JOIN species on pets.species = species_id " +
+                             "WHERE pet_id = @pet_id;";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@pet_id", petId);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    pet = CreatePetFromReader(reader);
+                }
+
+                return pet;
+            }
+        }
+
         public bool DeletePet(int petId)
         {
             try
@@ -218,6 +245,42 @@ namespace Capstone.DAO
                     SqlCommand cmd = new SqlCommand("SELECT pet_image, pet_id, user_id, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, " +
                                                     "independent, other_comments " +
                                                     "FROM pets " +
+                                                    "WHERE user_id = @user_id", conn);
+                    cmd.Parameters.AddWithValue("@user_id", userId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Pet pet = CreatePetFromReader(reader);
+                        allPetsByUserId.Add(pet);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+
+            return allPetsByUserId;
+        }
+
+        public List<Pet> GetLoggedInUserPetsForDisplay(int userId)
+        {
+            List<Pet> allPetsByUserId = new List<Pet>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT pet_image, pet_id, user_id, pet_name, age, breeds.breed, species.species, playful, nervous, confident, shy, mischievous, " +
+                                                    "independent, other_comments " +
+                                                    "FROM pets " +
+                                                    "JOIN breeds ON pets.breed = breed_id " +
+                                                    "JOIN species ON pets.species = species_id " +
                                                     "WHERE user_id = @user_id", conn);
                     cmd.Parameters.AddWithValue("@user_id", userId);
 

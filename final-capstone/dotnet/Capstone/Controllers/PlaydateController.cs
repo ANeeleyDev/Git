@@ -36,6 +36,13 @@ namespace Capstone.Controllers
             return playdateDao.GetPlaydate(playdateId);
         }
 
+        [HttpGet("{playdateId}/display")]
+        [AllowAnonymous]
+        public Playdate GetPlaydateForDisplay(int playdateId) //Will show city, state, and zip and not IDs
+        {
+            return playdateDao.GetPlaydateForDisplay(playdateId);
+        }
+
         [HttpGet("user/{userId}")]
         [AllowAnonymous]
         public List<Playdate> GetPlaydatesByUserId(int userId) //View all playdates from a specified user
@@ -64,6 +71,16 @@ namespace Capstone.Controllers
             userId = Convert.ToInt32(userIdString);
 
             return playdateDao.GetLoggedInUserPlaydates(userId);
+        }
+
+        [HttpGet("myplaydates/display")]
+        [Authorize]
+        public List<Playdate> GetLoggedInUserPlaydatesForDisplay(int userId) //Will show city name, state and zip not as IDs
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return playdateDao.GetLoggedInUserPlaydatesForDisplay(userId);
         }
 
         [HttpDelete("myplaydates/{playdateId}")] 

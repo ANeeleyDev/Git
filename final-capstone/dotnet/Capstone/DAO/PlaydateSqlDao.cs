@@ -22,7 +22,8 @@ namespace Capstone.DAO
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string sql = "SELECT playdate_id, playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, meeting_time, playdate_address, playdate_city, " +
+                string sql = "SELECT playdate_id, playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, " +
+                    "playdate_requested_pet_id, meeting_time, playdate_address, playdate_city, " +
                     "playdate_state, playdate_zip, playdate_status_id " +
                     "FROM playdates " +
                     "WHERE playdate_id = @playdate_id";
@@ -34,6 +35,35 @@ namespace Capstone.DAO
                 if (reader.Read())
                 {
                     playdate = CreatePlaydateFromReader(reader);
+                }
+
+                return playdate;
+            }
+        }
+
+        public Playdate GetPlaydateForDisplay(int playdateId)
+        {
+            Playdate playdate = null;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string sql = "SELECT playdate_id, playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, " +
+                    "playdate_requested_pet_id, meeting_time, playdate_address, cities.city_name, states.state_abbreviation, " +
+                    "zips.zipcode, playdate_status_id " +
+                    "FROM playdates " +
+                    "JOIN cities ON playdates.playdate_city = city_id " +
+                    "JOIN states ON playdates.playdate_state = states.state_id " +
+                    "JOIN zips ON playdates.playdate_zip = zip_id " +
+                    "WHERE playdate_id = @playdate_id";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@playdate_id", playdateId);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    playdate = CreatePlaydateFromReaderForDisplay(reader);
                 }
 
                 return playdate;
@@ -136,7 +166,8 @@ namespace Capstone.DAO
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand("SELECT playdate_id, playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, meeting_time, playdate_address, " +
+                    SqlCommand cmd = new SqlCommand("SELECT playdate_id, playdate_posted_user_id, playdate_posted_pet_id, " +
+                        "playdate_requested_user_id, playdate_requested_pet_id, meeting_time, playdate_address, " +
                         "playdate_city, playdate_state, playdate_zip, playdate_status_id " +
                         "FROM playdates " +
                         "WHERE playdate_posted_user_id = @playdate_posted_user_id", conn);
@@ -147,6 +178,44 @@ namespace Capstone.DAO
                     while (reader.Read())
                     {
                         Playdate playdate = CreatePlaydateFromReader(reader);
+                        allPlaydatesByUserId.Add(playdate);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+
+            return allPlaydatesByUserId;
+        }
+
+        public List<Playdate> GetLoggedInUserPlaydatesForDisplay(int userId)
+        {
+            List<Playdate> allPlaydatesByUserId = new List<Playdate>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT playdate_id, playdate_posted_user_id, playdate_posted_pet_id, " +
+                        "playdate_requested_user_id, playdate_requested_pet_id, meeting_time, playdate_address, " +
+                        "cities.city_name, states.state_abbreviation, zips.zipcode, playdate_status_id " +
+                        "FROM playdates " +
+                        "JOIN cities ON playdates.playdate_city = city_id " +
+                        "JOIN states ON playdates.playdate_state = states.state_id " +
+                        "JOIN zips ON playdates.playdate_zip = zip_id " +
+                        "WHERE playdate_posted_user_id = @playdate_posted_user_id", conn);
+                    cmd.Parameters.AddWithValue("@playdate_posted_user_id", userId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Playdate playdate = CreatePlaydateFromReaderForDisplay(reader);
                         allPlaydatesByUserId.Add(playdate);
                     }
                 }
@@ -397,11 +466,31 @@ namespace Capstone.DAO
             playdate.playdateId = Convert.ToInt32(reader["playdate_id"]);
             playdate.playdatePostedUserId = Convert.ToInt32(reader["playdate_posted_user_id"]);
             playdate.playdatePostedPetId = Convert.ToInt32(reader["playdate_posted_pet_id"]);
+            playdate.playdateRequestedUserId = Convert.ToInt32(reader["playdate_requested_user_id"]);
+            playdate.playdateRequestedPetId = Convert.ToInt32(reader["playdate_requested_pet_id"]);
             playdate.meetingTime = Convert.ToDateTime(reader["meeting_time"]);
             playdate.playdateAddress = Convert.ToString(reader["playdate_address"]);
             playdate.playdateCity = Convert.ToString(reader["playdate_city"]);
             playdate.playdateState = Convert.ToString(reader["playdate_state"]);
             playdate.playdateZip = Convert.ToString(reader["playdate_zip"]);
+            playdate.playdateStatusId = Convert.ToInt32(reader["playdate_status_id"]);
+
+            return playdate;
+        }
+
+        private Playdate CreatePlaydateFromReaderForDisplay(SqlDataReader reader)
+        {
+            Playdate playdate = new Playdate();
+            playdate.playdateId = Convert.ToInt32(reader["playdate_id"]);
+            playdate.playdatePostedUserId = Convert.ToInt32(reader["playdate_posted_user_id"]);
+            playdate.playdatePostedPetId = Convert.ToInt32(reader["playdate_posted_pet_id"]);
+            playdate.playdateRequestedUserId = Convert.ToInt32(reader["playdate_requested_user_id"]);
+            playdate.playdateRequestedPetId = Convert.ToInt32(reader["playdate_requested_pet_id"]);
+            playdate.meetingTime = Convert.ToDateTime(reader["meeting_time"]);
+            playdate.playdateAddress = Convert.ToString(reader["playdate_address"]);
+            playdate.playdateCity = Convert.ToString(reader["city_name"]);
+            playdate.playdateState = Convert.ToString(reader["state_abbreviation"]);
+            playdate.playdateZip = Convert.ToString(reader["zipcode"]);
             playdate.playdateStatusId = Convert.ToInt32(reader["playdate_status_id"]);
 
             return playdate;

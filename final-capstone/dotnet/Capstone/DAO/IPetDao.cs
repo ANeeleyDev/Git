@@ -17,6 +17,7 @@ namespace Capstone.DAO
         public Pet GetPet(int petId); //Anonymous users can view any pet
 
         public List<Pet> GetPetsByUserId(int userId); //Anonymous users can view any pet of a specified user
+        public Pet GetPetForDisplay(int petId); //Will display species and breeds as not id
 
 
 
@@ -24,6 +25,7 @@ namespace Capstone.DAO
         public Pet RegisterPet(Pet newPet); //Registered users can register their pet in system
 
         public List<Pet> GetLoggedInUserPets(int userId); //Registered users can view their pets
+        public List<Pet> GetLoggedInUserPetsForDisplay(int userId); //Will display species and breeds as not id
 
         public bool DeleteLoggedInUserPet(int petId, int userId); //Registered users can delete any of their pets
 
