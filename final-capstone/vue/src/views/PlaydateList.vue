@@ -1,9 +1,9 @@
 <template>
   <div>
-      <v-row>
-      <v-col v-for="playdate in playdates" v-bind:key="playdate.playdateId">
+      
+      <v-row v-for="playdate in playdates" v-bind:key="playdate.playdateId">
           <playdate-card v-bind:playdate = "playdate" />
-      </v-col>
+      
       </v-row>
   </div>
 </template>

@@ -45,7 +45,7 @@
         </v-btn>
     </v-card-actions>
  </v-card> -->
-  <v-card :loading="loading" class="mx-auto my-12" max-width="300">
+  <v-card :loading="loading" class="mx-auto my-12" max-height=auto  width="500">
     <template slot="progress">
       <v-progress-linear
         color="deep-purple"
@@ -54,21 +54,22 @@
       ></v-progress-linear>
     </template>
 
-    <v-img
+    <!-- <v-img
       height="250"
       :src="this.pet.petImage"
-    ></v-img>
+    ></v-img> -->
 
     <v-card-title>{{this.pet.petName}} & {{this.user.firstName}}</v-card-title>
-    <v-card-text>{{this.playdate.playdateAddress}}</v-card-text>
-    <v-card-text>{{this.playdate.playdateCity}}, {{playdate.playdateState}} {{playdate.playdateZip}}</v-card-text>
+    <v-card-text>{{this.playdate.playdateAddress}}
+    
+    {{this.playdate.playdateCity}}, {{playdate.playdateState}} {{playdate.playdateZip}}</v-card-text>
     <v-card-text>{{this.playdate.meetingTime}}</v-card-text>
 
 
     <v-card-actions>
-      <v-btn color="deep-purple lighten-2" text @click="reserve">
+      <!-- <v-btn color="deep-purple lighten-2" text @click="reserve">
         Reserve
-      </v-btn>
+      </v-btn> -->
     </v-card-actions>
   </v-card>
 </template>
