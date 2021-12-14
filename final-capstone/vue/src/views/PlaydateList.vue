@@ -23,7 +23,7 @@ export default {
     },
     methods: {
         getAllPlaydates(){            
-            playdateService.getAllPlaydates()
+            playdateService.getAllPlaydatesForDisplay()
             .then(response => {
           this.playdates = response.data;          
         })
