@@ -11,10 +11,10 @@
             <v-select
               v-model="select"
               :hint="`${select.petName}`"
-              :items="items"
+              :items="pets"
               item-text="petName"
               item-value="petId"
-              label="Select"
+              label="Select Pet"
               persistent-hint
               return-object
               single-line
@@ -23,11 +23,11 @@
         </v-row>
       </v-container>
 
-      <v-text-field
+      <!-- <v-text-field
         value="userFirstName"
         label="Owner First Name"
         v-model="user.firstName"
-      ></v-text-field>
+      ></v-text-field> -->
 
       <v-layout row>
         <v-flex xs 12 sm6 offset-sm3>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import petService from "@/services/PlaydateService";
+import petService from "@/services/PetService";
 export default {
   name: "create-playdate-form",
   props: ["petId", "userId"],
@@ -69,7 +69,7 @@ export default {
       items:{},
       pets: {},
       currentUserId: this.$store.state.user.userId,
-      petName: this.pet.petName,
+      //petName: this.pet.petName,
       date: new Date(),
       time: new Date(),
       
@@ -96,7 +96,7 @@ export default {
 
   methods: {
     getUserPets() {
-      petService.getPetList(this.currentUserId).then((response) => {
+      petService.getPetList().then((response) => {
         this.pets = response.data;
       });
     },

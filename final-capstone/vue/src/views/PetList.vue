@@ -28,7 +28,8 @@ export default {
             .then(response => {
           this.pets = response.data;          
         })
-        }
+        },
+        
     },
     created(){
         this.getUserPets();

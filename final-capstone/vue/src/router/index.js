@@ -8,10 +8,11 @@ import PetList from '../views/PetList.vue'
 import store from '../store/index'
 import AddPet from '../views/AddPet.vue'
 import EditPet from '../views/EditPet.vue'
-import WelcomePage from '../views/WelcomePage.vue'
 import ProfileDetails from '../views/ProfileDetails.vue'
 import PetView from '../views/PetView.vue'
-
+import UserPlaydateView from '../views/UserPlaydateView.vue'
+import PlaydateList from '../views/PlaydateList.vue'
+import CreatePlaydateForm from '../components/CreatePlaydateForm.vue'
 Vue.use(Router)
 
 /**
@@ -34,15 +35,7 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
-    },
-    {
-      path: '/welcomePage',
-      name: 'welcomePage',
-      component: WelcomePage,
-      meta: {
-        requiresAuth: false
-      }
-    },
+    },    
     {
       path: "/login",
       name: "login",
@@ -108,6 +101,31 @@ const router = new Router({
         requiresAuth: true
       }
     },
+    {
+      path: "/UserPlaydateView",
+      name: "user-playdate-view",
+      component: UserPlaydateView,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/playdateList",
+      name: "playdate-list",
+      component: PlaydateList,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/createPlaydateForm",
+      name: "create-playdate-form",
+      component: CreatePlaydateForm,
+      meta: {
+        requiresAuth: false
+      }
+    },
+
 
   ]
 })
@@ -118,7 +136,7 @@ router.beforeEach((to, from, next) => {
 
   // If it does and they are not logged in, send the user to "/login"
   if (requiresAuth && store.state.token === '') {
-    next("/welcomePage");
+    next("/");
   } else {
     // Else let them go to their next destination
     next();

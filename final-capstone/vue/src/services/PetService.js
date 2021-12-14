@@ -8,13 +8,13 @@ export default {
 
     
     getPetList() {
-        return axios.get(`/pets/mypets`)
+        return axios.get(`/pets/mypets/display`)
 
     },
 
 //return specific pet
     getPet(petId){
-        return axios.get(`/pets/${petId}`)
+        return axios.get(`/pets/${petId}/display`)
     },
 
 //register new pet

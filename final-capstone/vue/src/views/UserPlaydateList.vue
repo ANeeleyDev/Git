@@ -22,15 +22,15 @@ export default {
         }
     },
     methods: {
-        getAllPlaydates(){            
-            playdateService.getAllPlaydates()
+        getUserPlaydates(){            
+            playdateService.getLoggedInUserPlaydates()
             .then(response => {
           this.playdates = response.data;          
         })
         }
     },
     created(){
-        this.getAllPlaydates();
+        this.getUserPlaydates();
     }
 
 }

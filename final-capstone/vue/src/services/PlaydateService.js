@@ -7,8 +7,8 @@ export default {
 
     //get all playdates
 
-    playdateList() {
-        return axios.get(`/playdates`);
+    getAllPlaydates() {
+        return axios.get(`/playdates/display`);
     },
         // return playdates from specific user
     
@@ -27,7 +27,7 @@ export default {
         // return list of logged in users playdates
 
     getLoggedInUserPlaydates(){
-        return axios.get(`/playdates/myplaydates`)
+        return axios.get(`/playdates/myplaydates/display`)
     },
 
         //creates new playdate

@@ -25,7 +25,8 @@
           <v-btn>View My Pets</v-btn>
         </router-link>
       </v-card>
-      <v-card><v-btn>Forum</v-btn></v-card>
+      
+      <v-card><router-link v-bind:to="{ name: 'user-playdate-view' }"><v-btn>My Playdates</v-btn></router-link></v-card>
     </v-container>
   </div>
 </template>
