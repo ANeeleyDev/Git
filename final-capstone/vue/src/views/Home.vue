@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     
-    <nav-bar />
+    <nav-bar v-if="$store.state.token != ''" />
     <v-container>
       <v-row class="text-center">
         <v-col cols="12">
@@ -20,7 +20,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <playdate-view /> 
+    
 
     <div class="playdate-list">
       <v-card flat tile>
@@ -36,6 +36,7 @@
         </v-toolbar>
       </v-card>
     </div>
+    <playdate-view />
   </div>
 </template>
 

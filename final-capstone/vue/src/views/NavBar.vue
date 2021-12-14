@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container
+    <!-- <v-container
       v-if="this.$store.state.token === ''"
       class="d-flex justify-space-around flex-wrap"
       outline
@@ -15,7 +15,7 @@
           <v-btn>re</v-btn>
         </router-link>
       </v-card>
-    </v-container>
+    </v-container> -->
    
     <v-container class="d-flex justify-space-around flex-wrap" outline>
       <v-card>

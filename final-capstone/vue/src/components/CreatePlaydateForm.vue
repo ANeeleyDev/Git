@@ -8,16 +8,59 @@
           </v-col>
 
           <v-col cols="6">
-            <v-select class="selector"
-              v-model="select"
+            <v-select
+              class="selector"
+              v-model="playdate.playdatePostedPetId"
               :hint="`${select.petName}`"
               :items="pets"
               item-text="petName"
               item-value="petId"
               label="Select Pet"
               persistent-hint
-              return-object
               single-line
+            ></v-select>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12" md="4">
+            <v-text-field
+              v-model="playdate.playdateAddress"
+              label="Street Address"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-select
+              :items="city"
+              label="City"
+              v-model="playdate.playdateCity"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" md="4">
+            <!-- <v-autocomplete
+              v-model="playdate.playdateState"
+              :loading="loading"
+              :items="state"
+              :search-input.sync="search"
+              cache-items
+              class="mx-4"
+              flat
+              hide-no-data
+              hide-details
+              label="What state are you from?"
+              solo-inverted
+            ></v-autocomplete> -->
+            <v-select
+              :items="state"
+              label="State"
+              v-model="playdate.playdateState"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-select
+              :items="zip"
+              label="Zip Code"
+              v-model="playdate.playdateZip"
             ></v-select>
           </v-col>
         </v-row>
@@ -29,22 +72,22 @@
         v-model="user.firstName"
       ></v-text-field> -->
 
-    <section class="time-date">
-      <v-layout row>        
-          <h4>Choose a Date and Time</h4>        
-      </v-layout>
+      <section class="time-date">
+        <v-layout row>
+          <h4>Choose a Date and Time</h4>
+        </v-layout>
 
-      <v-layout row class="date-picker">        
+        <v-layout row class="date-picker">
           <v-date-picker v-model="date"></v-date-picker>
-          <p>{{ date }}</p>        
-      </v-layout>
-      <v-spacer></v-spacer>
+          <p>{{ date }}</p>
+        </v-layout>
+        <v-spacer></v-spacer>
 
-      <v-layout row class="time-picker">        
+        <v-layout row class="time-picker">
           <v-time-picker v-model="time" format="ampm"></v-time-picker>
-          <p>{{ time }}</p>        
-      </v-layout>
-    </section>
+          <p>{{ time }}</p>
+        </v-layout>
+      </section>
 
       <v-btn type="submit"> Submit </v-btn>
       <v-btn class="" v-on:click.prevent="cancelForm" type="cancel">
@@ -56,19 +99,81 @@
 
 <script>
 import petService from "@/services/PetService";
+import playdateService from "@/services/PlaydateService";
 export default {
   name: "create-playdate-form",
   props: ["petId"],
   data() {
     return {
-      select:{},
-      items:{},
-      pets: {},
+      select: [],
+
+      pets: [],
+      playdate: {
+        playdatePostedUserId: this.$store.state.user.userId,
+        playdatePostedPetId: "",
+        playdateRequestedUserId: this.$store.state.user.userId,
+        playdateRequestedPetId: "",
+        meetingTime: "",
+        playdateAddress: "",
+        playdateCity: "",
+        playdateState: "",
+        playdateZip: "",
+        playdateStatusId: 0,
+      },
       currentUserId: this.$store.state.user.userId,
       //petName: this.pet.petName,
       date: this.submittableDateTime,
       time: this.submittableDateTime,
-      
+      city: [
+        {
+          text: "Cincinnati",
+          value: "0",
+        },
+        {
+          text: "Columbus",
+          value: "1",
+        },
+        {
+          text: "Toledo",
+          value: "2",
+        },
+        {
+          text: "Cleveland",
+          value: "3",
+        },
+        {
+          text: "Dayton",
+          value: "4",
+        },
+      ],
+      state: [
+        {
+          text: "Ohio",
+          value: "34",
+        },
+      ],
+      zip: [
+        {
+          text: "45249",
+          value: "0",
+        },
+        {
+          text: "41073",
+          value: "1",
+        },
+        {
+          text: "45201",
+          value: "2",
+        },
+        {
+          text: "45222",
+          value: "3",
+        },
+        {
+          text: "45237",
+          value: "4",
+        },
+      ],
     };
   },
   computed: {
@@ -94,12 +199,19 @@ export default {
     getUserPets() {
       petService.getPetList().then((response) => {
         this.pets = response.data;
-      })
+      });
+    },
+    submitForm() {
+      this.playdate.playdateRequestedPetId = this.playdate.playdatePostedPetId;
+      this.playdate.meetingTime = this.submittableDateTime;
+      playdateService.registerPlaydate(this.playdate).then((response) => {
+        this.pets = response.data;
+        this.$router.push(`/UserPlaydateView`);
+      });
     },
 
-    
     cancelForm() {
-      this.$router.push(`/petlist`);
+      this.$router.push(`/UserPlaydateView`);
     },
 
     handleErrorResponse(error, verb) {
@@ -115,20 +227,18 @@ export default {
       } else {
         this.errorMsg = "Error " + verb + " pet. Request could not be created.";
       }
-    },  
+    },
   },
 };
-
 </script>
 
 <style>
-.time-date{
-margin-left:95px;
-padding-top: 40px
-  
+.time-date {
+  margin-left: 95px;
+  padding-top: 40px;
 }
 
-.selector{
+.selector {
   width: 100%;
   padding: 16px 20px;
   margin-top: 50px;
@@ -136,5 +246,4 @@ padding-top: 40px
   border-radius: 4px;
   background-color: #f1f1f1;
 }
-
 </style>

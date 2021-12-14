@@ -173,14 +173,16 @@ namespace Capstone.DAO
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO playdates (playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, meeting_time, playdate_address, " +
+                SqlCommand cmd = new SqlCommand("INSERT INTO playdates (playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, playdate_requested_pet_id, meeting_time, playdate_address, " +
                     "playdate_city, playdate_state, playdate_zip, playdate_status_id) " +
                 "OUTPUT INSERTED.playdate_id " +
-                "VALUES (@playdate_posted_user_id, @playdate_posted_pet_id, null, @meeting_time, @playdate_address, @playdate_city, @playdate_state, @playdate_zip, 0)" +
+                "VALUES (@playdate_posted_user_id, @playdate_posted_pet_id, @playdate_requested_user_id, @playdate_requested_pet_id, @meeting_time, @playdate_address, @playdate_city, @playdate_state, @playdate_zip, 0)" +
                 "", conn);
 
                 cmd.Parameters.AddWithValue("@playdate_posted_user_id", newPlaydate.playdatePostedUserId);
                 cmd.Parameters.AddWithValue("@playdate_posted_pet_id", newPlaydate.playdatePostedPetId);
+                cmd.Parameters.AddWithValue("@playdate_requested_user_id", newPlaydate.playdatePostedUserId);
+                cmd.Parameters.AddWithValue("@playdate_requested_pet_id", newPlaydate.playdatePostedPetId);
                 cmd.Parameters.AddWithValue("@meeting_time", newPlaydate.meetingTime);
                 cmd.Parameters.AddWithValue("@playdate_address", newPlaydate.playdateAddress);
                 cmd.Parameters.AddWithValue("@playdate_city", newPlaydate.playdateCity);
