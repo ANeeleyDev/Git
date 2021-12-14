@@ -5,15 +5,22 @@ export default {
 
     //ANONYMOUS USER FUNCTIONS
 
-    //get all playdates
+    
 
-    getAllPlaydates() {
-        return axios.get(`/playdates/display`);
-    },
+   
         // return playdates from specific user
     
     getPlaydatesByUserId(userId){
         return axios.get(`/playdates/user/${userId}`)
+    },
+
+    getPlaydateForDisplay(playdateId){
+        return axios.get(`/playdates/${playdateId}/display`)
+    },
+        //get all playdates
+        
+    getAllPlaydatesForDisplay(){
+        return axios.get(`/playdates/display`)
     },
 
         // return any playdate by ID

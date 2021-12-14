@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <nav-bar />
+    
+    <!-- <nav-bar /> -->
     <v-container>
       <v-row class="text-center">
         <v-col cols="12">
@@ -19,18 +20,38 @@
         </v-col>
       </v-row>
     </v-container>
-    <playdate-view />
+    <playdate-view /> 
+
+    <div class="playdate-list">
+      <v-card flat tile>
+        <v-toolbar color="cyan" dark>
+          <v-col cols="5"></v-col>
+          <v-col class="d-flex justify-space-around">
+            <v-app-bar-title class="white--text">
+              Look Who's Ready to Play!</v-app-bar-title
+            >
+            <display-top-five />
+          </v-col>
+          <v-col cols="5" class="d-flex justify-end"></v-col>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+      </v-card>
+    </div>
   </div>
 </template>
 
 <script>
 import PlaydateView from "./PlaydateView.vue";
 import userService from "@/services/UserService";
-import NavBar from "./NavBar.vue";
+// import NavBar from "./NavBar.vue";
+import DisplayTopFive from '../components/DisplayTopFive.vue';
+
 export default {
   components: {
     PlaydateView,
-    NavBar,
+    // NavBar,
+    DisplayTopFive,
+    
   },
   name: "home",
 
@@ -40,6 +61,7 @@ export default {
         this.$store.commit("SET_USER_PROFILE", response.data);
       });
     },
+    
   },
   created() {
     this.getCurrentUserProfile();
