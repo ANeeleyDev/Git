@@ -76,7 +76,7 @@ CREATE TABLE breeds (
 CREATE TABLE pets (
 	pet_id int IDENTITY(0,1) NOT NULL,
 	user_id int NOT NULL,
-	pet_image varchar(250) NOT NULL,
+	pet_image varchar(500) NOT NULL,
 	pet_name varchar(50) NOT NULL,
 	age int NOT NULL,
 	breed int NOT NULL,
@@ -1334,7 +1334,7 @@ VALUES	('Affenpinscher', 0),
 		('Bohemian Shepherd', 0),
 		('Bolognese', 0),
 		('Border Collie', 0),
-		('Border Terrier', 0),
+		('Border Terrier', 0), --50
 		('Borzoi', 0),
 		('Boston Terrier', 0),
 		('Bouvier des Flandres', 0),
@@ -1384,7 +1384,7 @@ VALUES	('Affenpinscher', 0),
 		('Dogue de Bordeaux', 0),
 		('Drentsche Patrijshond', 0),
 		('Drever', 0),
-		('Dutch Shepherd', 0),
+		('Dutch Shepherd', 0), --100
 		('English Cocker Spaniel', 0),
 		('English Foxhound', 0),
 		('English Setter', 0),
@@ -1434,7 +1434,7 @@ VALUES	('Affenpinscher', 0),
 		('Japanese Spitz', 0),
 		('Japanese Terrier', 0),
 		('Jindo', 0),
-		('Kai Ken', 0),
+		('Kai Ken', 0), --150
 		('Karelian Bear Dog', 0),
 		('Keeshond', 0),
 		('Kerry Blue Terrier', 0),
@@ -1484,7 +1484,7 @@ VALUES	('Affenpinscher', 0),
 		('Pointer', 0),
 		('Polish Lowland Sheepdog', 0),
 		('Pomeranian', 0),
-		('Poodle (miniature)', 0),
+		('Poodle (miniature)', 0), --200
 		('Poodle (standard)', 0),
 		('Poodle (toy)', 0),
 		('Porcelaine', 0),
@@ -1534,7 +1534,7 @@ VALUES	('Affenpinscher', 0),
 		('Spanish Mastiff', 0),
 		('Spanish Water Dog', 0),
 		('Spinone Italiano', 0),
-		('Stabyhoun', 0),
+		('Stabyhoun', 0), --250
 		('Staffordshire Bull Terrier', 0),
 		('Standard Schnauzer', 0),
 		('Sussex Spaniel', 0),
@@ -1566,7 +1566,8 @@ VALUES	('Affenpinscher', 0),
 		('Working Kelpie', 0),
 		('Xoloitzcuintli', 0),
 		('Yakutian Laika', 0),
-		('Yorkshire Terrier', 0);
+		('Yorkshire Terrier', 0),
+		('Mutt', 0); --284
 
 INSERT INTO users (username, password_hash, salt, user_role, first_name, last_name,	email_address, phone_number, street_address, city, state, zip)
 VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'Solo', 'hsolo@gmail.com', '7684729290', '111 Smugglers Way', 0, 34, 0),
@@ -1582,7 +1583,9 @@ VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'So
 
 INSERT INTO pets (user_id, pet_image, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
 VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large/james-parce-jabba-the-pug.jpg?1604239107', 'Jabba', 13, 0, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
-		(1, 'https://static.wikia.nocookie.net/arresteddevelopment/images/7/71/3x13_Development_Arrested_%2892%29.png/revision/latest/scale-to-width-down/1000?cb=20130323224933', 'Loose Seal AKA Bby Ppy Destructo', 3, 0, 0, 0, 0, 0, 0, 0, 0, 'destroys everything');
+		(1, 'https://static.wikia.nocookie.net/arresteddevelopment/images/7/71/3x13_Development_Arrested_%2892%29.png/revision/latest/scale-to-width-down/1000?cb=20130323224933', 'Loose Seal AKA Bby Ppy Destructo', 3, 0, 0, 0, 0, 0, 0, 0, 0, 'destroys everything'),
+		(2, 'https://mymodernmet.com/wp/wp-content/uploads/2020/10/cooper-baby-corgi-dogs-8.jpg', 'Kevin the Corgi', 1, 190, 0, 1, 0, 1, 0, 1, 0, 'super cute'),
+		(3, 'https://www.akc.org/wp-content/uploads/2017/11/Tibetan-Mastiff-laying-down-outdoors.jpg', 'Teddy Roosevelt', 5, 259, 0, 1, 0, 0, 1, 1, 1, 'Gigantic love bug');
 
 INSERT INTO posts (user_id, post_title, post_content)
 VALUES	(0, 'Jabba needs a snack- I mean friend', 'Looking for a friend for my lovely little Jabba');
@@ -1603,6 +1606,11 @@ VALUES	(0, 'Pending'),
 
 
 INSERT INTO playdates (playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, playdate_requested_pet_id, meeting_time, playdate_address, playdate_city, playdate_state, playdate_zip, playdate_status_id)
-VALUES (0, 0, 1, 1, '2021-12-08 10:30:00', '888 Galaxy Drive', 0, 0, 0, 4);
+VALUES	(0, 0, 1, 1, '2021-12-08 10:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
+		(1, 1, 2, 2, '2021-12-15 12:30:00', '9870 Smart Pets Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 2),
+		(2, 2, 3, 3, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
+		(2, 2, 0, 0, '2021-12-10 9:30:00', '5328 Pet Park Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
+		(0, 0, 3, 3, '2021-12-17 10:30:00', '8098 Doggy Park Way', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
+		(3, 3, 1, 1, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1);
 
 GO
