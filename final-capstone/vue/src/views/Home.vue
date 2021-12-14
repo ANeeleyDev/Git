@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     
-    <!-- <nav-bar /> -->
+    <nav-bar />
     <v-container>
       <v-row class="text-center">
         <v-col cols="12">
@@ -28,9 +28,8 @@
           <v-col cols="5"></v-col>
           <v-col class="d-flex justify-space-around">
             <v-app-bar-title class="white--text">
-              Look Who's Ready to Play!</v-app-bar-title
-            >
-            <display-top-five />
+              Look Who's Ready to Play!</v-app-bar-title            >
+            
           </v-col>
           <v-col cols="5" class="d-flex justify-end"></v-col>
           <v-spacer></v-spacer>
@@ -43,14 +42,14 @@
 <script>
 import PlaydateView from "./PlaydateView.vue";
 import userService from "@/services/UserService";
-// import NavBar from "./NavBar.vue";
-import DisplayTopFive from '../components/DisplayTopFive.vue';
+import NavBar from "./NavBar.vue";
+
 
 export default {
   components: {
     PlaydateView,
-    // NavBar,
-    DisplayTopFive,
+    NavBar,
+   
     
   },
   name: "home",
