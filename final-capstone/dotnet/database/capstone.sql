@@ -34,7 +34,7 @@ CREATE TABLE cities (
 )
 
 CREATE TABLE zips (
-	zip_id int NOT NULL,
+	zip_id int IDENTITY(0,1) NOT NULL,
 	zipcode int NOT NULL
 	CONSTRAINT PK_zip PRIMARY KEY (zip_id)
 )
@@ -1274,12 +1274,12 @@ VALUES	(34, 'Wauseon', 41.566796, -84.153745),
 		(34, 'Zoar', 40.614167, -81.4225);
 
 
-INSERT INTO zips (zip_id, zipcode)
-VALUES	(0, 45249),
-		(1, 41073),
-		(2, 45201),
-		(3, 45222),
-		(4, 45327);
+INSERT INTO zips (zipcode)
+VALUES	(45249),
+		(41073),
+		(45201),
+		(45222),
+		(45327);
 
 INSERT INTO species (species)
 VALUES	('Dog');
