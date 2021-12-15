@@ -62,29 +62,31 @@
     <v-card-title>{{this.pet.petName}} & {{this.user.firstName}}</v-card-title>
     <v-card-text>{{this.playdate.playdateAddress}}
     
-    {{this.playdate.playdateCity}}, {{playdate.playdateState}} {{playdate.playdateZip}}</v-card-text>
+    <br/>{{this.playdate.playdateCity}}, {{playdate.playdateState}} {{playdate.playdateZip}}</v-card-text>
     <v-card-text>{{this.playdate.meetingTime}}</v-card-text>
 
 
     <v-card-actions>
         <v-btn
-            color="green"
-            text
+            color="blue"
+            text v-if="this.playdate.playdatePostedUserId === this.$store.state.user.userId" @click="$router.push({name: 'edit-playdate', params: {playdateId: playdate.playdateId}})"
         >
-        Request Playdate
+        Edit 
         </v-btn>
 
-        <v-btn
-            color="blue"
-            text
-        >
-        Save 
+        <v-btn 
+        color="red" 
+        text v-if="this.playdate.playdatePostedUserId === this.$store.state.user.userId" @click="deletePlaydate"
+        > 
+        Delete 
         </v-btn>
+
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import playdateService from "@/services/PlaydateService";
 import petService from "@/services/PetService";
 import userService from '@/services/UserService';
 export default {
@@ -109,8 +111,37 @@ export default {
        
           this.user = response.data;
         })
-      
-    },
+     },
+      deletePlaydate() {
+        if (
+          confirm(
+            "Are you sure you want to delete this playdate? This action cannot be undone."
+          )
+        ) {
+          playdateService
+            .deleteLoggedInUserPlaydate(this.playdate.playdateId)
+            .then((response) => {
+              if (response.status === 200) {
+                alert("Playdate successfully deleted");
+                this.$router.push(`/`);
+              }
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.errorMsg =
+                  "Error deleting playdate. Response received was '" +
+                  error.response.statusText +
+                  "'.";
+              } else if (error.request) {
+                this.errorMsg =
+                  "Error deleting playdate. Server could not be reached.";
+              } else {
+                this.errorMsg =
+                  "Error deleting playdate. Request could not be created.";
+              }
+            });
+        }
+      }       
   },
   created() {
       this.getPetInfo();

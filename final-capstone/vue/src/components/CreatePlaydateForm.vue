@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1>Add Playdate</h1>
+    <playdate-form v-bind:playdateId="this.playdateId" />   
     <v-form v-on:submit.prevent="submitForm">
       <v-container fluid>
         <v-row align="center">
@@ -25,7 +27,7 @@
           <v-col cols="12" md="4">
             <v-text-field
               v-model="playdate.playdateAddress"
-              label="Street Address"
+              label="Address"
               required
             ></v-text-field>
           </v-col>

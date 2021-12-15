@@ -13,6 +13,7 @@ import PetView from '../views/PetView.vue'
 import UserPlaydateView from '../views/UserPlaydateView.vue'
 import PlaydateList from '../views/PlaydateList.vue'
 import CreatePlaydateForm from '../components/CreatePlaydateForm.vue'
+import EditPlaydate from '../views/EditPlaydate.vue'
 Vue.use(Router)
 
 /**
@@ -81,6 +82,14 @@ const router = new Router({
       path: "/editPet",
       name: "edit-pet",
       component: EditPet,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/editPlaydate",
+      name: "edit-playdate",
+      component: EditPlaydate,
       meta: {
         requiresAuth: false
       }

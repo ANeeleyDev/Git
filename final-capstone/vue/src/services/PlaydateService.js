@@ -59,7 +59,7 @@ export default {
         return axios.delete(`/playdates/admin/${playdateId}`)
     },
 
-    updatePlaydates(playdateId){
+    updatePlaydate(playdateId){
         return axios.put(`/playdates/admin/${playdateId}`)
     },
 

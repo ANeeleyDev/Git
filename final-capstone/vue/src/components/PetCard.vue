@@ -18,8 +18,8 @@
       >
         Learn More
       </v-btn> 
-      <v-btn color="orange" text v-if="this.pet.userId === this.$store.state.user.userId" @click="$router.push({name: 'edit-pet', params: {petId: pet.petId}})"> Edit </v-btn>
-      <v-btn color="orange" text v-if="this.pet.userId === this.$store.state.user.userId" @click="deletePet"> Delete </v-btn>
+      <v-btn color="blue" text v-if="this.pet.userId === this.$store.state.user.userId" @click="$router.push({name: 'edit-pet', params: {petId: pet.petId}})"> Edit </v-btn>
+      <v-btn color="red" text v-if="this.pet.userId === this.$store.state.user.userId" @click="deletePet"> Delete </v-btn>
      
       
     </v-card-actions>
