@@ -36,13 +36,20 @@
           </p>
             
           <p> {{pet.species}}, {{pet.breed}}, {{pet.age}} years old</p>
-          <p v-if="pet.playful === true" >Playful </p>
-          <p v-if="pet.nervous === true" >Nervous</p>
-          <p v-if="pet.confident === true" >Confident</p>
-          <p v-if="pet.shy === true" >Shy</p>
-          <p v-if="pet.mischievous === true" >Mischievous</p>
-          <p v-if="pet.independent === true" >Independent</p>
-          <p>{{ pet.otherComments }}</p>
+          <p style="display:inline" >Attributes: </p>
+          <p style="display:inline" v-if="pet.playful === true" >Playful</p>
+          <p style="display:inline" v-if="pet.nervous === true & pet.playful === true">, </p>
+          <p style="display:inline" v-if="pet.nervous === true" >Nervous</p>
+          <p style="display:inline" v-if="pet.confident === true">, </p>
+          <p style="display:inline" v-if="pet.confident === true" >Confident</p>
+          <p style="display:inline" v-if="pet.shy === true">, </p>
+          <p style="display:inline" v-if="pet.shy === true" >Shy</p>
+          <p style="display:inline" v-if="pet.mischievous === true">, </p>
+          <p style="display:inline" v-if="pet.mischievous === true" >Mischievous</p>
+          <p style="display:inline" v-if="pet.independent === true">, </p>
+          <p style="display:inline" v-if="pet.independent === true" >Independent</p>
+          <p></p>
+          <p>Other comments: "{{ pet.otherComments }}"</p>
         </v-card-text>
         <v-card-actions class="pt-0">
           <v-btn
