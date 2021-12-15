@@ -1,8 +1,9 @@
 <template>
   <v-card class="mx-auto" max-width="400">
     <v-img class="white--text align-end" height="200px" :src="pet.petImage">
-      <v-card-title>{{ pet.petName }}</v-card-title>
     </v-img>
+
+    <v-card-text class="black--text" id="petNameStylings">{{ pet.petName }}</v-card-text>
 
     <v-card-subtitle class="pb-0"> Age: {{ pet.age }} </v-card-subtitle>
 
@@ -118,6 +119,10 @@ export default {
   opacity: 1 !important;
   position: absolute;
   width: 100%;
+}
+
+.black--text {
+  font-size: 150%;
 }
 
 </style>
