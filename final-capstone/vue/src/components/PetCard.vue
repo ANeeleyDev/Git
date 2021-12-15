@@ -4,7 +4,7 @@
       <v-card-title>{{ pet.petName }}</v-card-title>
     </v-img>
 
-    <v-card-subtitle class="pb-0"> Age {{ pet.age }} </v-card-subtitle>
+    <v-card-subtitle class="pb-0"> Age: {{ pet.age }} </v-card-subtitle>
 
     <v-card-text class="text--primary">
       <div>{{ pet.otherComments }}</div>
@@ -35,9 +35,14 @@
             {{ pet.petName }}
           </p>
             
-          <p> Age: {{ pet.age }} {{pet.breed}} {{pet.species}}</p>
-          <p>Things to know about me:</p>
-          <p>{{ pet.otherComments }}}</p>
+          <p> {{pet.species}}, {{pet.breed}}, {{pet.age}} years old</p>
+          <p v-if="pet.playful === true" >Playful </p>
+          <p v-if="pet.nervous === true" >Nervous</p>
+          <p v-if="pet.confident === true" >Confident</p>
+          <p v-if="pet.shy === true" >Shy</p>
+          <p v-if="pet.mischievous === true" >Mischievous</p>
+          <p v-if="pet.independent === true" >Independent</p>
+          <p>{{ pet.otherComments }}</p>
         </v-card-text>
         <v-card-actions class="pt-0">
           <v-btn

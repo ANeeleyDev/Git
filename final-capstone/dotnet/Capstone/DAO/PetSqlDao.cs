@@ -41,6 +41,40 @@ namespace Capstone.DAO
             }
         }
 
+        //public List<String> DisplayPetPersonality(int petId)
+        //{
+        //    List<String> petPersonalities = new List<String>();
+
+        //    try
+        //    {
+        //        using (SqlConnection conn = new SqlConnection(connectionString))
+        //        {
+        //            conn.Open();
+
+        //            SqlCommand cmd = new SqlCommand("SELECT pet_id, playful, nervous, confident, shy, mischievous, " +
+        //                                            "independent " +
+        //                                            "FROM pets " +
+        //                                            "WHERE pet_id = @pet_id", conn);
+        //            cmd.Parameters.AddWithValue("@pet_id", petId);
+
+        //            SqlDataReader reader = cmd.ExecuteReader();
+
+        //            while (reader.Read())
+        //            {
+        //                Pet pet = CreatePetFromReader(reader);
+        //                allPetsByUserId.Add(pet);
+        //            }
+        //        }
+        //    }
+        //    catch (SqlException)
+        //    {
+
+        //        throw;
+        //    }
+
+        //    return allPetsByUserId;
+        //}
+
         public Pet GetPetForDisplay(int petId) //Will display species and breeds as not id
         {
             Pet pet = null;

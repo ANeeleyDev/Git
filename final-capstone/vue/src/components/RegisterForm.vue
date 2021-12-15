@@ -17,11 +17,12 @@
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="user.username"
-                :counter="10"
+                :counter="50"
                 label="Username"
                 required
               ></v-text-field>
             </v-col>
+            <!-- Changed counter from 10 to 50 by Kevin 12/14/2021 -->
 
             <v-col cols="12" md="4">
               <v-text-field
