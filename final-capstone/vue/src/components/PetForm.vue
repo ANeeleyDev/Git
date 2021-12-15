@@ -16,12 +16,16 @@
         label="Age"        
         v-model.number="pet.age"
       ></v-text-field>
-      <v-select
+      <v-select 
         :items="species"
         label="Species"
         v-model="pet.species"
       ></v-select>
-      <v-select :items="breed" label="Breed" v-model="pet.breed"></v-select>
+      <v-select 
+        :items="breed" 
+        label="Breed" 
+        v-model="pet.breed">
+      </v-select>
       <v-textarea
         name="input-7-1"
         label="Other Comments"
