@@ -49,7 +49,7 @@
           <p style="display:inline" v-if="pet.independent === true">, </p>
           <p style="display:inline" v-if="pet.independent === true" >Independent</p>
           <p></p>
-          <p>Other comments: {{ pet.otherComments }}</p>
+          <p>Other comments: "{{ pet.otherComments }}"</p>
         </v-card-text>
         <v-card-actions class="pt-0">
           <v-btn
