@@ -1,0 +1,16 @@
+{
+  "name": "c-pet-pals-capstone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://avorpetech@bitbucket.org/te-cin-cohort-12/c-pet-pals-capstone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/te-cin-cohort-12/c-pet-pals-capstone#readme"
+}
