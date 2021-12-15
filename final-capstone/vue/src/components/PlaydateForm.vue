@@ -1,25 +1,35 @@
 <template>
   <div>
     <v-form v-on:submit.prevent="submitForm">
+    <v-select
+        v-model="playdate.playdatePostedPetId"
+        :hint="`${select.petName}`"
+        :items="pets"
+        item-text="petName"
+        item-value="petId"
+        label="Select Pet"
+        persistent-hint
+        single-line
+    ></v-select>
       <v-text-field
         value="playdateAddress"
         label="Address"        
-        v-model.number="playdate.playdateAddress"
+        v-model="playdate.playdateAddress"
       ></v-text-field>
       <v-select 
         :items="city"
         label="City"
-        v-model="playdate.city"
+        v-model="playdate.playdateCity"
       ></v-select>
       <v-select 
         :items="state"
         label="State"
-        v-model="playdate.state"
+        v-model="playdate.playdateState"
       ></v-select>
       <v-select 
         :items="zip"
         label="Zip"
-        v-model="playdate.Zip"
+        v-model="playdate.playdateZip"
       ></v-select>
       <v-date-picker
         v-model="date"
@@ -54,7 +64,7 @@ export default {
             playdate: {
                 playdatePostedUserId: this.$store.state.user.userId,
                 playdatePostedPetId: "",
-                playdateRequestedUserId: this.$store.state.user.userId,
+                playdateRequestedUserId: "",
                 playdateRequestedPetId: "",
                 meetingTime: "",
                 playdateAddress: "",
@@ -69,23 +79,23 @@ export default {
             city: [
                 {
                 text: "Cincinnati",
-                value: "0",
+                value: "184",
                 },
                 {
                 text: "Columbus",
-                value: "1",
+                value: "207",
                 },
                 {
                 text: "Toledo",
-                value: "2",
+                value: "947",
                 },
                 {
                 text: "Cleveland",
-                value: "3",
+                value: "191",
                 },
                 {
                 text: "Dayton",
-                value: "4",
+                value: "238",
                 },
             ],
             state: [
@@ -119,7 +129,23 @@ export default {
             editPlaydateId: this.$route.params.playdateId,
         };
     }, 
+    computed: {
+    submittableDateTime() {
+      const date = new Date(this.date);
+      if (typeof this.time === "string") {
+        const hours = this.time.match(/^(\d+)/)[1];
+        const minutes = this.time.match(/:(\d+)/)[1];
+        date.setHours(hours);
+        date.setMinutes(minutes);
+      } else {
+        date.setHours(this.time.getHours());
+        date.setMinutes(this.time.getMinutes());
+      }
+      return date;
+    },
+    },
     created() {
+    this.getUserPets();
     if (this.playdateId != 0) {
       petService
         .getPlaydateForDisplay(this.playdateId)
@@ -135,19 +161,23 @@ export default {
           }
         });
     }
-  },
+  },  
+
     methods: {
+        getUserPets() {
+            petService.getPetList().then((response) => {
+            this.pets = response.data;
+        });
+    },
         submitForm() {
         const newPlaydate = {
             playdatePostedUserId: Number(this.$store.state.user.userId),
             playdatePostedPetId: this.playdate.playdatePostedPetId,
-            playdateRequestedUserId: this.playdate.playdateRequestedUserId,
-            playdateRequestedPetId: this.playdate.playdateRequestedPetId,
-            meetingTime: this.playdate.meetingTime,
+            meetingTime: this.submittableDateTime,
             playdateAddress: this.playdate.playdateAddress,
-            playdateCity: this.playdateCity,
-            playdateState: this.playdateState,
-            playdateZip: this.playdateZip,
+            playdateCity: this.playdate.playdateCity,
+            playdateState: this.playdate.playdateState,
+            playdateZip: this.playdate.playdateZip,
             playdateStatusId: this.playdateStatusId
         };
 
@@ -157,7 +187,7 @@ export default {
           .registerPlaydate(newPlaydate)
           .then((response) => {
             if (response.status === 200) {
-              this.$router.push(`/playdatelist`);
+              this.$router.push(`/userPlaydateView`);
             }
           })
           .catch((error) => {
@@ -182,7 +212,7 @@ export default {
       }
     },
     cancelForm() {
-      this.$router.push(`/playdatelist`);
+      this.$router.push(`/userPlaydateView`);
     },
     handleErrorResponse(error, verb) {
       if (error.response) {
