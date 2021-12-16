@@ -53,6 +53,10 @@ export default {
         return axios.delete(`playdates/myplaydates/${playdateId}`)
     },
 
+    requestPlaydate(updatedPlaydate, playdateId){
+        return axios.put(`/playdates/${playdateId}/request`, updatedPlaydate)
+    },
+
     // ADMIN functions
 
     deletePlaydate(playdateId){

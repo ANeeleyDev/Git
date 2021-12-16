@@ -155,7 +155,7 @@ export default {
         .catch(error => {
           if (error.response && error.response.status === 404) {
             alert(
-              "Card not available. This playdate may have been deleted or you have entered an invalid playdate ID."
+              "Playdate not available. This playdate may have been deleted or you have entered an invalid playdate ID."
             );
             this.$router.push("/");
           }
