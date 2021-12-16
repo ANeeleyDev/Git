@@ -60,23 +60,24 @@
     ></v-img>
 
     <v-card-title>Meet {{this.pet.petName}}</v-card-title>
-    <v-card-subtitle v-if="this.playdate.playdateStatusId === 1"> {{this.requestedPet.petName}} wants to meet you!</v-card-subtitle>
+    <v-card-subtitle v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId"> 
+      {{this.requestedPet.petName}} wants to meet you!</v-card-subtitle>
       <v-btn 
         color="green" 
-        text v-if="this.playdate.playdateStatusId === 1" 
-        @click="approvePlaydate"
+        text v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
+        @click="acceptPlaydate"
         > 
         Approve 
       </v-btn>
       <v-btn 
         color="red darken-4" 
-        text v-if="this.playdate.playdateStatusId === 1" 
+        text v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
         @click="rejectPlaydate"
         > 
         Reject 
       </v-btn>
       <v-btn
-          text v-if="this.playdate.playdateStatusId === 1" 
+          text v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
           color="orange accent-4"
           @click="revealRequestedPet = !revealRequestedPet"
         >
@@ -255,7 +256,7 @@ export default {
             .deleteLoggedInUserPlaydate(this.playdate.playdateId)
             .then((response) => {
               if (response.status === 200) {
-                alert("Playdate successfully deleted");
+                alert("Playdate successfully deleted.");
                 this.$router.push(`/`);
               }
             })
@@ -274,7 +275,75 @@ export default {
               }
             });
         }
-      }       
+      },
+      acceptPlaydate() {
+        const updatedPlaydate = {
+            playdateId: this.playdateId,
+            playdateStatusId: this.playdateStatusId
+          };
+        if (
+          confirm(
+            "Are you sure you want to accept this playdate?"
+          )
+        ) {
+          playdateService
+            .acceptPlaydate(updatedPlaydate, this.playdate.playdateId)
+            .then((response) => {
+              if (response.status === 200) {
+                alert("Playdate successfully approved.");
+                this.$router.push(`/`);
+              }
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.errorMsg =
+                  "Error accepting playdate. Response received was '" +
+                  error.response.statusText +
+                  "'.";
+              } else if (error.request) {
+                this.errorMsg =
+                  "Error accepting playdate. Server could not be reached.";
+              } else {
+                this.errorMsg =
+                  "Error accepting playdate. Request could not be created.";
+              }
+            });
+        }
+      },
+      rejectPlaydate() {
+        const updatedPlaydate = {
+            playdateId: this.playdateId,
+            playdateStatusId: this.playdateStatusId
+          };
+        if (
+          confirm(
+            "Are you sure you want to reject this playdate?"
+          )
+        ) {
+          playdateService
+            .rejectPlaydate(updatedPlaydate, this.playdate.playdateId)
+            .then((response) => {
+              if (response.status === 200) {
+                alert("Playdate successfully rejected.");
+                this.$router.push(`/`);
+              }
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.errorMsg =
+                  "Error rejecting playdate. Response received was '" +
+                  error.response.statusText +
+                  "'.";
+              } else if (error.request) {
+                this.errorMsg =
+                  "Error rejecting playdate. Server could not be reached.";
+              } else {
+                this.errorMsg =
+                  "Error rejecting playdate. Request could not be created.";
+              }
+            });
+        }
+      }          
   },
   created() {
       this.getPetInfo();
