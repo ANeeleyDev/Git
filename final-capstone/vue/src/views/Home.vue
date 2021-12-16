@@ -28,7 +28,7 @@
           <v-col cols="5"></v-col>
           <v-col class="d-flex justify-space-around">
             <v-app-bar-title class="white--text">
-              Look Who's Ready to Play!</v-app-bar-title            >
+              Look Who's Ready to Play!</v-app-bar-title>
             
           </v-col>
           <v-col cols="5" class="d-flex justify-end"></v-col>
@@ -36,7 +36,7 @@
         </v-toolbar>
       </v-card>
     </div>
-    <playdate-view />
+    <playdate-view align="center" />
   </div>
 </template>
 
