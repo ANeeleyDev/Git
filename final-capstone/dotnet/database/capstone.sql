@@ -1628,16 +1628,16 @@ VALUES	(0, 'Pending'),
 
 
 INSERT INTO playdates (playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, playdate_requested_pet_id, meeting_time, playdate_address, playdate_city, playdate_state, playdate_zip, playdate_status_id)
-VALUES	(0, 0, 1, 1, '2021-12-08 10:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
-		(1, 2, 2, 3, '2021-12-15 12:30:00', '9870 Smart Pets Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 2),
-		(2, 4, 3, 7, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
-		(8, 17, 4, 9, '2021-12-10 9:30:00', '5328 Pet Park Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
-		(8, 18, 10, 22, '2021-12-17 10:30:00', '8098 Doggy Park Way', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
-		(11, 23, 5, 11, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
-		(4, 8, 7, 15, '2021-12-20 10:00', '3432 Dog Park Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
-		(9, 20, 3, 6, '2021-12-18 12:00', '8474 Pets Play Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 2),
-		(4, 10, 5, 12, '2021-12-22 9:00', '', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
-		(9, 19, 6, 13, '2022-01-03', '11:00', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
-		(6, 14, 2, 4, '2022-01-10', '9:00', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1);
+VALUES	(0, 0, 1, 1, '2021-12-08 10:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(1, 2, 2, 3, '2021-12-15 12:30:00', '9870 Smart Pets Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(2, 4, 3, 7, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(8, 17, 4, 9, '2021-12-10 9:30:00', '5328 Pet Park Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(8, 18, 10, 22, '2021-12-17 10:30:00', '8098 Doggy Park Way', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(11, 23, 5, 11, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(4, 8, 7, 15, '2021-12-20 10:00', '3432 Dog Park Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(9, 20, 3, 6, '2021-12-18 12:00', '8474 Pets Play Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(4, 10, 5, 12, '2021-12-22 9:00', '', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(9, 19, 6, 13, '2022-01-03', '11:00', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(6, 14, 2, 4, '2022-01-10', '9:00m', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0);
 
 GO
