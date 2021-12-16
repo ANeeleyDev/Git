@@ -1636,8 +1636,8 @@ VALUES	(0, 0, 1, 1, '2021-12-08 10:30:00', '888 Galaxy Drive', (SELECT city_id F
 		(11, 23, 5, 11, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
 		(4, 8, 7, 15, '2021-12-20 10:00', '3432 Dog Park Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
 		(9, 20, 3, 6, '2021-12-18 12:00', '8474 Pets Play Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
-		(4, 10, 5, 12, '2021-12-22 9:00', '', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
-		(9, 19, 6, 13, '2022-01-03', '11:00', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
-		(6, 14, 2, 4, '2022-01-10', '9:00m', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0);
+		(4, 10, 5, 12, '2021-12-22 9:00', '9483 Park for Pup Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(9, 19, 6, 13, '2022-01-03 11:00', '5676 Best Pets Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+		(6, 14, 2, 4, '2022-01-10 9:00', '34554 Love Pets Road', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0);
 
 GO
