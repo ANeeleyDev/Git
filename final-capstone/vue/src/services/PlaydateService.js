@@ -57,6 +57,14 @@ export default {
         return axios.put(`/playdates/${playdateId}/request`, updatedPlaydate)
     },
 
+    acceptPlaydate(updatedPlaydate, playdateId){
+        return axios.put(`/playdates/${playdateId}/accept`, updatedPlaydate)
+    },
+    
+    rejectPlaydate(updatedPlaydate, playdateId){
+        return axios.put(`/playdates/${playdateId}/reject`, updatedPlaydate)
+    },
+
     // ADMIN functions
 
     deletePlaydate(playdateId){
