@@ -60,9 +60,17 @@ export default {
     acceptPlaydate(updatedPlaydate, playdateId){
         return axios.put(`/playdates/${playdateId}/accept`, updatedPlaydate)
     },
-    
+
     rejectPlaydate(updatedPlaydate, playdateId){
         return axios.put(`/playdates/${playdateId}/reject`, updatedPlaydate)
+    },
+
+    cancelPlaydate(updatedPlaydate, playdateId){
+        return axios.put(`/playdates/${playdateId}/cancel`, updatedPlaydate)
+    },
+    
+    finishPlaydate(updatedPlaydate, playdateId){
+        return axios.put(`/playdates/${playdateId}/finish`, updatedPlaydate)
     },
 
     // ADMIN functions
