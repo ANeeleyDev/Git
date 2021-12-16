@@ -14,6 +14,7 @@ import UserPlaydateView from '../views/UserPlaydateView.vue'
 import PlaydateList from '../views/PlaydateList.vue'
 import CreatePlaydateForm from '../components/CreatePlaydateForm.vue'
 import EditPlaydate from '../views/EditPlaydate.vue'
+import RequestPlaydate from '../views/RequestPlaydate.vue'
 Vue.use(Router)
 
 /**
@@ -130,6 +131,14 @@ const router = new Router({
       path: "/createPlaydateForm",
       name: "create-playdate-form",
       component: CreatePlaydateForm,
+      meta: {
+        requiresAuth: false
+      }
+    },
+    {
+      path: "/requestPlaydate",
+      name: "request-playdate",
+      component: RequestPlaydate,
       meta: {
         requiresAuth: false
       }
