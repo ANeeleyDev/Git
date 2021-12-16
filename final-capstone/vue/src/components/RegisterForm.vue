@@ -7,7 +7,7 @@
       Create Account
     </h1>
     <h1 v-else class="h3 mb-3 font-weight-normal">Edit Account</h1>
-    <v-form  @submit.prevent="register">
+    <v-form @submit.prevent="register">
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -86,7 +86,7 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="4">
-            <v-select :items="city" label="City" v-model="user.city"></v-select>
+            <v-autocomplete :items="city" label="City" item-text="cityName" item-value="cityId" v-model="user.city"></v-autocomplete>
           </v-col>
           <v-col cols="12" md="4">
             <v-select
@@ -131,28 +131,7 @@ export default {
   name: "register",
   data() {
     return {
-      city: [
-        {
-          text: "Cincinnati",
-          value: 0,
-        },
-        {
-          text: "Columbus",
-          value: 1,
-        },
-        {
-          text: "Toledo",
-          value: 2,
-        },
-        {
-          text: "Cleveland",
-          value: 3,
-        },
-        {
-          text: "Dayton",
-          value: 4,
-        },
-      ],
+      city: [],
       state: [
         {
           text: "Ohio",
@@ -201,6 +180,7 @@ export default {
     };
   },
   created() {
+    this.getAllCities();
     if (this.$store.state.token != "") {
       this.user = this.$store.state.userProfile;
     }
@@ -216,14 +196,14 @@ export default {
         passwordHash: this.$store.state.user.passwordHash,
         salt: this.$store.state.user.salt,
         userId: this.$store.state.user.userId,
-        role:'user',
+        role: "user",
         firstName: this.user.firstName,
         lastName: this.user.lastName,
-        emailAddress:this.user.emailAddress,
+        emailAddress: this.user.emailAddress,
         phoneNumber: this.user.phoneNumber,
         streetAddress: this.user.streetAddress,
         city: parseInt(this.user.city),
-        state:parseInt(this.user.state),
+        state: parseInt(this.user.state),
         zip: parseInt(this.user.zip),
       };
       //create new user
@@ -251,9 +231,9 @@ export default {
               }
             });
         }
-      } 
+      }
       //update user
-      else{
+      else {
         userService
 
           .editUser(updateUser)
@@ -266,6 +246,13 @@ export default {
             this.handleErrorResponse(error, "updating");
           });
       }
+    },
+    getAllCities() {
+      userService.getAllCities().then((response) => {
+        if (response.status === 200) {
+          this.city = response.data;
+        }
+      });
     },
     update() {},
     clearErrors() {

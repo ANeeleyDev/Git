@@ -36,6 +36,15 @@ namespace Capstone.Controllers
             return petDao.GetLast5Pets();
         }
 
+        //all breeds for field population
+
+        [HttpGet("breeds")]
+        [AllowAnonymous]
+        public List<Breed> GetAllBreeds()
+        {
+            return petDao.GetAllBreeds();
+        }
+
 
         //Anonymous user methods
 
@@ -113,6 +122,8 @@ namespace Capstone.Controllers
 
             return petDao.UpdateLoggedInUserPet(updatedPet, userId, petId);
         }
+
+
 
 
         //Admin methods

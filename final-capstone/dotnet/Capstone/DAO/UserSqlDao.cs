@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using Capstone.Models;
 using Capstone.Security;
@@ -188,6 +189,37 @@ namespace Capstone.DAO
                 throw;
             }
         }
+        public List<City> GetAllCities()
+        {
+            List<City> allCities = new List<City>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT city_id, state_id, city_name FROM cities";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                       City city = CreateCityFromReader(reader);
+                        allCities.Add(city);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+
+            return allCities;
+        }
 
         private User CreateUserFromReader(SqlDataReader reader)
         {
@@ -232,6 +264,17 @@ namespace Capstone.DAO
             };
 
             return du;
+        }
+
+        private City CreateCityFromReader(SqlDataReader reader)
+        {
+            City city= new City();
+
+            city.cityId = Convert.ToInt32(reader["city_id"]);
+            city.stateId = Convert.ToInt32(reader["state_id"]);
+            city.cityName = Convert.ToString(reader["city_name"]);
+
+            return city;
         }
     }
 }

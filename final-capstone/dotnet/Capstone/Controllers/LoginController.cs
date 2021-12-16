@@ -4,6 +4,7 @@ using Capstone.Models;
 using Capstone.Security;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using System.Collections.Generic;
 
 namespace Capstone.Controllers
 {
@@ -85,7 +86,12 @@ namespace Capstone.Controllers
             return userDao.DisplayUser(userId);
         }
 
-
+        [HttpGet("/user/cities")]
+        [AllowAnonymous]
+        public List<City> GetAllCities() //Get all cities for user field
+        {
+            return userDao.GetAllCities();
+        }
 
         //Registered user methods
 

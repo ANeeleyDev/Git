@@ -10,6 +10,9 @@ namespace Capstone.DAO
     {
         //Misc methods
         public List<Pet> GetLast5Pets();
+
+        public List<Breed> GetAllBreeds();
+
         //public List<String> DisplayPetPersonality(int petId);
 
 

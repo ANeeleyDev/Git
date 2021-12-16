@@ -94,6 +94,15 @@ CREATE TABLE pets (
 	CONSTRAINT FK_pet_species FOREIGN KEY (species) REFERENCES species (species_id)
 )
 
+CREATE TABLE owner_pets (
+	owner_pet_id int IDENTITY(0,1) NOT NULL,
+	owner_id int NOT NULL,
+	pet_id int NOT NULL
+	CONSTRAINT PK_owner_pet PRIMARY KEY (owner_pet_id)
+	CONSTRAINT FK_owner_id FOREIGN KEY (owner_id) REFERENCES users (user_id),
+	CONSTRAINT FK_pet_id FOREIGN KEY (pet_id) REFERENCES pets (pet_id)
+)
+
 CREATE TABLE posts (
 	post_id int IDENTITY(0,1) NOT NULL,
 	user_id int NOT NULL,
@@ -1585,29 +1594,32 @@ VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'So
 
 INSERT INTO pets (user_id, pet_image, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
 VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large/james-parce-jabba-the-pug.jpg?1604239107', 'Jabba', 13, 282, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
-		(1, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02F7KMHG9K-4f4c952368/image_from_ios_720.jpg', 'Loose Seal AKA Bby Ppy Destructo', 3, 94, 0, 0, 0, 0, 0, 0, 0, 'destroys everything'),
-		(1, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02F3BKC0AZ-083a312ae1/image_from_ios_720.jpg', 'Dr. Tobias Funke', 13, 51, 0, 1, 0, 1, 0, 0, 1, 'Best doggo award!'),
-		(2, 'https://files.slack.com/files-pri/T0GNFLF6D-F02QXQLKP37/image.png', 'Willie', 4, 185, 0, 1, 0, 1, 0, 1, 1, 'Loves pumpkin!'),
-		(2, 'https://files.slack.com/files-pri/T0GNFLF6D-F02QXQLKP37/image.png', 'Crush', 5, 185, 0, 1, 0, 1, 0, 1, 1, 'Loves Thanksgiving!'),
-		(2, 'https://files.slack.com/files-pri/T0GNFLF6D-F02G4RAAS1E/9dd90fe7-d244-4e6a-bfe9-225fd42ed703.jpeg', 'Gertie', 6, 18, 0, 1, 0, 1, 0, 1, 1, 'Gertie is such a cool cat!'),
+		(1, 'https://imgur.com/WmhoGkz', 'Loose Seal AKA Bby Ppy Destructo', 3, 94, 0, 0, 0, 0, 0, 0, 0, 'destroys everything'),
+		(1, 'https://imgur.com/TiGBeEs', 'Dr. Tobias Funke', 13, 51, 0, 1, 0, 1, 0, 0, 1, 'Best doggo award!'),
+		(2, 'https://imgur.com/CiJHLF5', 'Willie', 4, 185, 0, 1, 0, 1, 0, 1, 1, 'Loves pumpkin!'),
+		(2, 'https://imgur.com/CiJHLF5', 'Crush', 5, 185, 0, 1, 0, 1, 0, 1, 1, 'Loves Thanksgiving!'),
+		(2, 'https://imgur.com/mUzmrWP', 'Gertie', 6, 18, 0, 1, 0, 1, 0, 1, 1, 'Gertie is such a cool cat!'),
 		(3, 'https://www.akc.org/wp-content/uploads/2017/11/Tibetan-Mastiff-laying-down-outdoors.jpg', 'Teddy Roosevelt', 5, 258, 0, 1, 0, 0, 1, 1, 1, 'Gigantic love bug'),
-		(3, 'https://files.slack.com/files-pri/T0GNFLF6D-F02LFUVPKPF/20211108_105652.jpg', 'Pumpkin Patch', 7, 198, 0, 1, 0, 1, 0, 1, 1, 'Learns code with the class!'),
-		(4, 'https://files.slack.com/files-pri/T0GNFLF6D-F02RQUMP8HW/autumn.jpg', 'Autumn', 7, 18, 0, 1, 0, 1, 0, 1, 1, 'Learns code with the class!'),
+		(3, 'https://imgur.com/M5IMAVW', 'Pumpkin Patch', 7, 198, 0, 1, 0, 1, 0, 1, 1, 'Learns code with the class!'),
+		(4, 'https://imgur.com/c7s2Fwl', 'Autumn', 7, 18, 0, 1, 0, 1, 0, 1, 1, 'Learns code with the class!'),
 		(4, 'https://static1.colliderimages.com/wordpress/wp-content/uploads/2021/05/sandy-cheeks-social.jpg', 'Sandy', 13, 18, 0, 1, 0, 1, 0, 1, 1, 'Just a squirrel boxing on the ocean floor!'),
 		(4, 'https://static.wikia.nocookie.net/princessbride/images/7/70/Inigo_Montoya.png/revision/latest/top-crop/width/360/height/450?cb=20110320032519', 'Inigo Montoya', 27, 282, 0, 1, 0, 1, 0, 1, 1, 'My name is Inigo Montoya, you killed my father, prepare to die!'),
 		(5, 'https://keyassets.timeincuk.net/inspirewp/live/wp-content/uploads/sites/8/2021/02/GettyImages-997141470-e1614176377827.jpg', 'Oscar Wilde', 32, 18, 0, 1, 0, 1, 0, 1, 1, 'To live is the rarest thing in the world. Most people exist, that is all.'),
 		(5, 'https://i.pinimg.com/236x/ae/65/d3/ae65d3f67cd39c53b567e2de4601a43d.jpg', 'Orson Welles', 23, 18, 0, 1, 0, 1, 0, 1, 1, 'My doctor told me I had to stop throwing intimate dinners for four... Unless there are three other people.'),
-		(6, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02RDV8EYHX-cd7afe162f/20210326_001632_720.jpg', 'Luna', 7, 124, 0, 1, 0, 1, 0, 1, 1, 'Absolute sweetheart!'),
-		(6, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02QYD0J5V3-4a336ebdeb/20210224_113037_720.jpg', 'Molly', 7, 38, 0, 1, 0, 1, 0, 1, 1, 'Loves to sleep!'),
-		(7, 'https://files.slack.com/files-pri/T0GNFLF6D-F02QUPYU37Y/snapchat-1470840065.jpg', 'Nutmeg', 78, 18, 0, 1, 0, 1, 0, 1, 1, 'Best little friend I could ever ask for!'),
-		(7, 'https://files.slack.com/files-pri/T0GNFLF6D-F02R1FVJ70S/pxl_20210514_231345989.mp.jpg', 'Larry', 7, 49, 0, 1, 0, 1, 0, 1, 1, 'He''s got the best mohawk!'),
-		(8, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02R1AKV7PD-9e5afe6502/img_1568_720.jpg', 'Frida', 5, 18, 0, 1, 0, 1, 0, 1, 1, 'Independent woman who doesn''t need no man!'),
+		(6, 'https://imgur.com/Eiwa4Bm', 'Luna', 7, 124, 0, 1, 0, 1, 0, 1, 1, 'Absolute sweetheart!'),
+		(6, 'https://imgur.com/6kgSqoK', 'Molly', 7, 38, 0, 1, 0, 1, 0, 1, 1, 'Loves to sleep!'),
+		(7, 'https://imgur.com/AZfgOLa', 'Nutmeg', 78, 18, 0, 1, 0, 1, 0, 1, 1, 'Best little friend I could ever ask for!'),
+		(7, 'https://imgur.com/eru8EC9', 'Larry', 7, 49, 0, 1, 0, 1, 0, 1, 1, 'He''s got the best mohawk!'),
+		(8, 'https://imgur.com/yypFEVs', 'Frida', 5, 18, 0, 1, 0, 1, 0, 1, 1, 'Independent woman who doesn''t need no man!'),
 		(8, 'https://m.media-amazon.com/images/I/71wDS1MV2LS._AC_SL1500_.jpg', 'Slinky', 7, 89, 0, 1, 0, 1, 0, 1, 1, 'A slinky little thing!'),
-		(9, 'https://files.slack.com/files-pri/T0GNFLF6D-F02EZL474GN/img_0489.jpg', 'Marco Polo', 8, 18, 0, 1, 0, 1, 0, 1, 1, 'Aloof and loves to make an appearance on the camera!'),
-		(9, 'https://files.slack.com/files-pri/T0GNFLF6D-F02EZL474GN/img_0489.jpg', 'Daisy', 5, 75, 0, 1, 0, 1, 0, 1, 1, 'Loves to bark!'),
-		(10, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02K4DZ4JNT-6414d704b0/pxl_20211029_150831449_720.jpg', 'Willow', 7, 198, 0, 1, 0, 1, 0, 1, 1, 'Loves to look out the window!'),
+		(9, 'https://imgur.com/ymiOijX', 'Marco Polo', 8, 18, 0, 1, 0, 1, 0, 1, 1, 'Aloof and loves to make an appearance on the camera!'),
+		(9, 'https://imgur.com/MTyHTjO', 'Daisy', 5, 75, 0, 1, 0, 1, 0, 1, 1, 'Loves to bark!'),
+		(10, 'https://imgur.com/2ta1QVk', 'Willow', 7, 198, 0, 1, 0, 1, 0, 1, 1, 'Loves to look out the window!'),
 		(11, 'https://mymodernmet.com/wp/wp-content/uploads/2020/10/cooper-baby-corgi-dogs-8.jpg', 'Kevin the Corgi', 1, 18, 0, 1, 0, 1, 0, 1, 0, 'super cute'),
-		(11, 'https://files.slack.com/files-pri/T0GNFLF6D-F02J49EJ8BW/image_from_ios.jpg', 'Ally Mae', 9, 65, 0, 1, 1, 1, 0, 1, 1, 'Cutie who loves costumes!');
+		(11, 'https://imgur.com/VmpzbGY', 'Ally Mae', 9, 65, 0, 1, 1, 1, 0, 1, 1, 'Cutie who loves costumes!');
+
+INSERT INTO owner_pets (owner_id, pet_id)
+VALUES (0, 0)
 
 INSERT INTO posts (user_id, post_title, post_content)
 VALUES	(0, 'Jabba needs a snack- I mean friend', 'Looking for a friend for my lovely little Jabba');
@@ -1629,7 +1641,7 @@ VALUES	(0, 'Pending'),
 
 INSERT INTO playdates (playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, playdate_requested_pet_id, meeting_time, playdate_address, playdate_city, playdate_state, playdate_zip, playdate_status_id)
 VALUES	(0, 0, 1, 1, '2021-12-08 10:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
-		(1, 2, 2, 2, '2021-12-15 12:30:00', '9870 Smart Pets Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 2),
+		(1, 2, 2, 1, '2021-12-15 12:30:00', '9870 Smart Pets Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 2),
 		(2, 2, 3, 3, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
 		(3, 3, 4, 4, '2021-12-10 9:30:00', '5328 Pet Park Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
 		(4, 4, 5, 5, '2021-12-17 10:30:00', '8098 Doggy Park Way', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),

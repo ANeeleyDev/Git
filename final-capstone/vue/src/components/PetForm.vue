@@ -6,42 +6,38 @@
         label="Name"
         v-model="pet.petName"
       ></v-text-field>
-       <v-text-field
+      <v-text-field
         value="petImage"
-        label="Pet Image URL"        
+        label="Pet Image URL"
         v-model.number="pet.petImage"
       ></v-text-field>
       <v-text-field
         value="age"
-        label="Age"        
+        label="Age"
         v-model.number="pet.age"
       ></v-text-field>
-      <v-select 
+      <v-select
         :items="species"
         label="Species"
         v-model="pet.species"
       ></v-select>
-      <v-select 
-        :items="breed" 
-        label="Breed" 
-        v-model="pet.breed">
-      </v-select>
+      <v-autocomplete
+      name="breed"
+       :items="breed" 
+       label="Breed" 
+       v-model="pet.breed"
+       item-text="breed"
+        item-value="breedId"
+       > </v-autocomplete>
       <v-textarea
-        name="input-7-1"
+        name="comments"
         label="Other Comments"
         value="What else should we know?."
         v-model="pet.otherComments"
       ></v-textarea>
 
-      <v-checkbox
-        label="Playful"        
-        v-model="pet.playful"
-      ></v-checkbox>
-      <v-checkbox
-        v-model="pet.mischievous"
-        label="Mischievous"
-        
-      ></v-checkbox>
+      <v-checkbox label="Playful" v-model="pet.playful"></v-checkbox>
+      <v-checkbox v-model="pet.mischievous" label="Mischievous"></v-checkbox>
       <v-checkbox v-model="pet.shy" label="Shy"></v-checkbox>
       <v-checkbox v-model="pet.nervous" label="Nervous"></v-checkbox>
       <v-checkbox v-model="pet.confident" label="Confident"></v-checkbox>
@@ -51,8 +47,7 @@
       <v-btn class="" v-on:click.prevent="cancelForm" type="cancel">
         Cancel
       </v-btn>
-    </v-form>    
-    
+    </v-form>
   </div>
 </template>
 
@@ -75,12 +70,7 @@ export default {
           value: "1",
         },
       ],
-      breed: [
-        {
-          text: "Holder",
-          value: "0",
-        },
-      ],
+      breed: [],
       pet: {
         petId: "",
         petName: "",
@@ -100,6 +90,7 @@ export default {
     };
   },
   created() {
+    this.getBreeds();
     if (this.$route.params.petId != undefined) {
       petService
         .getPet(this.$route.params.petId)
@@ -124,7 +115,7 @@ export default {
         petImage: this.pet.petImage,
         age: this.pet.age,
         species: this.pet.species,
-        breed: this.pet.breed,
+        breed: String(this.pet.breed),
         otherComments: this.pet.otherComments,
         playful: this.pet.playful,
         nervous: this.pet.nervous,
@@ -140,7 +131,7 @@ export default {
           .addPet(newPet)
           .then((response) => {
             if (response.status === 200) {
-              this.$router.push(`/petlist`);
+              this.$router.push(`/petView`);
             }
           })
           .catch((error) => {
@@ -165,8 +156,9 @@ export default {
       }
     },
     cancelForm() {
-      this.$router.push(`/petlist`);
+      this.$router.push(`/petView`);
     },
+
     handleErrorResponse(error, verb) {
       if (error.response) {
         this.errorMsg =
@@ -180,6 +172,13 @@ export default {
       } else {
         this.errorMsg = "Error " + verb + " pet. Request could not be created.";
       }
+    },
+    getBreeds() {
+      petService.getAllBreeds().then((response) => {
+        if (response.status === 200) {
+          this.breed = response.data;
+        }
+      });
     },
   },
 };

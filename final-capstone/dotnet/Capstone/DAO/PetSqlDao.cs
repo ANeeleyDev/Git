@@ -401,6 +401,38 @@ namespace Capstone.DAO
             }
         }
 
+        public List<Breed> GetAllBreeds()
+        {
+            List<Breed> allBreeds = new List<Breed>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string sql = "Select breed_id, breed, species FROM breeds";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Breed breed = CreateBreedFromReader(reader);
+                        allBreeds.Add(breed);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+
+            return allBreeds;
+        }
+
 
         private Pet CreatePetFromReader(SqlDataReader reader)
         {
@@ -421,6 +453,17 @@ namespace Capstone.DAO
             pet.independent = Convert.ToBoolean(reader["independent"]);
 
             return pet;
+        }
+
+        private Breed CreateBreedFromReader(SqlDataReader reader)
+        {
+            Breed breed = new Breed();
+
+            breed.breedId = Convert.ToInt32(reader["breed_id"]);
+            breed.breed = Convert.ToString(reader["breed"]);
+            breed.species = Convert.ToInt32(reader["species"]);
+
+            return breed;
         }
     }
 }

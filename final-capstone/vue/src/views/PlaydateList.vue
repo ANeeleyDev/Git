@@ -20,7 +20,11 @@
 <v-row>
       <v-col v-for="playdate in filteredList" v-bind:key="playdate.playdateId">
           
+<<<<<<< HEAD
         <playdate-card v-bind:playdate="playdate" />
+=======
+        <playdate-card  v-bind:playdate="playdate" />
+>>>>>>> 11886ecb909544c7d4ebbbd8baf66de03693a1d4
         </v-col>
       </v-row>
     

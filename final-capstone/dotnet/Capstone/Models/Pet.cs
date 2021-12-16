@@ -44,4 +44,12 @@ namespace Capstone.Models
         public bool mischievous { get; set; }
         public bool independent { get; set; }
     }
+
+    public class Breed
+    {
+        public int breedId { get; set; }
+        public string breed { get; set; }
+
+        public int species { get; set; }
+    }
 }

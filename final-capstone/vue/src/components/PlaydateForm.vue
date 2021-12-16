@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-form v-on:submit.prevent="submitForm">
-    <v-select
+      <v-select
         v-model="playdate.playdatePostedPetId"
         :hint="`${select.petName}`"
         :items="pets"
@@ -10,126 +10,97 @@
         label="Select Pet"
         persistent-hint
         single-line
-    ></v-select>
+      ></v-select>
       <v-text-field
         value="playdateAddress"
-        label="Address"        
+        label="Address"
         v-model="playdate.playdateAddress"
       ></v-text-field>
-      <v-select 
-        :items="city"
-        label="City"
-        v-model="playdate.playdateCity"
-      ></v-select>
-      <v-select 
+     <v-autocomplete :items="city" label="City" item-text="cityName" item-value="cityId" v-model="playdate.playdateCity"></v-autocomplete>
+      <v-select
         :items="state"
         label="State"
         v-model="playdate.playdateState"
       ></v-select>
-      <v-select 
+      <v-select
         :items="zip"
         label="Zip"
         v-model="playdate.playdateZip"
       ></v-select>
-      <v-date-picker
-        v-model="date"
-      ></v-date-picker>
-    <br />
-      <v-time-picker
-        v-model="time" format="ampm"
-      ></v-time-picker>
-    <br />
-    <br />
+      <v-date-picker v-model="date"></v-date-picker>
+      <br />
+      <v-time-picker v-model="time" format="ampm"></v-time-picker>
+      <br />
+      <br />
       <v-btn type="submit"> Submit </v-btn>
       <v-btn class="" v-on:click.prevent="cancelForm" type="cancel">
         Cancel
       </v-btn>
-    </v-form>    
-    
+    </v-form>
   </div>
 </template>
 
 <script>
 import petService from "@/services/PetService";
 import playdateService from "../services/PlaydateService";
+import userService from "../services/UserService";
 
 export default {
-    name: "playdate-form",
-    props: ["playdateId"],
+  name: "playdate-form",
+  props: ["playdateId"],
 
-    data() {
-        return {
-            select: [],
-            pets: [],
-            playdate: {
-                playdatePostedUserId: this.$store.state.user.userId,
-                playdatePostedPetId: "",
-                playdateRequestedUserId: "",
-                playdateRequestedPetId: "",
-                meetingTime: "",
-                playdateAddress: "",
-                playdateCity: "",
-                playdateState: "",
-                playdateZip: "",
-                playdateStatusId: 0,
-            },
-            currentUserId: this.$store.state.user.userId,
-            date: this.submittableDateTime,
-            time: this.submittableDateTime,
-            city: [
-                {
-                text: "Cincinnati",
-                value: "184",
-                },
-                {
-                text: "Columbus",
-                value: "207",
-                },
-                {
-                text: "Toledo",
-                value: "947",
-                },
-                {
-                text: "Cleveland",
-                value: "191",
-                },
-                {
-                text: "Dayton",
-                value: "238",
-                },
-            ],
-            state: [
-                {
-                text: "Ohio",
-                value: "34",
-                },
-            ],
-            zip: [
-                {
-                text: "45249",
-                value: "0",
-                },
-                {
-                text: "41073",
-                value: "1",
-                },
-                {
-                text: "45201",
-                value: "2",
-                },
-                {
-                text: "45222",
-                value: "3",
-                },
-                {
-                text: "45237",
-                value: "4",
-                },
-            ],
-            editPlaydateId: this.$route.params.playdateId,
-        };
-    }, 
-    computed: {
+  data() {
+    return {
+      select: [],
+      pets: [],
+      playdate: {
+        playdatePostedUserId: this.$store.state.user.userId,
+        playdatePostedPetId: "",
+        playdateRequestedUserId: "",
+        playdateRequestedPetId: "",
+        meetingTime: "",
+        playdateAddress: "",
+        playdateCity: "",
+        playdateState: "",
+        playdateZip: "",
+        playdateStatusId: 0,
+      },
+      currentUserId: this.$store.state.user.userId,
+      date: this.submittableDateTime,
+      time: this.submittableDateTime,
+      city: [],
+      state: [
+        {
+          text: "Ohio",
+          value: "34",
+        },
+      ],
+      zip: [
+        {
+          text: "45249",
+          value: "0",
+        },
+        {
+          text: "41073",
+          value: "1",
+        },
+        {
+          text: "45201",
+          value: "2",
+        },
+        {
+          text: "45222",
+          value: "3",
+        },
+        {
+          text: "45237",
+          value: "4",
+        },
+      ],
+      editPlaydateId: this.$route.params.playdateId,
+    };
+  },
+  computed: {
     submittableDateTime() {
       const date = new Date(this.date);
       if (typeof this.time === "string") {
@@ -143,16 +114,17 @@ export default {
       }
       return date;
     },
-    },
-    created() {
+  },
+  created() {
     this.getUserPets();
+    this.getAllCities();
     if (this.playdateId != 0) {
       petService
         .getPlaydateForDisplay(this.playdateId)
-        .then(response => {
+        .then((response) => {
           this.playdate = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response && error.response.status === 404) {
             alert(
               "Playdate not available. This playdate may have been deleted or you have entered an invalid playdate ID."
@@ -161,27 +133,34 @@ export default {
           }
         });
     }
-  },  
+  },
 
-    methods: {
-        getUserPets() {
-            petService.getPetList().then((response) => {
-            this.pets = response.data;
-        });
+  methods: {
+    getUserPets() {
+      petService.getPetList().then((response) => {
+        this.pets = response.data;
+      });
     },
-        submitForm() {
-        const newPlaydate = {
-            playdatePostedUserId: Number(this.$store.state.user.userId),
-            playdatePostedPetId: this.playdate.playdatePostedPetId,
-            meetingTime: this.submittableDateTime,
-            playdateAddress: this.playdate.playdateAddress,
-            playdateCity: this.playdate.playdateCity,
-            playdateState: this.playdate.playdateState,
-            playdateZip: this.playdate.playdateZip,
-            playdateStatusId: this.playdateStatusId
-        };
+    getAllCities() {
+      userService.getAllCities().then((response) => {
+        if (response.status === 200) {
+          this.city = response.data;
+        }
+      });
+    },
+    submitForm() {
+      const newPlaydate = {
+        playdatePostedUserId: Number(this.$store.state.user.userId),
+        playdatePostedPetId: this.playdate.playdatePostedPetId,
+        meetingTime: this.submittableDateTime,
+        playdateAddress: this.playdate.playdateAddress,
+        playdateCity: String(this.playdate.playdateCity),
+        playdateState: this.playdate.playdateState,
+        playdateZip: this.playdate.playdateZip,
+        playdateStatusId: this.playdateStatusId,
+      };
 
-        if (this.editPlaydateId === undefined) {
+      if (this.editPlaydateId === undefined) {
         //add here
         playdateService
           .registerPlaydate(newPlaydate)
@@ -223,13 +202,14 @@ export default {
           error.response.statusText +
           "'.";
       } else if (error.request) {
-        this.errorMsg = "Error " + verb + " playdate. Server could not be reached.";
+        this.errorMsg =
+          "Error " + verb + " playdate. Server could not be reached.";
       } else {
-        this.errorMsg = "Error " + verb + " playdate. Request could not be created.";
+        this.errorMsg =
+          "Error " + verb + " playdate. Request could not be created.";
       }
     },
-    },
-
+  },
 };
 </script>
 
