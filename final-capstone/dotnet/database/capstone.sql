@@ -94,15 +94,6 @@ CREATE TABLE pets (
 	CONSTRAINT FK_pet_species FOREIGN KEY (species) REFERENCES species (species_id)
 )
 
-CREATE TABLE owner_pets (
-	owner_pet_id int IDENTITY(0,1) NOT NULL,
-	owner_id int NOT NULL,
-	pet_id int NOT NULL
-	CONSTRAINT PK_owner_pet PRIMARY KEY (owner_pet_id)
-	CONSTRAINT FK_owner_id FOREIGN KEY (owner_id) REFERENCES users (user_id),
-	CONSTRAINT FK_pet_id FOREIGN KEY (pet_id) REFERENCES pets (pet_id)
-)
-
 CREATE TABLE posts (
 	post_id int IDENTITY(0,1) NOT NULL,
 	user_id int NOT NULL,
@@ -1611,15 +1602,12 @@ VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large
 		(7, 'https://imgur.com/AZfgOLa', 'Nutmeg', 78, 18, 0, 1, 0, 1, 0, 1, 1, 'Best little friend I could ever ask for!'),
 		(7, 'https://imgur.com/eru8EC9', 'Larry', 7, 49, 0, 1, 0, 1, 0, 1, 1, 'He''s got the best mohawk!'),
 		(8, 'https://imgur.com/yypFEVs', 'Frida', 5, 18, 0, 1, 0, 1, 0, 1, 1, 'Independent woman who doesn''t need no man!'),
-		(8, 'https://m.media-amazon.com/images/I/71wDS1MV2LS._AC_SL1500_.jpg', 'Slinky', 7, 89, 0, 1, 0, 1, 0, 1, 1, 'A slinky little thing!'),
+		(8, 'https://m.media-amazon.com/images/I/71wDS1MV2LS._AC_SL1500_.jpg', 'Slinky', 7, 89, 0, 1, 0, 1, 0, 1, 1, 'Likes to slink around!'),
 		(9, 'https://imgur.com/ymiOijX', 'Marco Polo', 8, 18, 0, 1, 0, 1, 0, 1, 1, 'Aloof and loves to make an appearance on the camera!'),
 		(9, 'https://imgur.com/MTyHTjO', 'Daisy', 5, 75, 0, 1, 0, 1, 0, 1, 1, 'Loves to bark!'),
-		(10, 'https://imgur.com/2ta1QVk', 'Willow', 7, 198, 0, 1, 0, 1, 0, 1, 1, 'Loves to look out the window!'),
-		(11, 'https://mymodernmet.com/wp/wp-content/uploads/2020/10/cooper-baby-corgi-dogs-8.jpg', 'Kevin the Corgi', 1, 18, 0, 1, 0, 1, 0, 1, 0, 'super cute'),
-		(11, 'https://imgur.com/VmpzbGY', 'Ally Mae', 9, 65, 0, 1, 1, 1, 0, 1, 1, 'Cutie who loves costumes!');
-
-INSERT INTO owner_pets (owner_id, pet_id)
-VALUES (0, 0)
+		(10, 'https://mymodernmet.com/wp/wp-content/uploads/2020/10/cooper-baby-corgi-dogs-8.jpg', 'Kevin the Corgi', 1, 18, 0, 1, 0, 1, 0, 1, 0, 'super cute'),
+		(10, 'https://imgur.com/VmpzbGY', 'Ally Mae', 9, 65, 0, 1, 1, 1, 0, 1, 1, 'Cutie who loves costumes!'),
+		(11, 'https://imgur.com/2ta1QVk', 'Willow', 7, 198, 0, 1, 0, 1, 0, 1, 1, 'Loves to look out the window!');
 
 INSERT INTO posts (user_id, post_title, post_content)
 VALUES	(0, 'Jabba needs a snack- I mean friend', 'Looking for a friend for my lovely little Jabba');
@@ -1641,10 +1629,15 @@ VALUES	(0, 'Pending'),
 
 INSERT INTO playdates (playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, playdate_requested_pet_id, meeting_time, playdate_address, playdate_city, playdate_state, playdate_zip, playdate_status_id)
 VALUES	(0, 0, 1, 1, '2021-12-08 10:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
-		(1, 2, 2, 1, '2021-12-15 12:30:00', '9870 Smart Pets Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 2),
-		(2, 2, 3, 3, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
-		(3, 3, 4, 4, '2021-12-10 9:30:00', '5328 Pet Park Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
-		(4, 4, 5, 5, '2021-12-17 10:30:00', '8098 Doggy Park Way', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
-		(3, 3, 1, 1, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1);
+		(1, 2, 2, 3, '2021-12-15 12:30:00', '9870 Smart Pets Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 2),
+		(2, 4, 3, 7, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
+		(8, 17, 4, 9, '2021-12-10 9:30:00', '5328 Pet Park Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
+		(8, 18, 10, 22, '2021-12-17 10:30:00', '8098 Doggy Park Way', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 5),
+		(11, 23, 5, 11, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
+		(4, 8, 7, 15, '2021-12-20 10:00', '3432 Dog Park Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
+		(9, 20, 3, 6, '2021-12-18 12:00', '8474 Pets Play Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 2),
+		(4, 10, 5, 12, '2021-12-22 9:00', '', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
+		(9, 19, 6, 13, '2022-01-03', '11:00', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1),
+		(6, 14, 2, 4, '2022-01-10', '9:00', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 1);
 
 GO
