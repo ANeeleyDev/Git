@@ -1584,7 +1584,7 @@ VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'So
 		('user5', 'Jg45HuwT7PZkfuKTz6IB90CtWY4=', 'LHxP4Xh7bN0=', 'user', 'Duston', 'Fox', 'fakedustin@gmail.com', '7684729301', '9485 Software Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0);
 
 INSERT INTO pets (user_id, pet_image, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
-VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large/james-parce-jabba-the-pug.jpg?1604239107', 'Jabba', 13, 284, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
+VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large/james-parce-jabba-the-pug.jpg?1604239107', 'Jabba', 13, 282, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
 		(1, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02F7KMHG9K-4f4c952368/image_from_ios_720.jpg', 'Loose Seal AKA Bby Ppy Destructo', 3, 95, 0, 0, 0, 0, 0, 0, 0, 'destroys everything'),
 		(1, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02F3BKC0AZ-083a312ae1/image_from_ios_720.jpg', 'Dr. Tobias Funke', 13, 52, 0, 1, 0, 1, 0, 0, 1, 'Best doggo award!'),
 		(2, 'https://files.slack.com/files-pri/T0GNFLF6D-F02QXQLKP37/image.png', 'Willie', 4, 186, 0, 1, 0, 1, 0, 1, 1, 'Loves pumpkin!'),
@@ -1594,7 +1594,7 @@ VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large
 		(3, 'https://files.slack.com/files-pri/T0GNFLF6D-F02LFUVPKPF/20211108_105652.jpg', 'Pumpkin Patch', 7, 199, 0, 1, 0, 1, 0, 1, 1, 'Learns code with the class!'),
 		(4, 'https://files.slack.com/files-pri/T0GNFLF6D-F02RQUMP8HW/autumn.jpg', 'Autumn', 7, 19, 0, 1, 0, 1, 0, 1, 1, 'Learns code with the class!'),
 		(4, 'https://static1.colliderimages.com/wordpress/wp-content/uploads/2021/05/sandy-cheeks-social.jpg', 'Sandy', 13, 19, 0, 1, 0, 1, 0, 1, 1, 'Just a squirrel boxing on the ocean floor!'),
-		(4, 'https://static.wikia.nocookie.net/princessbride/images/7/70/Inigo_Montoya.png/revision/latest/top-crop/width/360/height/450?cb=20110320032519', 'Inigo Montoya', 27, 284, 0, 1, 0, 1, 0, 1, 1, 'My name is Inigo Montoya, you killed my father, prepare to die!'),
+		(4, 'https://static.wikia.nocookie.net/princessbride/images/7/70/Inigo_Montoya.png/revision/latest/top-crop/width/360/height/450?cb=20110320032519', 'Inigo Montoya', 27, 282, 0, 1, 0, 1, 0, 1, 1, 'My name is Inigo Montoya, you killed my father, prepare to die!'),
 		(5, 'https://keyassets.timeincuk.net/inspirewp/live/wp-content/uploads/sites/8/2021/02/GettyImages-997141470-e1614176377827.jpg', 'Oscar Wilde', 32, 19, 0, 1, 0, 1, 0, 1, 1, 'To live is the rarest thing in the world. Most people exist, that is all.'),
 		(5, 'https://i.pinimg.com/236x/ae/65/d3/ae65d3f67cd39c53b567e2de4601a43d.jpg', 'Orson Welles', 23, 19, 0, 1, 0, 1, 0, 1, 1, 'My doctor told me I had to stop throwing intimate dinners for four... Unless there are three other people.'),
 		(6, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02RDV8EYHX-cd7afe162f/20210326_001632_720.jpg', 'Luna', 7, 127, 0, 1, 0, 1, 0, 1, 1, 'Absolute sweetheart!'),
