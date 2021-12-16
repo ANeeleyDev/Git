@@ -1,76 +1,43 @@
 <template>
   <div>
     <h1>Add Playdate</h1>
-    <playdate-form v-bind:playdateId="this.playdateId" />   
+    <playdate-form v-bind:playdateId="this.playdateId" />
     <v-form v-on:submit.prevent="submitForm">
-      <v-container fluid>
-        <v-row align="center">
-          <v-col cols="1">
-            <v-subheader class="h3 mb-3 font-weight-normal"></v-subheader>
-          </v-col>
+      <v-select
+        v-model.="playdate.playdatePostedPetId"
+        :items="pets"
+        item-text="petName"
+        item-value="petId"
+        label="Select Pet"
+        single-line
+      ></v-select>
 
-          <v-col cols="6">
-            <v-select
-              class="selector"
-              v-model="playdate.playdatePostedPetId"
-              :items="pets"
-              item-text="petName"
-              item-value="petId"
-              label="Select Pet"
-              single-line
-            ></v-select>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" md="4">
-            <v-text-field
-              v-model="playdate.playdateAddress"
-              label="Address"
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" md="4">
-            <v-select
-              :items="city"
-              label="City"
-              v-model="playdate.playdateCity"
-            ></v-select>
-          </v-col>
-          <v-col cols="12" md="4">
-            <!-- <v-autocomplete
-              v-model="playdate.playdateState"
-              :loading="loading"
-              :items="state"
-              :search-input.sync="search"
-              cache-items
-              class="mx-4"
-              flat
-              hide-no-data
-              hide-details
-              label="What state are you from?"
-              solo-inverted
-            ></v-autocomplete> -->
-            <v-select
-              :items="state"
-              label="State"
-              v-model="playdate.playdateState"
-            ></v-select>
-          </v-col>
-          <v-col cols="12" md="4">
-            <v-select
-              :items="zip"
-              label="Zip Code"
-              v-model="playdate.playdateZip"
-            ></v-select>
-          </v-col>
-        </v-row>
-      </v-container>
+      <v-text-field
+        v-model="playdate.playdateAddress"
+        label="Address"
+        required
+      ></v-text-field>
 
-      <!-- <v-text-field
-        value="userFirstName"
-        label="Owner First Name"
-        v-model="user.firstName"
-      ></v-text-field> -->
+      <v-autocomplete
+        :items="city"
+        name="city"
+        item-text="cityName"
+        item-value="cityId"
+        label="City"
+        v-model="playdate.playdateCity"
+      ></v-autocomplete>
+
+      <v-select
+        :items="state"
+        label="State"
+        v-model="playdate.playdateState"
+      ></v-select>
+
+      <v-select
+        :items="zip"
+        label="Zip Code"
+        v-model="playdate.playdateZip"
+      ></v-select>
 
       <section class="time-date">
         <v-layout row>
@@ -99,16 +66,13 @@
 
 <script>
 import petService from "@/services/PetService";
-//import userService from '@/services/UserService';
+import userService from "@/services/UserService";
 import playdateService from "@/services/PlaydateService";
 export default {
   name: "create-playdate-form",
   props: ["petId"],
   data() {
     return {
-      select: [],
-      cities:[],
-
       pets: [],
       playdate: {
         playdatePostedUserId: this.$store.state.user.userId,
@@ -126,28 +90,7 @@ export default {
       //petName: this.pet.petName,
       date: this.submittableDateTime,
       time: this.submittableDateTime,
-      city: [
-        {
-          text: "Cincinnati",
-          value: "184",
-        },
-        {
-          text: "Columbus",
-          value: "207",
-        },
-        {
-          text: "Toledo",
-          value: "947",
-        },
-        {
-          text: "Cleveland",
-          value: "191",
-        },
-        {
-          text: "Dayton",
-          value: "238",
-        },
-      ],
+      city: [],
       state: [
         {
           text: "Ohio",
@@ -195,18 +138,34 @@ export default {
   },
   created() {
     this.getUserPets();
+    this.getAllCities();
   },
 
   methods: {
+    getAllCities() {
+      userService.getAllCities().then((response) => {
+        if (response.status === 200) {
+          this.city = response.data;
+        }
+      });
+    },
     getUserPets() {
       petService.getPetList().then((response) => {
         this.pets = response.data;
       });
     },
     submitForm() {
-      this.playdate.playdateRequestedPetId = this.playdate.playdatePostedPetId;
-      this.playdate.meetingTime = this.submittableDateTime;
-      playdateService.registerPlaydate(this.playdate).then((response) => {
+      const newPlaydate = {
+        playdatePostedUserId: Number(this.$store.state.user.userId),
+        playdatePostedPetId: Number(this.playdate.playdatePostedPetId),
+        meetingTime: this.submittableDateTime,
+        playdateAddress: this.playdate.playdateAddress,
+        playdateCity: String(this.playdate.playdateCity),
+        playdateState: this.playdate.playdateState,
+        playdateZip: this.playdate.playdateZip,
+        playdateStatusId: this.playdateStatusId,
+      };
+      playdateService.registerPlaydate(newPlaydate).then((response) => {
         this.pets = response.data;
         this.$router.push(`/UserPlaydateView`);
       });

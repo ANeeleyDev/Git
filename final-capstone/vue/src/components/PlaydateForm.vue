@@ -16,7 +16,7 @@
         label="Address"
         v-model="playdate.playdateAddress"
       ></v-text-field>
-     <v-autocomplete :items="city" label="City" item-text="cityName" item-value="cityId" v-model="user.city"></v-autocomplete>
+     <v-autocomplete :items="city" label="City" item-text="cityName" item-value="cityId" v-model="playdate.playdateCity"></v-autocomplete>
       <v-select
         :items="state"
         label="State"
