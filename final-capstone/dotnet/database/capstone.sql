@@ -1585,7 +1585,7 @@ VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'So
 
 INSERT INTO pets (user_id, pet_image, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
 VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large/james-parce-jabba-the-pug.jpg?1604239107', 'Jabba', 13, 282, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
-		(1, 'https://i.imgur.com/WmhoGkz.jpeg', 'Loose Seal AKA Bby Ppy Destructo', 3, 94, 0, 0, 0, 0, 0, 0, 0, 'destroys everything'),
+		(1, 'https://i.imgur.com/WmhoGkz.jpeg', 'Loose Seal', 3, 94, 0, 0, 0, 0, 0, 0, 0, 'destroys everything.. nickname: AKA Bby Ppy Destructo'),
 		(1, 'https://i.imgur.com/TiGBeEs.jpeg', 'Dr. Tobias Funke', 13, 51, 0, 1, 0, 1, 0, 0, 1, 'Best doggo award!'),
 		(2, 'https://i.imgur.com/CiJHLF5.jpeg', 'Willie', 4, 185, 0, 1, 0, 1, 0, 1, 1, 'Loves pumpkin!'),
 		(2, 'https://i.imgur.com/CiJHLF5.jpeg', 'Crush', 5, 185, 0, 1, 0, 1, 0, 1, 1, 'Loves Thanksgiving!'),
@@ -1628,12 +1628,12 @@ VALUES	(0, 'Pending'),
 
 
 INSERT INTO playdates (playdate_posted_user_id, playdate_posted_pet_id, playdate_requested_user_id, playdate_requested_pet_id, meeting_time, playdate_address, playdate_city, playdate_state, playdate_zip, playdate_status_id)
-VALUES	(0, 0, 0, 0, '2021-12-08 10:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
-		(1, 2, 1, 2, '2021-12-15 12:30:00', '9870 Smart Pets Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
-		(2, 4, 2, 4, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
-		(8, 17, 8, 17, '2021-12-10 9:30:00', '5328 Pet Park Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
-		(8, 18, 8, 18, '2021-12-17 10:30:00', '8098 Doggy Park Way', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
-		(11, 23, 11, 23, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
+VALUES	(0, 0, 0, 0, '2021-12-08 10:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Dayton'), 34, 0, 0),
+		(1, 2, 1, 2, '2021-12-15 12:30:00', '9870 Smart Pets Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Toledo'), 34, 0, 0),
+		(2, 4, 2, 4, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Columbus'), 34, 0, 0),
+		(8, 17, 8, 17, '2021-12-10 9:30:00', '5328 Pet Park Avenue', (SELECT city_id FROM cities WHERE city_name = 'Dayton'), 34, 0, 0),
+		(8, 18, 8, 18, '2021-12-17 10:30:00', '8098 Doggy Park Way', (SELECT city_id FROM cities WHERE city_name = 'Toledo'), 34, 0, 0),
+		(11, 23, 11, 23, '2021-12-10 9:30:00', '888 Galaxy Drive', (SELECT city_id FROM cities WHERE city_name = 'Columbus'), 34, 0, 0),
 		(4, 8, 4, 8, '2021-12-20 10:00', '3432 Dog Park Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
 		(9, 20, 9, 20, '2021-12-18 12:00', '8474 Pets Play Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
 		(4, 10, 4, 10, '2021-12-22 9:00', '9483 Park for Pup Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0, 0),
