@@ -60,6 +60,22 @@
     ></v-img>
 
     <v-card-title>Meet {{this.pet.petName}}</v-card-title>
+    <v-card-subtitle v-if="this.playdate.playdateStatusId === 2 && this.playdate.playdatePostedUserId === this.$store.state.user.userId"> 
+      APPROVED</v-card-subtitle>
+      <v-btn 
+        color="purple" 
+        text v-if="this.playdate.playdateStatusId === 2 && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
+        @click="finishPlaydate"
+        > 
+        Mark as Finished 
+      </v-btn>
+      <v-btn 
+        color="red" 
+        text v-if="this.playdate.playdateStatusId === 2 && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
+        @click="cancelPlaydate"
+        > 
+        Cancel
+      </v-btn>
     <v-card-subtitle v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId"> 
       {{this.requestedPet.petName}} wants to meet you!</v-card-subtitle>
       <v-btn 
@@ -99,7 +115,7 @@
           Learn More About {{this.pet.petName}}
         </v-btn> 
         <v-btn
-          text v-if="this.playdate.playdatePostedUserId !== this.$store.state.user.userId" 
+          text v-if="this.playdate.playdateStatusId === 0 && this.playdate.playdatePostedUserId !== this.$store.state.user.userId" 
           color="red"
           @click="$router.push({name: 'request-playdate', params: {playdateId: playdate.playdateId}})"
         >
@@ -343,7 +359,75 @@ export default {
               }
             });
         }
-      }          
+      },
+      cancelPlaydate() {
+        const updatedPlaydate = {
+            playdateId: this.playdateId,
+            playdateStatusId: this.playdateStatusId
+          };
+        if (
+          confirm(
+            "Are you sure you want to cancel this playdate?"
+          )
+        ) {
+          playdateService
+            .cancelPlaydate(updatedPlaydate, this.playdate.playdateId)
+            .then((response) => {
+              if (response.status === 200) {
+                alert("Playdate successfully cancelled.");
+                this.$router.push(`/`);
+              }
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.errorMsg =
+                  "Error cancelling playdate. Response received was '" +
+                  error.response.statusText +
+                  "'.";
+              } else if (error.request) {
+                this.errorMsg =
+                  "Error cancelling playdate. Server could not be reached.";
+              } else {
+                this.errorMsg =
+                  "Error cancelling playdate. Request could not be created.";
+              }
+            });
+        }
+      },
+       finishPlaydate() {
+        const updatedPlaydate = {
+            playdateId: this.playdateId,
+            playdateStatusId: this.playdateStatusId
+          };
+        if (
+          confirm(
+            "Are you sure you want to mark this playdate as finished?"
+          )
+        ) {
+          playdateService
+            .finishPlaydate(updatedPlaydate, this.playdate.playdateId)
+            .then((response) => {
+              if (response.status === 200) {
+                alert("Playdate successfully marked finished.");
+                this.$router.push(`/`);
+              }
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.errorMsg =
+                  "Error marking playdate as finished. Response received was '" +
+                  error.response.statusText +
+                  "'.";
+              } else if (error.request) {
+                this.errorMsg =
+                  "Error marking playdate as finished. Server could not be reached.";
+              } else {
+                this.errorMsg =
+                  "Error marking playdate as finished. Request could not be created.";
+              }
+            });
+        }
+      }      
   },
   created() {
       this.getPetInfo();
