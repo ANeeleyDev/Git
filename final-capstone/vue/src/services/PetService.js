@@ -41,4 +41,8 @@ export default {
         return axios.get(`/pets/recent`)
     },
 
+    getAllBreeds() {
+        return axios.get(`/pets/breeds`)
+    }
+
 }

@@ -41,4 +41,8 @@ export default {
     return axios.put(`/admin/${userId}`)
   },
 
+  getAllCities(){
+    return axios.get(`/user/cities`)
+  }
+
 }

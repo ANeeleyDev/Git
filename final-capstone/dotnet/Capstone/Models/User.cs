@@ -80,4 +80,11 @@
         public int State { get; set; }
         public int Zip { get; set; }
     }
+    public class City
+    {
+        public int cityId { get; set; }
+        public int stateId { get; set; }
+        public string cityName { get; set; }
+    }
 }
+

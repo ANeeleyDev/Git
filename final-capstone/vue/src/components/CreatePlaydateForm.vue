@@ -101,6 +101,7 @@
 
 <script>
 import petService from "@/services/PetService";
+//import userService from '@/services/UserService';
 import playdateService from "@/services/PlaydateService";
 export default {
   name: "create-playdate-form",
@@ -108,6 +109,7 @@ export default {
   data() {
     return {
       select: [],
+      cities:[],
 
       pets: [],
       playdate: {
