@@ -1584,13 +1584,13 @@ VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'So
 		('user5', 'Jg45HuwT7PZkfuKTz6IB90CtWY4=', 'LHxP4Xh7bN0=', 'user', 'Duston', 'Fox', 'fakedustin@gmail.com', '7684729301', '9485 Software Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0);
 
 INSERT INTO pets (user_id, pet_image, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
-VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large/james-parce-jabba-the-pug.jpg?1604239107', 'Jabba', 13, 0, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
-		(1, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02F7KMHG9K-4f4c952368/image_from_ios_720.jpg', 'Loose Seal AKA Bby Ppy Destructo', 3, 0, 0, 0, 0, 0, 0, 0, 0, 'destroys everything'),
+VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large/james-parce-jabba-the-pug.jpg?1604239107', 'Jabba', 13, 284, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
+		(1, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02F7KMHG9K-4f4c952368/image_from_ios_720.jpg', 'Loose Seal AKA Bby Ppy Destructo', 3, 95, 0, 0, 0, 0, 0, 0, 0, 'destroys everything'),
 		(1, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02F3BKC0AZ-083a312ae1/image_from_ios_720.jpg', 'Dr. Tobias Funke', 13, 52, 0, 1, 0, 1, 0, 0, 1, 'Best doggo award!'),
 		(2, 'https://files.slack.com/files-pri/T0GNFLF6D-F02QXQLKP37/image.png', 'Willie', 4, 186, 0, 1, 0, 1, 0, 1, 1, 'Loves pumpkin!'),
 		(2, 'https://files.slack.com/files-pri/T0GNFLF6D-F02QXQLKP37/image.png', 'Crush', 5, 186, 0, 1, 0, 1, 0, 1, 1, 'Loves Thanksgiving!'),
 		(2, 'https://files.slack.com/files-pri/T0GNFLF6D-F02G4RAAS1E/9dd90fe7-d244-4e6a-bfe9-225fd42ed703.jpeg', 'Gertie', 6, 19, 0, 1, 0, 1, 0, 1, 1, 'Gertie is such a cool cat!'),
-		(3, 'https://www.akc.org/wp-content/uploads/2017/11/Tibetan-Mastiff-laying-down-outdoors.jpg', 'Teddy Roosevelt', 5, 260, 0, 1, 0, 0, 1, 1, 1, 'Gigantic love bug'),
+		(3, 'https://www.akc.org/wp-content/uploads/2017/11/Tibetan-Mastiff-laying-down-outdoors.jpg', 'Teddy Roosevelt', 5, 259, 0, 1, 0, 0, 1, 1, 1, 'Gigantic love bug'),
 		(3, 'https://files.slack.com/files-pri/T0GNFLF6D-F02LFUVPKPF/20211108_105652.jpg', 'Pumpkin Patch', 7, 199, 0, 1, 0, 1, 0, 1, 1, 'Learns code with the class!'),
 		(4, 'https://files.slack.com/files-pri/T0GNFLF6D-F02RQUMP8HW/autumn.jpg', 'Autumn', 7, 19, 0, 1, 0, 1, 0, 1, 1, 'Learns code with the class!'),
 		(4, 'https://static1.colliderimages.com/wordpress/wp-content/uploads/2021/05/sandy-cheeks-social.jpg', 'Sandy', 13, 19, 0, 1, 0, 1, 0, 1, 1, 'Just a squirrel boxing on the ocean floor!'),
