@@ -20,6 +20,7 @@ namespace Capstone.DAO
         public Playdate RegisterPlaydate(Playdate newPlaydate); //Registered users can register their playdate in system
         public List<Playdate> GetLoggedInUserPlaydates(int userId); //Registered users can view their playdates
         public List<Playdate> GetLoggedInUserPlaydatesForDisplay(int userId); //Will show city, state and zip not as IDs
+        public List<Playdate> GetLoggedInUserCompletedPlaydatesForDisplay(int userId); //Will show city, state and zip not as IDs
         public bool DeleteLoggedInUserPlaydate(int playdateId, int userId); //Registered users can delete any of their playdates
         public bool UpdateLoggedInUserPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can update any of their playdates
         public bool RequestPlaydate(Playdate updatedPlaydate, int userId, int playdateId); //Registered users can request to meet a pet

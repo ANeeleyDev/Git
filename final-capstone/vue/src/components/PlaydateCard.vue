@@ -59,9 +59,23 @@
       :src="this.pet.petImage"
     ></v-img>
 
-    <v-card-title>Meet {{this.pet.petName}}</v-card-title>
-    <v-card-subtitle v-if="this.playdate.playdateStatusId === 2 && this.playdate.playdatePostedUserId === this.$store.state.user.userId"> 
+    <v-card-title> Meet {{this.pet.petName}}</v-card-title>
+    <v-card-subtitle v-if="this.playdate.playdateStatusId === 0"> 
+      PENDING REQUEST</v-card-subtitle>
+    <v-card-subtitle v-if="this.playdate.playdateStatusId === 1"> 
+      PENDING APPROVAL</v-card-subtitle>
+    <v-card-subtitle v-if="this.playdate.playdateStatusId === 2"> 
       APPROVED</v-card-subtitle>
+    <v-card-subtitle v-if="this.playdate.playdateStatusId === 3"> 
+      REJECTED</v-card-subtitle>
+    <v-card-subtitle v-if="this.playdate.playdateStatusId === 4"> 
+      CANCELLED</v-card-subtitle>
+    <v-card-subtitle v-if="this.playdate.playdateStatusId === 5"> 
+      FINISHED</v-card-subtitle>
+    <v-card-text v-if="this.playdate.playdateStatusId !== 0 && this.playdate.playdatePostedUserId === this.$store.state.user.userId"> 
+      {{this.requestedPet.petName}} requested to meet you and your pet, {{this.pet.petName}}.</v-card-text>
+    <v-card-text v-if="this.playdate.playdateStatusId !== 0 && this.playdate.playdateRequestedUserId === this.$store.state.user.userId"> 
+      You and your pet, {{this.requestedPet.petName}}, requested to meet {{this.pet.petName}}.</v-card-text>
       <v-btn 
         color="purple" 
         text v-if="this.playdate.playdateStatusId === 2 && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
@@ -76,8 +90,6 @@
         > 
         Cancel
       </v-btn>
-    <v-card-subtitle v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId"> 
-      {{this.requestedPet.petName}} wants to meet you!</v-card-subtitle>
       <v-btn 
         color="green" 
         text v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
@@ -93,7 +105,7 @@
         Reject 
       </v-btn>
       <v-btn
-          text v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
+          text v-if="(this.playdate.playdateStatusId === 1 || this.playdate.playdateStatusId === 2) && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
           color="orange accent-4"
           @click="revealRequestedPet = !revealRequestedPet"
         >

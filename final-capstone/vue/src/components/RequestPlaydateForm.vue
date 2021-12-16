@@ -82,7 +82,7 @@ export default {
           .registerPlaydate(newPlaydate)
           .then((response) => {
             if (response.status === 200) {
-              this.$router.push(`/userPlaydateView`);
+              this.$router.push(`/userPlaydateViewInProgress`);
             }
           })
           .catch((error) => {
@@ -98,7 +98,7 @@ export default {
           .requestPlaydate(newPlaydate, this.editPlaydateId)
           .then((response) => {
             if (response.status === 200) {
-              this.$router.push(`/UserPlaydateView`);
+              this.$router.push(`/UserPlaydateViewInProgress`);
             }
           })
           .catch((error) => {
@@ -107,7 +107,7 @@ export default {
       }
     },
         cancelForm() {
-        this.$router.push(`/userPlaydateView`);
+        this.$router.push(`/userPlaydateViewInProgress`);
     },
         handleErrorResponse(error, verb) {
         if (error.response) {

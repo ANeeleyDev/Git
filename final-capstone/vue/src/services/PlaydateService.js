@@ -33,8 +33,12 @@ export default {
         
         // return list of logged in users playdates
 
-    getLoggedInUserPlaydates(){
+    getLoggedInUserPlaydatesInProgress(){
         return axios.get(`/playdates/myplaydates/display`)
+    },
+
+    getLoggedInUserPlaydatesCompleted(){
+        return axios.get(`/playdates/myplaydates/display/completed`)
     },
 
         //creates new playdate

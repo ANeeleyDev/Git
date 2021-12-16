@@ -144,7 +144,8 @@ namespace Capstone.DAO
                         "FROM playdates " +
                         "JOIN cities ON playdates.playdate_city = city_id " +
                         "JOIN states ON playdates.playdate_state = states.state_id " +
-                        "JOIN zips ON playdates.playdate_zip = zip_id;", conn);
+                        "JOIN zips ON playdates.playdate_zip = zip_id " +
+                        "WHERE playdate_status_id = 0", conn);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
@@ -247,8 +248,53 @@ namespace Capstone.DAO
                         "JOIN cities ON playdates.playdate_city = city_id " +
                         "JOIN states ON playdates.playdate_state = states.state_id " +
                         "JOIN zips ON playdates.playdate_zip = zip_id " +
-                        "WHERE playdate_posted_user_id = @playdate_posted_user_id", conn);
+                        "WHERE (playdate_posted_user_id = @playdate_posted_user_id OR playdate_requested_user_id = " +
+                        "@playdate_requested_user_id) " +
+                        "AND (playdate_status_id = 0 OR playdate_status_id = 1 OR playdate_status_id = 2)", conn);
                     cmd.Parameters.AddWithValue("@playdate_posted_user_id", userId);
+                    cmd.Parameters.AddWithValue("@playdate_requested_user_id", userId);
+
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Playdate playdate = CreatePlaydateFromReaderForDisplay(reader);
+                        allPlaydatesByUserId.Add(playdate);
+                    }
+                }
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+
+            return allPlaydatesByUserId;
+        }
+
+        public List<Playdate> GetLoggedInUserCompletedPlaydatesForDisplay(int userId)
+        {
+            List<Playdate> allPlaydatesByUserId = new List<Playdate>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT playdate_id, playdate_posted_user_id, playdate_posted_pet_id, " +
+                        "playdate_requested_user_id, playdate_requested_pet_id, meeting_time, playdate_address, " +
+                        "cities.city_name, states.state_abbreviation, zips.zipcode, playdate_status_id " +
+                        "FROM playdates " +
+                        "JOIN cities ON playdates.playdate_city = city_id " +
+                        "JOIN states ON playdates.playdate_state = states.state_id " +
+                        "JOIN zips ON playdates.playdate_zip = zip_id " +
+                        "WHERE (playdate_posted_user_id = @playdate_posted_user_id OR playdate_requested_user_id = " +
+                        "@playdate_requested_user_id) " +
+                        "AND (playdate_status_id = 3 OR playdate_status_id = 4 OR playdate_status_id = 5)", conn);
+                    cmd.Parameters.AddWithValue("@playdate_posted_user_id", userId);
+                    cmd.Parameters.AddWithValue("@playdate_requested_user_id", userId);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 

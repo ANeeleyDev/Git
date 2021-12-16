@@ -30,7 +30,7 @@
       </v-card>
 
       <v-card
-        ><router-link v-bind:to="{ name: 'user-playdate-view' }"
+        ><router-link v-bind:to="{ name: 'user-playdate-view-in-progress' }"
           ><v-btn>View My Playdates</v-btn></router-link
         ></v-card
       >

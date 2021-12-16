@@ -1,15 +1,16 @@
 <template>
   <div>
-      <router-link :to="{ name: 'create-playdate-form' }"><v-btn>Add Playdate</v-btn></router-link>
+      <playdate-nav-bar v-if="$store.state.token != ''" />
       <user-playdate-list />
   </div>
 </template>
 
 <script>
 import UserPlaydateList from '@/views/UserPlaydateList'
+import PlaydateNavBar from "./PlaydateNavBar.vue";
 
 export default {
-  components: { UserPlaydateList },
+  components: { UserPlaydateList, PlaydateNavBar },
     name: 'user-playdate-view'
 }
 </script>

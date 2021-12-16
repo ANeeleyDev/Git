@@ -90,6 +90,26 @@ namespace Capstone.Controllers
             return playdateDao.GetLoggedInUserPlaydatesForDisplay(userId);
         }
 
+        [HttpGet("myplaydates/display/completed")]
+        [Authorize]
+        public List<Playdate> GetLoggedInUserCompletedPlaydatesForDisplay(int userId)
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return playdateDao.GetLoggedInUserCompletedPlaydatesForDisplay(userId);
+        }
+
+        [HttpGet("myplaydates/display/requested")]
+        [Authorize]
+        public List<Playdate> GetLoggedInUserRequestedPlaydatesForDisplay(int userId)
+        {
+            string userIdString = User.FindFirst("sub")?.Value;
+            userId = Convert.ToInt32(userIdString);
+
+            return playdateDao.GetLoggedInUserCompletedPlaydatesForDisplay(userId);
+        }
+
         [HttpDelete("myplaydates/{playdateId}")] 
         [Authorize]
         public bool DeleteLoggedInUserPlaydate(int playdateId, int userId) //Delete their playdate
