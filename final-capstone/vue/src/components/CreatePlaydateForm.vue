@@ -13,12 +13,10 @@
             <v-select
               class="selector"
               v-model="playdate.playdatePostedPetId"
-              :hint="`${select.petName}`"
               :items="pets"
               item-text="petName"
               item-value="petId"
               label="Select Pet"
-              persistent-hint
               single-line
             ></v-select>
           </v-col>

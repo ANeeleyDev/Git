@@ -1570,22 +1570,44 @@ VALUES	('Affenpinscher', 0),
 		('Mutt', 0); --284
 
 INSERT INTO users (username, password_hash, salt, user_role, first_name, last_name,	email_address, phone_number, street_address, city, state, zip)
-VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'Solo', 'hsolo@gmail.com', '7684729290', '111 Smugglers Way', 0, 34, 0),
-		('user1','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Tyson', 'Thorp', 'faketyson@gmail.com', '7684729291', '112 News Crew Drive', 0, 34, 0),
-		('user2','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Annie', 'Cochran', 'fakeannie@gmail.com', '7684729292', '777 Consultant Street', 0, 34, 0),
-		('user3','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Tiffany', 'McGillvary', 'faketiff@gmail.com', '7684729293', '8909 Stalk Market Road', 0, 34, 0),
-		('admin1','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Kevin', 'O''Leary', 'fakekevin@gmail.com', '7684729294', '9890 Columbus Way', 0, 34, 0),
-		('admin2','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Robert', 'Kaiser', 'fakerob@gmail.com', '7684729295', '7564 Oscar Wilde Boulevard', 0, 34, 0),
-		('admin3','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Amanda', 'Neeley', 'fakeamanda@gmail.com', '7684729296', '5555 Boss Lady Road', 0, 34, 0),
-		('admin4','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Ashley', 'Vorpe', 'fakeashley@gmail.com', '7684729297', '6754 Nerd Avenue', 0, 34, 0),
-		('mod1', 'YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=', 'mod', 'Joe', 'Riggs', 'fakejoe@gmail.com', '7684729298', '9483 Bobblehead Drive', 0, 34, 0),
-		('mod2', 'YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=', 'mod', 'Monika', 'Royal-Fischer', 'fakemonika@gmail.com', '7684729299', '7493 Leadership Court', 0, 34, 0);
+VALUES	('hsolo','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Han', 'Solo', 'hsolo@gmail.com', '7684729290', '111 Smugglers Way', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0),
+		('user1','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Tyson', 'Thorp', 'faketyson@gmail.com', '7684729291', '112 News Crew Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0),
+		('user2','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Annie', 'Cochran', 'fakeannie@gmail.com', '7684729292', '777 Consultant Street', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0),
+		('user3','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user', 'Tiffany', 'McGillvary', 'faketiff@gmail.com', '7684729293', '8909 Stalk Market Road', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0),
+		('admin1','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Kevin', 'O''Leary', 'fakekevin@gmail.com', '7684729294', '9890 Columbus Way', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0),
+		('admin2','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Robert', 'Kaiser', 'fakerob@gmail.com', '7684729295', '7564 Oscar Wilde Boulevard', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0),
+		('admin3','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Amanda', 'Neeley', 'fakeamanda@gmail.com', '7684729296', '5555 Boss Lady Road', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0),
+		('admin4','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin', 'Ashley', 'Vorpe', 'fakeashley@gmail.com', '7684729297', '6754 Nerd Avenue', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0),
+		('mod1', 'YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=', 'mod', 'Joe', 'Riggs', 'fakejoe@gmail.com', '7684729298', '9483 Bobblehead Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0),
+		('mod2', 'YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=', 'mod', 'Monika', 'Royal-Fischer', 'fakemonika@gmail.com', '7684729299', '7493 Leadership Court', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0),
+		('user4', 'Jg45HuwT7PZkfuKTz6IB90CtWY4=', 'LHxP4Xh7bN0=', 'user', 'Brittany', 'Lohrum', 'fakebrittany@gmail.com', '7684729300', '3547 Friendship Way', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0),
+		('user5', 'Jg45HuwT7PZkfuKTz6IB90CtWY4=', 'LHxP4Xh7bN0=', 'user', 'Duston', 'Fox', 'fakedustin@gmail.com', '7684729301', '9485 Software Drive', (SELECT city_id FROM cities WHERE city_name = 'Cincinnati'), 34, 0);
 
 INSERT INTO pets (user_id, pet_image, pet_name, age, breed, species, playful, nervous, confident, shy, mischievous, independent, other_comments)
-VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large/james-parce-jabba-the-pug.jpg?1604239107', 'Jabba', 13, 0, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
-		(1, 'https://static.wikia.nocookie.net/arresteddevelopment/images/7/71/3x13_Development_Arrested_%2892%29.png/revision/latest/scale-to-width-down/1000?cb=20130323224933', 'Loose Seal AKA Bby Ppy Destructo', 3, 0, 0, 0, 0, 0, 0, 0, 0, 'destroys everything'),
-		(2, 'https://mymodernmet.com/wp/wp-content/uploads/2020/10/cooper-baby-corgi-dogs-8.jpg', 'Kevin the Corgi', 1, 190, 0, 1, 0, 1, 0, 1, 0, 'super cute'),
-		(3, 'https://www.akc.org/wp-content/uploads/2017/11/Tibetan-Mastiff-laying-down-outdoors.jpg', 'Teddy Roosevelt', 5, 259, 0, 1, 0, 0, 1, 1, 1, 'Gigantic love bug');
+VALUES	(0, 'https://cdnb.artstation.com/p/assets/images/images/031/653/493/large/james-parce-jabba-the-pug.jpg?1604239107', 'Jabba', 13, 282, 0, 0, 1, 0, 1, 1, 0, 'loves to eat'),
+		(1, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02F7KMHG9K-4f4c952368/image_from_ios_720.jpg', 'Loose Seal AKA Bby Ppy Destructo', 3, 95, 0, 0, 0, 0, 0, 0, 0, 'destroys everything'),
+		(1, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02F3BKC0AZ-083a312ae1/image_from_ios_720.jpg', 'Dr. Tobias Funke', 13, 52, 0, 1, 0, 1, 0, 0, 1, 'Best doggo award!'),
+		(2, 'https://files.slack.com/files-pri/T0GNFLF6D-F02QXQLKP37/image.png', 'Willie', 4, 186, 0, 1, 0, 1, 0, 1, 1, 'Loves pumpkin!'),
+		(2, 'https://files.slack.com/files-pri/T0GNFLF6D-F02QXQLKP37/image.png', 'Crush', 5, 186, 0, 1, 0, 1, 0, 1, 1, 'Loves Thanksgiving!'),
+		(2, 'https://files.slack.com/files-pri/T0GNFLF6D-F02G4RAAS1E/9dd90fe7-d244-4e6a-bfe9-225fd42ed703.jpeg', 'Gertie', 6, 19, 0, 1, 0, 1, 0, 1, 1, 'Gertie is such a cool cat!'),
+		(3, 'https://www.akc.org/wp-content/uploads/2017/11/Tibetan-Mastiff-laying-down-outdoors.jpg', 'Teddy Roosevelt', 5, 259, 0, 1, 0, 0, 1, 1, 1, 'Gigantic love bug'),
+		(3, 'https://files.slack.com/files-pri/T0GNFLF6D-F02LFUVPKPF/20211108_105652.jpg', 'Pumpkin Patch', 7, 199, 0, 1, 0, 1, 0, 1, 1, 'Learns code with the class!'),
+		(4, 'https://files.slack.com/files-pri/T0GNFLF6D-F02RQUMP8HW/autumn.jpg', 'Autumn', 7, 19, 0, 1, 0, 1, 0, 1, 1, 'Learns code with the class!'),
+		(4, 'https://static1.colliderimages.com/wordpress/wp-content/uploads/2021/05/sandy-cheeks-social.jpg', 'Sandy', 13, 19, 0, 1, 0, 1, 0, 1, 1, 'Just a squirrel boxing on the ocean floor!'),
+		(4, 'https://static.wikia.nocookie.net/princessbride/images/7/70/Inigo_Montoya.png/revision/latest/top-crop/width/360/height/450?cb=20110320032519', 'Inigo Montoya', 27, 282, 0, 1, 0, 1, 0, 1, 1, 'My name is Inigo Montoya, you killed my father, prepare to die!'),
+		(5, 'https://keyassets.timeincuk.net/inspirewp/live/wp-content/uploads/sites/8/2021/02/GettyImages-997141470-e1614176377827.jpg', 'Oscar Wilde', 32, 19, 0, 1, 0, 1, 0, 1, 1, 'To live is the rarest thing in the world. Most people exist, that is all.'),
+		(5, 'https://i.pinimg.com/236x/ae/65/d3/ae65d3f67cd39c53b567e2de4601a43d.jpg', 'Orson Welles', 23, 19, 0, 1, 0, 1, 0, 1, 1, 'My doctor told me I had to stop throwing intimate dinners for four... Unless there are three other people.'),
+		(6, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02RDV8EYHX-cd7afe162f/20210326_001632_720.jpg', 'Luna', 7, 127, 0, 1, 0, 1, 0, 1, 1, 'Absolute sweetheart!'),
+		(6, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02QYD0J5V3-4a336ebdeb/20210224_113037_720.jpg', 'Molly', 7, 39, 0, 1, 0, 1, 0, 1, 1, 'Loves to sleep!'),
+		(7, 'https://files.slack.com/files-pri/T0GNFLF6D-F02QUPYU37Y/snapchat-1470840065.jpg', 'Nutmeg', 78, 19, 0, 1, 0, 1, 0, 1, 1, 'Best little friend I could ever ask for!'),
+		(7, 'https://files.slack.com/files-pri/T0GNFLF6D-F02R1FVJ70S/pxl_20210514_231345989.mp.jpg', 'Larry', 7, 50, 0, 1, 0, 1, 0, 1, 1, 'He''s got the best mohawk!'),
+		(8, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02R1AKV7PD-9e5afe6502/img_1568_720.jpg', 'Frida', 5, 19, 0, 1, 0, 1, 0, 1, 1, 'Independent woman who doesn''t need no man!'),
+		(8, 'https://m.media-amazon.com/images/I/71wDS1MV2LS._AC_SL1500_.jpg', 'Slinky', 7, 90, 0, 1, 0, 1, 0, 1, 1, 'A slinky little thing!'),
+		(9, 'https://files.slack.com/files-pri/T0GNFLF6D-F02EZL474GN/img_0489.jpg', 'Marco Polo', 8, 19, 0, 1, 0, 1, 0, 1, 1, 'Aloof and loves to make an appearance on the camera!'),
+		(9, 'https://files.slack.com/files-pri/T0GNFLF6D-F02EZL474GN/img_0489.jpg', 'Daisy', 5, 76, 0, 1, 0, 1, 0, 1, 1, 'Loves to bark!'),
+		(10, 'https://files.slack.com/files-tmb/T0GNFLF6D-F02K4DZ4JNT-6414d704b0/pxl_20211029_150831449_720.jpg', 'Willow', 7, 199, 0, 1, 0, 1, 0, 1, 1, 'Loves to look out the window!'),
+		(11, 'https://mymodernmet.com/wp/wp-content/uploads/2020/10/cooper-baby-corgi-dogs-8.jpg', 'Kevin the Corgi', 1, 190, 0, 1, 0, 1, 0, 1, 0, 'super cute'),
+		(11, 'https://files.slack.com/files-pri/T0GNFLF6D-F02J49EJ8BW/image_from_ios.jpg', 'Ally Mae', 9, 66, 0, 1, 1, 1, 0, 1, 1, 'Cutie who loves costumes!');
 
 INSERT INTO posts (user_id, post_title, post_content)
 VALUES	(0, 'Jabba needs a snack- I mean friend', 'Looking for a friend for my lovely little Jabba');

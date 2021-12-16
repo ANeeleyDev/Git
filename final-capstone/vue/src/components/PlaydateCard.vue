@@ -1,5 +1,40 @@
 <template>
 
+    <v-card-title>
+        Come Pay With Me!
+    </v-card-title>
+
+    <v-card-subtitle class="pd-name">
+        Name {{pet.petname}}
+    </v-card-subtitle>
+    <v-card-subtitle class="pd-age">
+        Age {{pet.age}}
+    </v-card-subtitle>
+
+    <v-card-subtitle class="pd-breed">
+        Breed {{pet.breed}}
+    </v-card-subtitle>
+
+    <v-card-text class="pd-comments">
+        <div>{{pet.otherComments}}</div>
+    </v-card-text>
+
+    <v-card-actions>
+        <v-btn
+            color="green"
+            text
+        >
+        Request Playdate
+        </v-btn>
+
+        <v-btn
+            color="blue"
+            text
+        >
+        Save 
+        </v-btn>
+    </v-card-actions>
+ </v-card> -->
   <v-card class="mx-auto my-12" max-height=auto  width="500">
     <template slot="progress">
       <v-progress-linear
@@ -15,6 +50,30 @@
     ></v-img>
 
     <v-card-title>Meet {{this.pet.petName}}</v-card-title>
+    <v-card-subtitle v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId"> 
+      {{this.requestedPet.petName}} wants to meet you!</v-card-subtitle>
+      <v-btn 
+        color="green" 
+        text v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
+        @click="acceptPlaydate"
+        > 
+        Approve 
+      </v-btn>
+      <v-btn 
+        color="red darken-4" 
+        text v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
+        @click="rejectPlaydate"
+        > 
+        Reject 
+      </v-btn>
+      <v-btn
+          text v-if="this.playdate.playdateStatusId === 1 && this.playdate.playdatePostedUserId === this.$store.state.user.userId" 
+          color="orange accent-4"
+          @click="revealRequestedPet = !revealRequestedPet"
+        >
+          About {{this.requestedPet.petName}}
+        </v-btn> 
+
     <v-card-text>{{this.playdate.playdateAddress}}
     
     <br/>{{this.playdate.playdateCity}}, {{playdate.playdateState}} {{playdate.playdateZip}}</v-card-text>
@@ -29,7 +88,6 @@
         >
           Learn More About {{this.pet.petName}}
         </v-btn> 
-        
         <v-btn
           text v-if="this.playdate.playdatePostedUserId !== this.$store.state.user.userId" 
           color="red"
@@ -62,6 +120,7 @@
         class="transition-fast-in-fast-out v-card--reveal"
         style="height: 100%;"
       >
+
         <v-card-text class="pb-0">
           <p class="text-h4 text--primary">
             {{ pet.petName }}
@@ -93,6 +152,48 @@
           </v-btn>
         </v-card-actions>
       </v-card>
+       <v-card
+        v-if="revealRequestedPet"
+        class="transition-fast-in-fast-out v-card--revealRequestedPet"
+        style="height: 100%;"
+      >
+
+        <v-card-text class="pb-0">
+          <p class="text-h4 text--primary">
+            {{ requestedPet.petName }}
+          </p>
+
+        <v-img
+         height="250"
+          :src="this.requestedPet.petImage"
+        ></v-img>
+            
+          <p> {{requestedPet.species}}, {{requestedPet.breed}}, {{requestedPet.age}} years old</p>
+          <p style="display:inline" >Attributes: </p>
+          <p style="display:inline" v-if="requestedPet.playful === true" >Playful</p>
+          <p style="display:inline" v-if="requestedPet.nervous === true & requestedPet.playful === true">, </p>
+          <p style="display:inline" v-if="requestedPet.nervous === true" >Nervous</p>
+          <p style="display:inline" v-if="requestedPet.confident === true">, </p>
+          <p style="display:inline" v-if="requestedPet.confident === true" >Confident</p>
+          <p style="display:inline" v-if="requestedPet.shy === true">, </p>
+          <p style="display:inline" v-if="requestedPet.shy === true" >Shy</p>
+          <p style="display:inline" v-if="requestedPet.mischievous === true">, </p>
+          <p style="display:inline" v-if="requestedPet.mischievous === true" >Mischievous</p>
+          <p style="display:inline" v-if="requestedPet.independent === true">, </p>
+          <p style="display:inline" v-if="requestedPet.independent === true" >Independent</p>
+          <p></p>
+          <p>Other comments: "{{ requestedPet.otherComments }}"</p>
+        </v-card-text>
+        <v-card-actions class="pt-0">
+          <v-btn
+            text
+            color="teal accent-4"
+            @click="revealRequestedPet = false"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-expand-transition>
     
   </v-card>
@@ -108,7 +209,9 @@ export default {
   data() {
     return {
       reveal: false,
+      revealRequestedPet: false,
       pet: {},
+      requestedPet: {},
       user:{}
     };
   },
@@ -119,6 +222,13 @@ export default {
           this.pet = response.data;
         })
       
+    },
+    getRequestedPetInfo() {
+      petService.getPet(this.playdate.playdateRequestedPetId).then((response) => {
+       
+          this.requestedPet = response.data;
+        })
+
     },
      getUserInfo() {
       userService.displayUser(this.playdate.playdatePostedUserId).then((response) => {
@@ -136,7 +246,7 @@ export default {
             .deleteLoggedInUserPlaydate(this.playdate.playdateId)
             .then((response) => {
               if (response.status === 200) {
-                alert("Playdate successfully deleted");
+                alert("Playdate successfully deleted.");
                 this.$router.push(`/`);
               }
             })
@@ -155,10 +265,79 @@ export default {
               }
             });
         }
-      }       
+      },
+      acceptPlaydate() {
+        const updatedPlaydate = {
+            playdateId: this.playdateId,
+            playdateStatusId: this.playdateStatusId
+          };
+        if (
+          confirm(
+            "Are you sure you want to accept this playdate?"
+          )
+        ) {
+          playdateService
+            .acceptPlaydate(updatedPlaydate, this.playdate.playdateId)
+            .then((response) => {
+              if (response.status === 200) {
+                alert("Playdate successfully approved.");
+                this.$router.push(`/`);
+              }
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.errorMsg =
+                  "Error accepting playdate. Response received was '" +
+                  error.response.statusText +
+                  "'.";
+              } else if (error.request) {
+                this.errorMsg =
+                  "Error accepting playdate. Server could not be reached.";
+              } else {
+                this.errorMsg =
+                  "Error accepting playdate. Request could not be created.";
+              }
+            });
+        }
+      },
+      rejectPlaydate() {
+        const updatedPlaydate = {
+            playdateId: this.playdateId,
+            playdateStatusId: this.playdateStatusId
+          };
+        if (
+          confirm(
+            "Are you sure you want to reject this playdate?"
+          )
+        ) {
+          playdateService
+            .rejectPlaydate(updatedPlaydate, this.playdate.playdateId)
+            .then((response) => {
+              if (response.status === 200) {
+                alert("Playdate successfully rejected.");
+                this.$router.push(`/`);
+              }
+            })
+            .catch((error) => {
+              if (error.response) {
+                this.errorMsg =
+                  "Error rejecting playdate. Response received was '" +
+                  error.response.statusText +
+                  "'.";
+              } else if (error.request) {
+                this.errorMsg =
+                  "Error rejecting playdate. Server could not be reached.";
+              } else {
+                this.errorMsg =
+                  "Error rejecting playdate. Request could not be created.";
+              }
+            });
+        }
+      }          
   },
   created() {
       this.getPetInfo();
+      this.getRequestedPetInfo();
       this.getUserInfo();
   },
 };
@@ -166,6 +345,13 @@ export default {
 
 <style>
 .v-card--reveal {
+  bottom: 0;
+  opacity: 1 !important;
+  position: absolute;
+  width: 100%;
+}
+
+.v-card--revealRequestedPet {
   bottom: 0;
   opacity: 1 !important;
   position: absolute;
